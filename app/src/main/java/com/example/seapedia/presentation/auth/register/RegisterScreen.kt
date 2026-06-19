@@ -1,7 +1,6 @@
-package com.example.seapedia.presentation.auth.login
+package com.example.seapedia.presentation.auth.register
 
 import androidx.compose.foundation.clickable
-import com.example.seapedia.R
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -12,6 +11,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MailOutline
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +29,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import clearFocusOnTap
+import com.example.seapedia.R
 import com.example.seapedia.global.navigation.NavGraph
 import com.example.seapedia.global.navigation.auth.AuthRoute
 import com.example.seapedia.global.utils.ALL_USER_ROLES
@@ -42,18 +43,16 @@ import com.example.seapedia.presentation.common.TextFieldCustom
 import com.example.seapedia.ui.theme.Dimens
 
 @Composable
-fun LoginScreen(
+fun RegisterScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    viewModel: LoginViewModel = hiltViewModel<LoginViewModel>()
+    viewModel: RegisterViewModel = hiltViewModel<RegisterViewModel>()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val scrollState = rememberScrollState()
     LaunchedEffect(Unit) {
-        viewModel.navigateToBuyer.collect {
-            navController.navigate(NavGraph.BUYER){
-                popUpTo(0)
-            }
+        viewModel.navigateToLogin.collect {
+            navController.navigate(AuthRoute.Login.route)
         }
     }
     Column (
@@ -66,6 +65,20 @@ fun LoginScreen(
         verticalArrangement = Arrangement.spacedBy(Dimens.SpacePadding)
 
     ){
+        TextFieldCustom(
+            enabled = !state.loading,
+            title = "Full name",
+            hint = "Input your full name",
+            keyboardType = KeyboardType.Text,
+            text = state.fullName,
+            imeAction = ImeAction.Next,
+            leadingIcon = {
+                IconCustom(id = 0, icon = Icons.Default.Person, contentDescription = "Fullname")
+            },
+        ) {
+            viewModel.onFullNameChange(it)
+        }
+
         TextFieldCustom(
             enabled = !state.loading,
             title = "Email",
@@ -97,8 +110,8 @@ fun LoginScreen(
                 PasswordIcon(modifier,
                     isVisible = state.isPasswordVisible,
                     onClick = {
-                    viewModel.onPasswordVisible()
-                })
+                        viewModel.onPasswordVisible()
+                    })
             }
         ) {
             viewModel.onPasswordChange(it)
@@ -112,28 +125,18 @@ fun LoginScreen(
                 viewModel.onRoleChange(it)
             },
             itemLabel = {
-                role -> role.name.lowercase().replaceFirstChar{it.uppercase()}
+                    role -> role.name.lowercase().replaceFirstChar{it.uppercase()}
             },
             label = "Role")
-
-        Text(
-            modifier = Modifier.clickable(
-                onClick = {
-                    viewModel.onContinueAsGuest()
-                }
-            ),
-            text = stringResource(R.string.continue_as_guest_login),
-            style = MaterialTheme.typography.bodyMedium.copy(
-                color = MaterialTheme.colorScheme.primary
-            ))
+        Text(text = "*${stringResource(R.string.information_role_register)}", style = MaterialTheme.typography.bodyMedium)
         Spacer(Modifier.height(5.dp))
         ButtonCustom(
             enabled = !state.passwordError and !state.emailError && state.selectedRole != null,
             loading = !state.loading,
-            title = "Login",
+            title = "Register",
             onClick = {
                 if (!state.loading) {
-                    viewModel.login()
+                    viewModel.register()
                 }
             }
         )
@@ -141,10 +144,10 @@ fun LoginScreen(
         Text(
             modifier = Modifier.clickable(
                 onClick = {
-                    navController.navigate(AuthRoute.Register.route)
+                    navController.navigate(AuthRoute.Login.route)
                 }
             ),
-            text = stringResource(R.string.dont_have_an_account_register_now),
+            text = stringResource(R.string.have_an_account_login_now),
             style = MaterialTheme.typography.bodyMedium.copy(
                 color = MaterialTheme.colorScheme.primary
             ))

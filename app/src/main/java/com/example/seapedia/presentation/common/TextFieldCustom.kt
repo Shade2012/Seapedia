@@ -1,6 +1,7 @@
 package com.example.seapedia.presentation.common
 
 import android.view.textclassifier.TextSelection
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Spacer
@@ -18,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
@@ -40,11 +42,15 @@ fun TextFieldCustom(
     isError: Boolean = false,
     supportingText: BaseSupportingText? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
+    leadingIcon : @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
     onTextChange: (String) -> Unit
 ) {
     val focusManager : FocusManager = LocalFocusManager.current
-    Column {
-        Text(title)
+    Column(
+        verticalArrangement = Arrangement.spacedBy(Dimens.SpacePadding)
+    ) {
+        Text(title, style = MaterialTheme.typography.labelMedium)
         OutlinedTextField(
             modifier = modifier.fillMaxWidth(),
             enabled = enabled,
@@ -74,7 +80,6 @@ fun TextFieldCustom(
                 unfocusedContainerColor = MaterialTheme.colorScheme.primary
 
             ),
-
             onValueChange = onTextChange,
             keyboardOptions = KeyboardOptions(
                 keyboardType = keyboardType,
@@ -85,6 +90,8 @@ fun TextFieldCustom(
                     focusManager.clearFocus()
                 }
             ),
+            leadingIcon = leadingIcon,
+            trailingIcon = trailingIcon
         )
         Spacer(modifier.padding(Dimens.SpacePadding))
         supportingText?.SupportText(text)

@@ -1,51 +1,57 @@
-package com.example.seapedia.presentation.auth.login
+package com.example.seapedia.presentation.auth.register
 
 import android.util.Log
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.seapedia.domain.usecases.auth.LoginUseCase
-import com.example.seapedia.domain.usecases.auth.SetAccessTokenUseCase
-import com.example.seapedia.domain.usecases.auth.SetRoleUseCase
+import com.example.seapedia.data.remote.body.RegisterBody
+import com.example.seapedia.domain.usecases.auth.RegisterUseCase
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.global.utils.EmailSupportingText
 import com.example.seapedia.global.utils.PasswordSupportingText
 import com.example.seapedia.global.utils.UserRole
-import com.example.seapedia.global.utils.session.SessionRepository
 import com.example.seapedia.global.utils.ui.AppEventBus
 import com.example.seapedia.global.utils.ui.CustomSnackbarVisuals
 import com.example.seapedia.global.utils.ui.SnackbarType
 import com.example.seapedia.global.utils.ui.UiEvent
+import com.example.seapedia.presentation.auth.login.LoginState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
-    private val sessionRepository: SessionRepository,
-    private val loginUseCase: LoginUseCase,
-    private val setRoleUseCase: SetRoleUseCase,
-    private val setAccessTokenUseCase: SetAccessTokenUseCase
-): ViewModel() {
-    private val _state : MutableStateFlow<LoginState> = MutableStateFlow<LoginState>(LoginState())
+class RegisterViewModel @Inject constructor(
+    private val registerUseCase: RegisterUseCase
+) : ViewModel() {
+    private val _state: MutableStateFlow<RegisterState> = MutableStateFlow(RegisterState())
     val state = _state.asStateFlow()
-    private val _navigateToBuyer = MutableSharedFlow<Unit>()
-    val navigateToBuyer = _navigateToBuyer.asSharedFlow()
 
-    fun login(){
-        viewModelScope.launch(Dispatchers.IO) {
-            loginUseCase.run(email = state.value.email, password = state.value.password, role = state.value.selectedRole!!).collect {
+    private val _navigateToLogin: MutableSharedFlow<Unit> = MutableSharedFlow<Unit>()
+    val navigateToLogin = _navigateToLogin
+
+    fun register(){
+        viewModelScope.launch(Dispatchers.IO){
+            registerUseCase.run(
+                RegisterBody(
+                    fullName = state.value.fullName,
+                    email = state.value.email,
+                    password = state.value.password,
+                    role = state.value.selectedRole!!.name
+                )
+            ).collect {
                 result ->
                 when(result){
                     is CommonState.Error<*> -> {
                         updateState {
                             copy(error = result.message, loading = false)
                         }
+                        Log.d("Register View Model",result.message)
                         AppEventBus.events.emit(
                             UiEvent.ShowSnackbar(CustomSnackbarVisuals(
                                 message = "Login Gagal, ${result.message}",
@@ -53,35 +59,27 @@ class LoginViewModel @Inject constructor(
                             ))
                         )
                     }
-
                     is CommonState.Loading<*> -> {
                         updateState {
-                            copy(loading = true)
+                            copy(
+                                loading = true
+                            )
                         }
                     }
-
                     is CommonState.Success<String> -> {
                         updateState {
                             copy(loading = false)
                         }
                         AppEventBus.events.emit(
                             UiEvent.ShowSnackbar(CustomSnackbarVisuals(
-                                message = "Login Success",
+                                message = result.data,
                                 type = SnackbarType.SUCCESS
                             ))
                         )
-                        setRoleUseCase.run(state.value.selectedRole!!)
-                        setAccessTokenUseCase.run(result.data)
-                        sessionRepository.login(
-                            token = result.data,
-                            isLoggedIn = true,
-                            role = state.value.selectedRole,
-                        )
-                        _navigateToBuyer.emit(Unit)
+                        _navigateToLogin.emit(Unit)
                     }
                 }
             }
-
         }
     }
     fun onEmailChange(value: String){
@@ -89,6 +87,13 @@ class LoginViewModel @Inject constructor(
             copy(
                 email = value,
                 emailError = !EmailSupportingText.validate(value)
+            )
+        }
+    }
+    fun onFullNameChange(value: String){
+        updateState {
+            copy(
+                fullName = value,
             )
         }
     }
@@ -110,25 +115,18 @@ class LoginViewModel @Inject constructor(
     fun onPasswordVisible(){
         updateState {
             copy(
-                isPasswordVisible = !isPasswordVisible
+               isPasswordVisible = !isPasswordVisible
             )
         }
     }
-    fun onContinueAsGuest(){
-        viewModelScope.launch(Dispatchers.IO){
-            setRoleUseCase.run(UserRole.Guest)
-            sessionRepository.login(
-                isLoggedIn = true,
-                role = UserRole.Guest
-            )
-            _navigateToBuyer.emit(Unit)
-        }
-    }
+
     private fun updateState(
-        update: LoginState.() -> LoginState
-    ) {
+        update: RegisterState.() -> RegisterState
+    ){
         _state.update {
             it.update()
         }
     }
+
+
 }

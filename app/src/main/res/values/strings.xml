@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Seapedia</string>
+    <string name="pick_roles_login">Select your role</string>
+    <string name="continue_as_guest_login">Continue as Guest</string>
+    <string name="dont_have_an_account_register_now">Don\'t have an account? Register now.</string>
+    <string name="have_an_account_login_now">Have an account? Login now.</string>
+    <string name="information_role_register">You can add more roles later at the profile</string>
+
 </resources>

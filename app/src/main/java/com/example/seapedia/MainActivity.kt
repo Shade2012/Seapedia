@@ -12,12 +12,16 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.seapedia.global.navigation.NavGraph
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.compose.rememberNavController
+import com.example.seapedia.global.navigation.RootNavGraph
 import com.example.seapedia.global.utils.ui.AppEventBus
 import com.example.seapedia.global.utils.ui.UiEvent
 import com.example.seapedia.presentation.common.SnackBarCustom
@@ -39,9 +43,11 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun AppRoot(modifier: Modifier = Modifier) {
+fun AppRoot(
+) {
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    val navController = rememberNavController()
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -57,15 +63,18 @@ fun AppRoot(modifier: Modifier = Modifier) {
                 }
             }
         }
-        NavGraph()
+        RootNavGraph(navController)
         SnackbarHost(
             hostState = snackbarHostState,
             modifier = Modifier
                 .fillMaxSize()
-                .wrapContentSize(Alignment.TopCenter)
-                .padding(bottom = 40.dp),
+                .wrapContentSize(Alignment.TopCenter),
             snackbar = {
-                data -> SnackBarCustom(data)
+                data -> Box(
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                ) {
+                    SnackBarCustom(data)
+                }
             }
         )
     }

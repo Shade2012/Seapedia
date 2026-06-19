@@ -1,15 +1,25 @@
 package com.example.seapedia.global.navigation
 
-//@Serializable
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import com.example.seapedia.global.navigation.auth.authGraph
+import com.example.seapedia.global.navigation.buyer.buyerGraph
+import com.example.seapedia.global.utils.session.SessionState
 
-sealed class Routes(val name:String, val path: String) {
 
-    object Home : Routes("home","home_screen")
-    object Login : Routes("login","login_screen")
-    object Profile : Routes("profile","profile_screen")
-
-    object MainBottom : Routes("mainBottom","main_bottom_screen")
-
-    object Splash : Routes("splash","splash_screen")
+@Composable
+fun RootNavGraph(
+     navController: NavHostController,
+     startDestination: String = NavGraph.AUTH,
+) {
+    NavHost(
+        navController = navController,
+        startDestination = startDestination
+    ) {
+        authGraph(navController)
+        buyerGraph(navController)
+    }
 }
+
 

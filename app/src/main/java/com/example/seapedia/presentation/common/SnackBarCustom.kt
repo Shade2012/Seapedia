@@ -21,7 +21,7 @@ fun SnackBarCustom(
     val type : SnackbarType = visuals.type
     Surface(
         color = type.containerColor,
-        modifier = Modifier.padding(top = 30.dp),
+        modifier = Modifier.padding(top = 40.dp),
         shape = RoundedCornerShape(12.dp),
         tonalElevation = 6.dp
     ) {

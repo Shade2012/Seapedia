@@ -11,7 +11,8 @@ import androidx.compose.ui.unit.sp
 // Set of Material typography styles to start with
 val monserratFontFamily = FontFamily(
     Font(R.font.montserrat_regular, FontWeight.Normal),
-    Font(R.font.montserrat_extra_bold, FontWeight.ExtraBold)
+    Font(R.font.montserrat_extra_bold, FontWeight.ExtraBold),
+    Font(R.font.montserrat_medium, weight = FontWeight.Medium)
 )
 
 val AppTypography = Typography(
@@ -44,6 +45,13 @@ val AppTypography = Typography(
         fontSize = 17.sp,
 
         ),
+    labelMedium = TextStyle(
+        fontFamily = monserratFontFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp,
+        lineHeight = 20.sp,
+        letterSpacing = 0.25.sp
+    ),
     bodyMedium = TextStyle(
         fontFamily = monserratFontFamily,
         fontWeight = FontWeight.Normal,

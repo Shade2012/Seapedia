@@ -36,14 +36,14 @@ object PasswordSupportingText : BaseSupportingText{
         }
         if (text.length < 8)
             Text("Password must be 8 char or more",style = style)
-        if (!text.any { it.isLowerCase() }){
-            Text("Password must atleast have one lowercase",style = style)
-        }
+//        if (!text.any { it.isLowerCase() }){
+//            Text("Password must atleast have one lowercase",style = style)
+//        }
     }
 
     override fun validate(text: String): Boolean {
         return text.isNotBlank()
                 && text.length >= 8
-                && text.any{it.isLowerCase()}
+//                && text.any{it.isLowerCase()}
     }
 }

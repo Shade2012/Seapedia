@@ -5,6 +5,6 @@ import com.example.seapedia.global.utils.Mapper
 
 class LoginMapper : Mapper<LoginResponse, String> {
     override fun mapFromResponse(type: LoginResponse): String {
-        return type.token
+        return type.data
     }
 }
