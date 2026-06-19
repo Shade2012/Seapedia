@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Base_Compose"
+rootProject.name = "Seapedia"
 include(":app")
  

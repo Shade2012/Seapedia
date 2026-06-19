@@ -12,11 +12,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.base_compose"
+    namespace = "com.example.seapedia"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.base_compose"
+        applicationId = "com.example.seapedia"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
@@ -44,6 +44,10 @@ android {
     buildFeatures {
         compose = true
     }
+}
+
+tasks.withType<JavaCompile>().configureEach {
+    options.compilerArgs.add("-Xlint:deprecation")
 }
 
 dependencies {
