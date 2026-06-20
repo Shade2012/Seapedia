@@ -12,12 +12,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class HomeBuyerViewModel @Inject constructor(
     private val sessionRepository: SessionRepository,
     private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
     private val _navigateToBuyer = MutableSharedFlow<Unit>()
+
     val navigateToBuyer = _navigateToBuyer.asSharedFlow()
+
     val state = sessionRepository.sessionState
     fun logout(){
         viewModelScope.launch(Dispatchers.IO) {

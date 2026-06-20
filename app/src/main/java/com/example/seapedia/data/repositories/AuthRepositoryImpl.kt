@@ -61,12 +61,28 @@ class AuthRepositoryImpl @Inject constructor(
         return authLocalDataSource.getAccessToken()
     }
 
+    override fun getEmail(): Flow<String?> {
+        return authLocalDataSource.getEmail()
+    }
+
+    override fun getPassword(): Flow<String?> {
+        return authLocalDataSource.getPassword()
+    }
+
     override suspend fun setRole(role: UserRole) {
         return authLocalDataSource.setRole(role)
     }
 
     override suspend fun setAccessToken(accessToken: String) {
         return authLocalDataSource.setAccessToken(accessToken)
+    }
+
+    override suspend fun setEmail(email: String) {
+        return authLocalDataSource.setEmail(email)
+    }
+
+    override suspend fun setPassword(password: String) {
+        return authLocalDataSource.setPassword(password)
     }
 
     override suspend fun logout(): Boolean {

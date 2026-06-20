@@ -17,12 +17,21 @@ class UserDataStoreManager @Inject constructor(
     companion object {
         val ACCESS_TOKEN_KEY = stringPreferencesKey("access_token")
         val ROLE_KEY = stringPreferencesKey("role")
+        val EMAIL_KEY = stringPreferencesKey("email")
+        val PASSWORD_KEY = stringPreferencesKey("password")
     }
 
     suspend fun setRole(role: UserRole){
         return setPrefs(ROLE_KEY,role.name)
     }
 
+    suspend fun setEmail(email: String){
+        return setPrefs(EMAIL_KEY,email)
+    }
+
+    suspend fun setPassword(password: String){
+        return setPrefs(PASSWORD_KEY,password)
+    }
     suspend fun setAccessToken(token: String){
         return setPrefs(ACCESS_TOKEN_KEY,token)
     }
@@ -33,6 +42,12 @@ class UserDataStoreManager @Inject constructor(
 
     fun getAccessToken() : Flow<String?> {
         return getPrefs(ACCESS_TOKEN_KEY)
+    }
+    fun getEmail() : Flow<String?> {
+        return getPrefs(EMAIL_KEY)
+    }
+    fun getPassword() : Flow<String?> {
+        return getPrefs(PASSWORD_KEY)
     }
 
     suspend fun logout(): Boolean {

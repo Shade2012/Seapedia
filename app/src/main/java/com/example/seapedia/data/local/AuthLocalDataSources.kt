@@ -12,6 +12,11 @@ class AuthLocalDataSources @Inject constructor(
 ) {
     fun getAccessToken(): Flow<String?> = userDataStoreManager.getAccessToken()
     fun getRole(): Flow<String?> = userDataStoreManager.getRole()
+    fun getEmail(): Flow<String?> = userDataStoreManager.getEmail()
+    fun getPassword(): Flow<String?> = userDataStoreManager.getPassword()
+
+    suspend fun setEmail(email: String): Unit = userDataStoreManager.setEmail(email)
+    suspend fun setPassword(password: String): Unit = userDataStoreManager.setPassword(password)
     suspend fun setAccessToken(accessToken: String): Unit = userDataStoreManager.setAccessToken(accessToken)
     suspend fun setRole(role: UserRole): Unit = userDataStoreManager.setRole(role)
     suspend fun logout(): Boolean = userDataStoreManager.logout()

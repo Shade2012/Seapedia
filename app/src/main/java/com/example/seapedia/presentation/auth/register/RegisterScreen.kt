@@ -30,12 +30,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import clearFocusOnTap
 import com.example.seapedia.R
-import com.example.seapedia.global.navigation.NavGraph
 import com.example.seapedia.global.navigation.auth.AuthRoute
 import com.example.seapedia.global.utils.ALL_USER_ROLES
 import com.example.seapedia.global.utils.EmailSupportingText
 import com.example.seapedia.global.utils.PasswordSupportingText
 import com.example.seapedia.presentation.auth.login.widgets.DropdownCustom
+import com.example.seapedia.presentation.auth.widgets.TopIconAppAuth
 import com.example.seapedia.presentation.common.ButtonCustom
 import com.example.seapedia.presentation.common.IconCustom
 import com.example.seapedia.presentation.common.PasswordIcon
@@ -65,6 +65,7 @@ fun RegisterScreen(
         verticalArrangement = Arrangement.spacedBy(Dimens.SpacePadding)
 
     ){
+        TopIconAppAuth()
         TextFieldCustom(
             enabled = !state.loading,
             title = "Full name",

@@ -1,7 +1,11 @@
 package com.example.seapedia.global.di
 
 import com.example.seapedia.data.remote.services.AuthService
+import com.example.seapedia.data.remote.services.UserService
 import com.example.seapedia.global.networks.NetworkConstant
+import com.example.seapedia.global.utils.auth.AuthAuthenticator
+//import com.example.seapedia.global.utils.auth.AuthAuthenticator
+import com.example.seapedia.global.utils.auth.AuthInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,9 +24,14 @@ import javax.inject.Singleton
 object NetworkModule {
     @Provides
     @Singleton
-    fun provideLogging() : OkHttpClient {
+    fun provideLogging(
+        authInterceptor: AuthInterceptor,
+        authAuthenticator: AuthAuthenticator
+    ) : OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .addInterceptor(authInterceptor)
+            .authenticator(authAuthenticator)
             .connectTimeout(120, TimeUnit.SECONDS)
             .readTimeout(120, TimeUnit.SECONDS)
             .build()
@@ -48,5 +57,11 @@ object NetworkModule {
     @Singleton
     fun provideAuthService(retrofit: Retrofit): AuthService{
         return retrofit.create<AuthService>(AuthService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserService(retrofit: Retrofit): UserService{
+        return retrofit.create<UserService>(UserService::class.java)
     }
 }

@@ -60,6 +60,9 @@ dependencies {
 //    Serialization
     implementation(libs.serialization)
 
+//    Shimmer
+    implementation(libs.com.valentinilk.shimmer.compose.shimmer)
+
 //    Retrofit2
     implementation(libs.squareup.retrofit2.retrofit)
     implementation(libs.squareup.retrofit2.converter.serialization)
@@ -73,6 +76,10 @@ dependencies {
 //    Viewmodel and Lifecycle
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+//    Coil
+    implementation(libs.io.coil.kt.coil3.coil.compose)
+    implementation(libs.io.coil.kt.coil3.coil.network.okhttp)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)

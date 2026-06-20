@@ -10,17 +10,18 @@ import com.example.seapedia.global.navigation.auth.AuthRoute
 import com.example.seapedia.global.utils.session.SessionState
 
 import com.example.seapedia.presentation.buyer.home.HomeBuyerScreen
+import com.example.seapedia.presentation.buyer.main.MainBuyerScreen
+import com.example.seapedia.presentation.buyer.profile.ProfileBuyerScreen
 
 fun NavGraphBuilder.buyerGraph(
     navController: NavHostController,
 ){
     navigation(
         route = NavGraph.BUYER,
-        startDestination = BuyerRoute.Home.route
+        startDestination = BuyerRoute.MainNavigation.route
     ){
-        composable(BuyerRoute.Home.route) {
-            HomeBuyerScreen(Modifier, navController)
+        composable (BuyerRoute.MainNavigation.route){
+            MainBuyerScreen(rootNavController = navController)
         }
-
     }
 }
