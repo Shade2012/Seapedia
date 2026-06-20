@@ -5,32 +5,41 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.example.seapedia.global.navigation.NavGraph
-import com.example.seapedia.global.utils.UserRole
-import com.example.seapedia.presentation.common.ButtonCustom
+import com.example.seapedia.domain.entities.ProductEntity
+import com.example.seapedia.global.utils.CommonState
+import com.example.seapedia.presentation.buyer.home.shimmer.HomeBuyerShimmer
+import com.example.seapedia.presentation.buyer.home.widgets.defaultProductSection
+import com.example.seapedia.presentation.buyer.home.widgets.searchProductSection
+import com.example.seapedia.presentation.common.FailedCommonCustom
+import com.example.seapedia.presentation.common.TextFieldCustom
 import com.example.seapedia.ui.theme.Dimens
 import com.example.seapedia.ui.theme.White
 
@@ -39,25 +48,89 @@ fun HomeBuyerScreen(
     modifier: Modifier = Modifier,
     buyerNavController: NavController,
     isGuest: Boolean,
-    homeBuyerViewModel: HomeBuyerViewModel = hiltViewModel<HomeBuyerViewModel>()
+    homeBuyerViewModel: HomeBuyerViewModel = hiltViewModel()
 ) {
-    val scrollState = rememberScrollState()
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .verticalScroll(scrollState)
-            .padding(Dimens.InnerPadding)
+    val state = homeBuyerViewModel.state.collectAsStateWithLifecycle().value
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(horizontal = Dimens.InnerPadding)
             .padding(top = Dimens.TopPadding),
-        verticalArrangement = Arrangement.spacedBy(Dimens.SpacePadding)
-    ) {
-        WelcomeSection()
-        if(!isGuest)
-            BalanceSection()
-        ButtonCustom(modifier, enabled = true, loading = true, title = "Logout") {
-//            homeBuyerViewModel.logout()
+        verticalArrangement = Arrangement.spacedBy(
+            Dimens.SpacePadding
+        ),
+        horizontalArrangement = Arrangement.spacedBy(
+            Dimens.RowSpacePadding
+        )
+    ){
+        item(
+            span = { GridItemSpan(maxLineSpan) }
+        ) {
+            WelcomeSection()
+        }
+
+        if (!isGuest) {
+            item(
+                span = { GridItemSpan(maxLineSpan) }
+            ) {
+                BalanceSection()
+            }
+        }
+
+        item(
+            span = { GridItemSpan(maxLineSpan) }
+        ) {
+            SearchBar(
+                text = state.searchName,
+                enabled = true,
+                onChanged = {
+                    homeBuyerViewModel.onSearchNameChange(it)
+                }
+            )
+        }
+
+        when (val productsState = state.products) {
+
+            is CommonState.Loading -> {
+                item(
+                    span = { GridItemSpan(maxLineSpan) }
+                ) {
+                    HomeBuyerShimmer()
+                }
+            }
+
+            is CommonState.Error -> {
+                item(
+                    span = { GridItemSpan(maxLineSpan) }
+                ) {
+                    FailedCommonCustom(
+                        text = productsState.message
+                    )
+                }
+            }
+
+            is CommonState.Success<List<ProductEntity>> -> {
+                    if (state.searchName.isNotEmpty()) {
+                        searchProductSection(
+                            products = productsState.data,
+                            searchName = state.searchName,
+                            isGuest = isGuest,
+                            buyerNavController = buyerNavController
+                        )
+                    } else {
+                        defaultProductSection(
+                            products = productsState.data,
+                            isGuest = isGuest,
+                            buyerNavController = buyerNavController
+                        )
+                    }
+
+            }
         }
     }
 }
+
 
 @Composable
 fun WelcomeSection(
@@ -65,6 +138,39 @@ fun WelcomeSection(
 ) {
     Text("Welcome to Seapedia", style = MaterialTheme.typography.bodyMedium)
 }
+
+@Composable
+fun SearchBar(
+    modifier: Modifier = Modifier,
+    text:String,
+    enabled: Boolean,
+    onChanged: (String) -> Unit
+) {
+    TextFieldCustom(
+        modifier = modifier.clip(
+            shape = RoundedCornerShape(16.dp)
+        ),
+        text = text,
+        title = null,
+        hint = "Search product",
+        imeAction = ImeAction.Done,
+        keyboardType = KeyboardType.Text,
+        enabled = enabled,
+        isError = false,
+        supportingText = null,
+        visualTransformation = VisualTransformation.None,
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Default.Search,
+                tint = White,
+                contentDescription = "Search Icon"
+            )
+        },
+    ){
+        onChanged(it)
+    }
+}
+
 @Composable
 fun BalanceSection(modifier: Modifier = Modifier) {
     Card(

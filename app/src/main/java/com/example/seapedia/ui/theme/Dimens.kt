@@ -8,5 +8,6 @@ object Dimens {
     val IconSize = 25.dp
     val SpacePadding = 8.dp
     val ButtonCorner = 5.dp
+    val RowSpacePadding = 12.dp
     val ButtonVerticalPadding = 15.dp
 }

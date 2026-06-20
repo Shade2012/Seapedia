@@ -38,7 +38,8 @@ fun ProfileBuyerShimmer(
             .padding(top = Dimens.TopPadding),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(Dimens.SpacePadding)
-    ) {
+    )
+    {
 
         // Profile image
         Box(

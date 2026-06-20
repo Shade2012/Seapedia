@@ -1,8 +1,6 @@
 package com.example.seapedia.presentation.auth.register
 
 import android.util.Log
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.seapedia.data.remote.body.RegisterBody
@@ -15,7 +13,6 @@ import com.example.seapedia.global.utils.ui.AppEventBus
 import com.example.seapedia.global.utils.ui.CustomSnackbarVisuals
 import com.example.seapedia.global.utils.ui.SnackbarType
 import com.example.seapedia.global.utils.ui.UiEvent
-import com.example.seapedia.presentation.auth.login.LoginState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -54,7 +51,7 @@ class RegisterViewModel @Inject constructor(
                         Log.d("Register View Model",result.message)
                         AppEventBus.events.emit(
                             UiEvent.ShowSnackbar(CustomSnackbarVisuals(
-                                message = "Login Gagal, ${result.message}",
+                                message = "Register Failed, ${result.message}",
                                 type = SnackbarType.ERROR
                             ))
                         )

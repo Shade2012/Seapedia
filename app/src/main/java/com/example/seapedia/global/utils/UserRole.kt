@@ -8,3 +8,4 @@ enum class UserRole {
     Guest
 }
 val ALL_USER_ROLES = UserRole.entries.filter { it != UserRole.Guest && it != UserRole.Admin }
+val ALL_LOGIN_ROLES = UserRole.entries.filter { it != UserRole.Guest }

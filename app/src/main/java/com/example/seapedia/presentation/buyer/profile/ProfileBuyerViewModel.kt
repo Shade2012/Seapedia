@@ -58,7 +58,7 @@ class ProfileBuyerViewModel @Inject constructor(
                             ))
                             AppEventBus.events.emit(
                                 UiEvent.ShowSnackbar(CustomSnackbarVisuals(
-                                    message = "Gagal mendapatkan profile, ${result.message}",
+                                    message = "Failed get profile, ${result.message}",
                                     type = SnackbarType.ERROR
                                 ))
                             )

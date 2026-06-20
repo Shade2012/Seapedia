@@ -3,11 +3,14 @@ package com.example.seapedia.global.navigation.buyer
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.example.seapedia.presentation.buyer.cart.CartBuyerScreen
 import com.example.seapedia.presentation.buyer.home.HomeBuyerScreen
 import com.example.seapedia.presentation.buyer.profile.ProfileBuyerScreen
+import com.example.seapedia.presentation.buyer.product.ProductDetailBuyerScreen
 
 
 @Composable
@@ -39,6 +42,16 @@ fun BuyerNavHost(
                 isGuest = isGuest,
                 rootNavController = rootNavController
             )
+        }
+        composable(
+            route = BuyerRoute.ProductDetail.route,
+            arguments = listOf(
+                navArgument("productId"){
+                    type = NavType.IntType
+                }
+            )
+        ) { backStackEntry ->
+            ProductDetailBuyerScreen(navController = buyerNavController)
         }
         composable(
             BuyerRoute.Cart.route

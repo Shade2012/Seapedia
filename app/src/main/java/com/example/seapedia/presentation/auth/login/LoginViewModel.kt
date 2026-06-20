@@ -48,7 +48,7 @@ class LoginViewModel @Inject constructor(
                         }
                         AppEventBus.events.emit(
                             UiEvent.ShowSnackbar(CustomSnackbarVisuals(
-                                message = "Login Gagal, ${result.message}",
+                                message = "Login Failed, ${result.message}",
                                 type = SnackbarType.ERROR
                             ))
                         )

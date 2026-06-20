@@ -8,8 +8,10 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.seapedia.global.navigation.buyer.BuyerNavHost
+import com.example.seapedia.global.navigation.buyer.BuyerRoute
 import com.example.seapedia.global.utils.UserRole
 import com.example.seapedia.presentation.buyer.main.widgets.BottomBuyerBar
 
@@ -22,10 +24,25 @@ fun MainBuyerScreen(
     val session by mainBuyerViewModel.state.collectAsStateWithLifecycle()
     val isGuest = session.role != UserRole.Buyer
 
+    val currentRoute = buyerNavController
+        .currentBackStackEntryAsState()
+        .value
+        ?.destination
+        ?.route
 
     Scaffold(
         bottomBar = {
-            BottomBuyerBar(buyerNavController,isGuest)
+            if (
+                currentRoute == BuyerRoute.Home.route ||
+                currentRoute == BuyerRoute.Profile.route ||
+                currentRoute == BuyerRoute.Cart.route
+            ) {
+                BottomBuyerBar(
+                    navController = buyerNavController,
+                    isGuest = isGuest
+                )
+            }
+
         }
     ) {
         padding ->
