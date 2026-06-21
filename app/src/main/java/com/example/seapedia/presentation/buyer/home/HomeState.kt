@@ -8,4 +8,5 @@ data class HomeState(
     val searchName: String = "",
     val products: CommonState<List<ProductEntity>> = CommonState.Loading(),
     val reviews: CommonState<List<ReviewEntity>> = CommonState.Loading(),
+    val isRefreshing : Boolean = false
 )

@@ -43,6 +43,7 @@ import com.example.seapedia.presentation.buyer.home.widgets.defaultProductSectio
 import com.example.seapedia.presentation.buyer.home.widgets.reviewSection
 import com.example.seapedia.presentation.buyer.home.widgets.searchProductSection
 import com.example.seapedia.presentation.common.FailedCommonCustom
+import com.example.seapedia.presentation.common.RefreshCommon
 import com.example.seapedia.presentation.common.TextFieldCustom
 import com.example.seapedia.ui.theme.Dimens
 import com.example.seapedia.ui.theme.White
@@ -56,103 +57,111 @@ fun HomeBuyerScreen(
     homeBuyerViewModel: HomeBuyerViewModel = hiltViewModel()
 ) {
     val state = homeBuyerViewModel.state.collectAsStateWithLifecycle().value
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = Dimens.InnerPadding)
-            .padding(top = Dimens.TopPadding),
-        verticalArrangement = Arrangement.spacedBy(
-            Dimens.SpacePadding
-        ),
-        horizontalArrangement = Arrangement.spacedBy(
-            Dimens.RowSpacePadding
-        )
-    ){
-        item(
-            span = { GridItemSpan(maxLineSpan) }
+    RefreshCommon(
+        modifier = Modifier.fillMaxSize(),
+        refreshing = state.isRefreshing,
+        onRefresh = homeBuyerViewModel::refreshHome
+    ) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            modifier = modifier
+                .fillMaxSize()
+                .padding(horizontal = Dimens.InnerPadding)
+                .padding(top = Dimens.TopPadding),
+            verticalArrangement = Arrangement.spacedBy(
+                Dimens.SpacePadding
+            ),
+            horizontalArrangement = Arrangement.spacedBy(
+                Dimens.RowSpacePadding
+            )
         ) {
-            WelcomeSection()
-        }
-
-        if (!isGuest) {
             item(
                 span = { GridItemSpan(maxLineSpan) }
             ) {
-                BalanceSection()
+                WelcomeSection()
             }
-        }
 
-        item(
-            span = { GridItemSpan(maxLineSpan) }
-        ) {
-            SearchBar(
-                text = state.searchName,
-                enabled = true,
-                onChanged = {
-                    homeBuyerViewModel.onSearchNameChange(it)
-                }
-            )
-        }
-
-        when (val productsState = state.products) {
-
-            is CommonState.Loading -> {
+            if (!isGuest) {
                 item(
                     span = { GridItemSpan(maxLineSpan) }
                 ) {
-                    HomeBuyerShimmer()
+                    BalanceSection()
                 }
             }
 
-            is CommonState.Error -> {
-                item(
-                    span = { GridItemSpan(maxLineSpan) }
-                ) {
-                    FailedCommonCustom(
-                        text = productsState.message
-                    )
-                }
-            }
-
-            is CommonState.Success<List<ProductEntity>> -> {
-                if (state.searchName.isNotEmpty()) {
-                    searchProductSection(
-                        products = productsState.data,
-                        searchName = state.searchName,
-                        isGuest = isGuest,
-                        buyerNavController = buyerNavController
-                    )
-                } else {
-                    defaultProductSection(
-                        products = productsState.data,
-                        isGuest = isGuest,
-                        buyerNavController = buyerNavController
-                    )
-                }
-
-            }
-        }
-        when (val reviewState = state.reviews){
-            is CommonState.Error<*> -> {
-
-            }
-            is CommonState.Loading -> {
-                item(
-                    span = { GridItemSpan(maxLineSpan) }
-                ) {
-                    ReviewCardShimmer()
-                }
-            }
-            is CommonState.Success<List<ReviewEntity>> -> {
-
-                reviewSection(
-                    modifier = Modifier,
-                    reviews = reviewState.data,
-                    onClickAllReview = {
-                        rootNavController.navigate(ReviewRoutes.AllReview.route)
+            item(
+                span = { GridItemSpan(maxLineSpan) }
+            ) {
+                SearchBar(
+                    text = state.searchName,
+                    enabled = true,
+                    onChanged = {
+                        homeBuyerViewModel.onSearchNameChange(it)
                     }
                 )
+            }
+
+            when (val productsState = state.products) {
+
+                is CommonState.Loading -> {
+                    item(
+                        span = { GridItemSpan(maxLineSpan) }
+                    ) {
+                        HomeBuyerShimmer()
+                    }
+                }
+
+                is CommonState.Error -> {
+                    item(
+                        span = { GridItemSpan(maxLineSpan) }
+                    ) {
+                        FailedCommonCustom(
+                            text = productsState.message
+                        )
+                    }
+                }
+
+                is CommonState.Success<List<ProductEntity>> -> {
+                    if (state.searchName.isNotEmpty()) {
+                        searchProductSection(
+                            products = productsState.data,
+                            searchName = state.searchName,
+                            isGuest = isGuest,
+                            buyerNavController = buyerNavController
+                        )
+                    } else {
+                        defaultProductSection(
+                            products = productsState.data,
+                            isGuest = isGuest,
+                            buyerNavController = buyerNavController
+                        )
+                    }
+
+                }
+            }
+            when (val reviewState = state.reviews) {
+                is CommonState.Error<*> -> {
+
+                }
+
+                is CommonState.Loading -> {
+                    item(
+                        span = { GridItemSpan(maxLineSpan) }
+                    ) {
+                        ReviewCardShimmer()
+                    }
+                }
+
+                is CommonState.Success<List<ReviewEntity>> -> {
+
+                    reviewSection(
+                        modifier = Modifier,
+                        reviews = reviewState.data,
+                        onClickAllReview = {
+                            rootNavController.navigate(ReviewRoutes.AllReview.route)
+                        }
+                    )
+                }
             }
         }
     }

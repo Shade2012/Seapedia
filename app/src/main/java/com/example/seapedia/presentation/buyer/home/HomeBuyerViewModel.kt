@@ -13,8 +13,10 @@ import com.example.seapedia.global.utils.ui.CustomSnackbarVisuals
 import com.example.seapedia.global.utils.ui.SnackbarType
 import com.example.seapedia.global.utils.ui.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -46,6 +48,23 @@ class HomeBuyerViewModel @Inject constructor(
         getReviews()
     }
 
+    fun refreshHome() {
+        viewModelScope.launch {
+
+            updateState {
+                copy(isRefreshing = true)
+            }
+
+            coroutineScope {
+                launch { refreshReviews() }
+                launch { refreshProducts() }
+            }
+
+            updateState {
+                copy(isRefreshing = false)
+            }
+        }
+    }
     fun onSearchNameChange(searchName: String){
         updateState {
             copy(searchName = searchName)
@@ -66,7 +85,7 @@ class HomeBuyerViewModel @Inject constructor(
             state.map {
                 it.searchName
             }
-                .debounce(500)
+                .debounce(400)
                 .distinctUntilChanged()
                 .flatMapLatest {
                     searchName ->
@@ -127,5 +146,28 @@ class HomeBuyerViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private suspend fun refreshProducts() {
+        val searchName = state.value.searchName
+
+        getAllProductUseCase
+            .run(AllProductQuery(name = searchName))
+            .collect { result ->
+
+                updateState {
+                    copy(products = result)
+                }
+            }
+    }
+    private suspend fun refreshReviews() {
+        getAllReviewUseCase
+            .run(AllReviewQuery(limit = 3))
+            .collect { result ->
+
+                updateState {
+                    copy(reviews = result)
+                }
+            }
     }
 }
