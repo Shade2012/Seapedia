@@ -1,0 +1,30 @@
+package com.example.seapedia.presentation.buyer.home.widgets
+
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyGridScope
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.ui.Modifier
+import com.example.seapedia.domain.entities.ReviewEntity
+import com.example.seapedia.presentation.review.widgets.ReviewCard
+
+
+fun LazyGridScope.reviewSection(
+    modifier: Modifier = Modifier,
+    reviews: List<ReviewEntity>,
+    onClickAllReview: () -> Unit
+) {
+    item(
+        span = { GridItemSpan(maxLineSpan) }
+    ) {
+        ReviewTitle(onClickAllReview = onClickAllReview)
+    }
+    items(
+        items = reviews,
+        key = { it.id },
+        span = { GridItemSpan(maxLineSpan) }
+    ) { review ->
+        ReviewCard(
+            review = review
+        )
+    }
+}

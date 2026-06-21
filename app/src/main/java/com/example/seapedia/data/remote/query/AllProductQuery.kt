@@ -14,15 +14,4 @@ data class AllProductQuery(
     val storeId: Int? = null,
     val name: String? = null,
     val limit: Int? = null
-)
-
-fun AllProductQuery.toMap() : Map<String, String>{
-    val jsonElement = Json.encodeToJsonElement(this)
-    return jsonElement.jsonObject.filterValues {
-        value ->
-        value != JsonNull
-    }.mapValues {
-        (_,value) ->
-        value.jsonPrimitive.content
-    }
-}
+): QueryParams

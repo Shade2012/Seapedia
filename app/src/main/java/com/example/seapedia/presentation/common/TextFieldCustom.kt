@@ -38,6 +38,7 @@ fun TextFieldCustom(
     keyboardType: KeyboardType,
     enabled: Boolean = true,
     isError: Boolean = false,
+    minLines:Int = 1,
     supportingText: BaseSupportingText? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     leadingIcon : @Composable (() -> Unit)? = null,
@@ -54,6 +55,7 @@ fun TextFieldCustom(
             modifier = modifier.fillMaxWidth(),
             enabled = enabled,
             isError = isError,
+            minLines = minLines,
             visualTransformation = visualTransformation,
             value = text,
             textStyle = MaterialTheme.typography.bodyMedium.copy(

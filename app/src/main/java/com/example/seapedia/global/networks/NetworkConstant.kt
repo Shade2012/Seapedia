@@ -4,4 +4,5 @@ object NetworkConstant {
     const val BASE_URL = "https://tomoko-unburst-sulphurously.ngrok-free.dev"
     const val PRODUCTS = "products"
     const val USERS = "users"
+    const val REVIEWS = "reviews"
 }

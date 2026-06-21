@@ -6,4 +6,5 @@ object NavGraph {
     const val DRIVER = "driver"
     const val SELLER = "seller"
     const val ADMIN = "admin"
+    const val REVIEW = "review"
 }

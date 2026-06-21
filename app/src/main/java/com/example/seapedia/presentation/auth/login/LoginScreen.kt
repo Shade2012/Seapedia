@@ -134,9 +134,7 @@ fun LoginScreen(
             loading = !state.loading,
             title = "Login",
             onClick = {
-                if (!state.loading) {
-                    viewModel.login()
-                }
+                viewModel.login()
             }
         )
         Spacer(Modifier.height(5.dp))

@@ -32,7 +32,8 @@ fun BuyerNavHost(
         ) {
             HomeBuyerScreen(
                 isGuest = isGuest,
-                buyerNavController = buyerNavController
+                buyerNavController = buyerNavController,
+                rootNavController = rootNavController
             )
         }
         composable(
@@ -51,7 +52,10 @@ fun BuyerNavHost(
                 }
             )
         ) { backStackEntry ->
-            ProductDetailBuyerScreen(navController = buyerNavController)
+            ProductDetailBuyerScreen(
+                navController = buyerNavController,
+                isGuest = isGuest,
+            )
         }
         composable(
             BuyerRoute.Cart.route

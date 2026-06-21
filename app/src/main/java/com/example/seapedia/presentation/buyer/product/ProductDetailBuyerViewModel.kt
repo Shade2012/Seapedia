@@ -11,7 +11,6 @@ import com.example.seapedia.global.utils.ui.AppEventBus
 import com.example.seapedia.global.utils.ui.CustomSnackbarVisuals
 import com.example.seapedia.global.utils.ui.SnackbarType
 import com.example.seapedia.global.utils.ui.UiEvent
-import com.example.seapedia.presentation.buyer.home.HomeUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

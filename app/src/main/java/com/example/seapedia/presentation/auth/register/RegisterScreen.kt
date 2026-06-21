@@ -136,9 +136,7 @@ fun RegisterScreen(
             loading = !state.loading,
             title = "Register",
             onClick = {
-                if (!state.loading) {
-                    viewModel.register()
-                }
+                viewModel.register()
             }
         )
         Spacer(Modifier.height(5.dp))

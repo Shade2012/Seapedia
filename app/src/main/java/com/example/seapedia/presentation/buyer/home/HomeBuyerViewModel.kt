@@ -3,8 +3,9 @@ package com.example.seapedia.presentation.buyer.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.seapedia.data.remote.query.AllProductQuery
+import com.example.seapedia.data.remote.query.AllReviewQuery
 import com.example.seapedia.domain.usecases.product.GetAllProductUseCase
-import com.example.seapedia.domain.usecases.product.GetDetailProductUseCase
+import com.example.seapedia.domain.usecases.review.GetAllReviewUseCase
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.global.utils.session.SessionRepository
 import com.example.seapedia.global.utils.ui.AppEventBus
@@ -30,10 +31,10 @@ import javax.inject.Inject
 class HomeBuyerViewModel @Inject constructor(
     private val sessionRepository: SessionRepository,
     private val getAllProductUseCase: GetAllProductUseCase,
-    private val getDetailProductUseCase: GetDetailProductUseCase,
+    private val getAllReviewUseCase: GetAllReviewUseCase
 ) : ViewModel() {
     private val _navigateToBuyer = MutableSharedFlow<Unit>()
-    private val _state = MutableStateFlow(HomeUiState(searchName = ""))
+    private val _state = MutableStateFlow(HomeState(searchName = ""))
 
     val navigateToBuyer = _navigateToBuyer.asSharedFlow()
 
@@ -42,6 +43,7 @@ class HomeBuyerViewModel @Inject constructor(
 
     init {
         observeProduct()
+        getReviews()
     }
 
     fun onSearchNameChange(searchName: String){
@@ -51,7 +53,7 @@ class HomeBuyerViewModel @Inject constructor(
     }
 
     private fun updateState(
-        update: HomeUiState.() -> HomeUiState
+        update: HomeState.() -> HomeState
     ) {
         _state.update {
             it.update()
@@ -99,6 +101,31 @@ class HomeBuyerViewModel @Inject constructor(
                         }
                     }
                 }
+        }
+    }
+
+    private fun getReviews(){
+        viewModelScope.launch {
+            getAllReviewUseCase.run(queries = AllReviewQuery(limit = 3)).collect {
+                result ->
+                when(result){
+                    is CommonState.Error<*> -> {
+                        updateState {
+                            copy(reviews = result)
+                        }
+                    }
+                    is CommonState.Loading<*> -> {
+                        updateState {
+                            copy(reviews = CommonState.Loading())
+                        }
+                    }
+                    is CommonState.Success<*> -> {
+                        updateState {
+                            copy(reviews = result)
+                        }
+                    }
+                }
+            }
         }
     }
 }

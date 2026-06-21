@@ -25,6 +25,7 @@ import com.example.seapedia.global.navigation.buyer.BuyerRoute
 import com.example.seapedia.global.utils.Formatting
 import com.example.seapedia.presentation.common.ImageCustom
 import com.example.seapedia.ui.theme.Dimens
+import com.example.seapedia.ui.theme.White
 
 
 @Composable
@@ -99,7 +100,9 @@ fun HomeProductCard(
                         modifier = Modifier.fillMaxWidth(),
                         onClick = { }
                     ) {
-                        Text("Add To Cart")
+                        Text(text = "Add To Cart", style = MaterialTheme.typography.bodyMedium.copy(
+                            color = White
+                        ))
                     }
                 }
             }

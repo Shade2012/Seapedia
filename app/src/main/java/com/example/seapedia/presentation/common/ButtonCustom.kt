@@ -37,7 +37,11 @@ fun ButtonCustom(
             disabledContainerColor = Grey,
             disabledContentColor = Black.copy(alpha = 0.38f)
         ),
-        onClick = onClick
+        onClick = {
+            if(enabled && loading){
+                onClick()
+            }
+        }
     ){
         if (loading){
             Text(

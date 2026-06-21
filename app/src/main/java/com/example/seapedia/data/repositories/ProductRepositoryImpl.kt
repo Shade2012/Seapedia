@@ -6,7 +6,6 @@ import com.example.seapedia.domain.entities.ProductEntity
 import com.example.seapedia.domain.repositories.ProductRepository
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.global.utils.getErrorMessage
-import com.example.seapedia.mapper.product.ProductMapper
 import com.example.seapedia.mapper.product.ProductRawMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

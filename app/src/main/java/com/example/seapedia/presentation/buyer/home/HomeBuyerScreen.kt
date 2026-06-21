@@ -34,9 +34,13 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.seapedia.domain.entities.ProductEntity
+import com.example.seapedia.domain.entities.ReviewEntity
+import com.example.seapedia.global.navigation.review.ReviewRoutes
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.presentation.buyer.home.shimmer.HomeBuyerShimmer
+import com.example.seapedia.presentation.buyer.home.shimmer.ReviewCardShimmer
 import com.example.seapedia.presentation.buyer.home.widgets.defaultProductSection
+import com.example.seapedia.presentation.buyer.home.widgets.reviewSection
 import com.example.seapedia.presentation.buyer.home.widgets.searchProductSection
 import com.example.seapedia.presentation.common.FailedCommonCustom
 import com.example.seapedia.presentation.common.TextFieldCustom
@@ -48,6 +52,7 @@ fun HomeBuyerScreen(
     modifier: Modifier = Modifier,
     buyerNavController: NavController,
     isGuest: Boolean,
+    rootNavController: NavController,
     homeBuyerViewModel: HomeBuyerViewModel = hiltViewModel()
 ) {
     val state = homeBuyerViewModel.state.collectAsStateWithLifecycle().value
@@ -111,21 +116,43 @@ fun HomeBuyerScreen(
             }
 
             is CommonState.Success<List<ProductEntity>> -> {
-                    if (state.searchName.isNotEmpty()) {
-                        searchProductSection(
-                            products = productsState.data,
-                            searchName = state.searchName,
-                            isGuest = isGuest,
-                            buyerNavController = buyerNavController
-                        )
-                    } else {
-                        defaultProductSection(
-                            products = productsState.data,
-                            isGuest = isGuest,
-                            buyerNavController = buyerNavController
-                        )
-                    }
+                if (state.searchName.isNotEmpty()) {
+                    searchProductSection(
+                        products = productsState.data,
+                        searchName = state.searchName,
+                        isGuest = isGuest,
+                        buyerNavController = buyerNavController
+                    )
+                } else {
+                    defaultProductSection(
+                        products = productsState.data,
+                        isGuest = isGuest,
+                        buyerNavController = buyerNavController
+                    )
+                }
 
+            }
+        }
+        when (val reviewState = state.reviews){
+            is CommonState.Error<*> -> {
+
+            }
+            is CommonState.Loading -> {
+                item(
+                    span = { GridItemSpan(maxLineSpan) }
+                ) {
+                    ReviewCardShimmer()
+                }
+            }
+            is CommonState.Success<List<ReviewEntity>> -> {
+
+                reviewSection(
+                    modifier = Modifier,
+                    reviews = reviewState.data,
+                    onClickAllReview = {
+                        rootNavController.navigate(ReviewRoutes.AllReview.route)
+                    }
+                )
             }
         }
     }
@@ -217,8 +244,4 @@ fun BalanceSection(modifier: Modifier = Modifier) {
             )
         }
     }
-}
-@Composable
-fun ReviewSection(modifier: Modifier = Modifier) {
-
 }

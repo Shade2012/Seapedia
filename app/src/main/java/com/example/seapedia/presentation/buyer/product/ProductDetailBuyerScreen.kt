@@ -19,6 +19,7 @@ import com.example.seapedia.presentation.buyer.product.shimmer.ProductDetailBuye
 import com.example.seapedia.presentation.buyer.product.widgets.ProductDetailBody
 import com.example.seapedia.presentation.buyer.product.widgets.ProductDetailImages
 import com.example.seapedia.presentation.buyer.product.widgets.StoreOverviewWidget
+import com.example.seapedia.presentation.common.ButtonCustom
 import com.example.seapedia.presentation.common.FailedCommonCustom
 import com.example.seapedia.presentation.common.TopAppBarCustom
 import com.example.seapedia.ui.theme.Dimens
@@ -27,7 +28,8 @@ import com.example.seapedia.ui.theme.Dimens
 fun ProductDetailBuyerScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    productDetailBuyerViewModel: ProductDetailBuyerViewModel = hiltViewModel<ProductDetailBuyerViewModel>()
+    productDetailBuyerViewModel: ProductDetailBuyerViewModel = hiltViewModel<ProductDetailBuyerViewModel>(),
+    isGuest: Boolean,
 ) {
     val state = productDetailBuyerViewModel.state.collectAsStateWithLifecycle().value
     val scrollState = rememberScrollState()
@@ -65,6 +67,13 @@ fun ProductDetailBuyerScreen(
                     )
                 StoreOverviewWidget(store = product.store)
                 ProductDetailBody(modifier,product)
+                if(!isGuest)
+                    ButtonCustom(
+                        enabled = true,
+                        title = "Add to Cart",
+                        onClick = {},
+                        loading = true
+                    )
             }
         }
     }

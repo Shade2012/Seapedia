@@ -2,9 +2,11 @@ package com.example.seapedia.global.di
 
 import com.example.seapedia.data.repositories.AuthRepositoryImpl
 import com.example.seapedia.data.repositories.ProductRepositoryImpl
+import com.example.seapedia.data.repositories.ReviewRepositoryImpl
 import com.example.seapedia.data.repositories.UserRepositoryImpl
 import com.example.seapedia.domain.repositories.AuthRepository
 import com.example.seapedia.domain.repositories.ProductRepository
+import com.example.seapedia.domain.repositories.ReviewRepository
 import com.example.seapedia.domain.repositories.UserRepository
 import dagger.Binds
 import dagger.Module
@@ -34,4 +36,10 @@ abstract class RepositoryModule {
     abstract fun bindProductRepository(
         impl: ProductRepositoryImpl
     ): ProductRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindReviewRepository(
+        impl: ReviewRepositoryImpl
+    ): ReviewRepository
 }

@@ -2,6 +2,7 @@ package com.example.seapedia.global.di
 
 import com.example.seapedia.data.remote.services.AuthService
 import com.example.seapedia.data.remote.services.ProductService
+import com.example.seapedia.data.remote.services.ReviewService
 import com.example.seapedia.data.remote.services.UserService
 import com.example.seapedia.global.networks.NetworkConstant
 import com.example.seapedia.global.utils.auth.AuthAuthenticator
@@ -69,5 +70,11 @@ object NetworkModule {
     @Singleton
     fun provideProductService(retrofit: Retrofit): ProductService{
         return retrofit.create<ProductService>(ProductService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideReviewService(retrofit: Retrofit): ReviewService{
+        return retrofit.create<ReviewService>(ReviewService::class.java)
     }
 }

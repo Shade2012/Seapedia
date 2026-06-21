@@ -54,6 +54,9 @@ dependencies {
 //    Navigation
     implementation(libs.androidx.navigation)
 
+//  Datetime
+    implementation(libs.org.jetbrains.kotlinx.datetime)
+
 //    LocalStorage DataStore
     implementation(libs.androidx.datastore.preference)
 
