@@ -31,7 +31,7 @@ fun RefreshCommon(
                 modifier = Modifier.align(Alignment.TopCenter),
                 isRefreshing = refreshing,
                 state = state,
-                containerColor = MaterialTheme.colorScheme.primary,
+                containerColor = MaterialTheme.colorScheme.tertiary,
                 color = White
             )
         },
