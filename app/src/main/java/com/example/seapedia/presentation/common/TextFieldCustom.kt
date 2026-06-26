@@ -67,7 +67,7 @@ fun TextFieldCustom(
                 ))
             },
             colors = OutlinedTextFieldDefaults.colors(
-                disabledContainerColor = Grey.copy(alpha = 100F),
+                disabledContainerColor = Grey.copy(alpha = 0.5f),
                 disabledTextColor = Black.copy(alpha = 0.38f),
                 cursorColor = White,
                 selectionColors = TextSelectionColors(

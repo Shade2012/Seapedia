@@ -65,14 +65,14 @@ fun ProductDetailBuyerScreen(
                         },
                         primaryImageUrl = state.selectedImage
                     )
-                StoreOverviewWidget(store = product.store)
+                StoreOverviewWidget(store = product.store!!)
                 ProductDetailBody(modifier,product)
                 if(!isGuest)
                     ButtonCustom(
                         enabled = true,
                         title = "Add to Cart",
                         onClick = {},
-                        loading = true
+                        isNotLoading = true
                     )
             }
         }

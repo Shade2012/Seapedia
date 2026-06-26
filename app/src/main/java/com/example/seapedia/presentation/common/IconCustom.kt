@@ -15,7 +15,7 @@ import com.example.seapedia.ui.theme.White
 @Composable
 fun IconCustom(
     modifier: Modifier = Modifier,
-    id: Int,
+    id: Int = 0,
     color: Color = White,
     contentDescription: String = "",
     icon: ImageVector? = null
@@ -29,5 +29,4 @@ fun IconCustom(
         contentDescription = contentDescription,
 
     )
-
 }

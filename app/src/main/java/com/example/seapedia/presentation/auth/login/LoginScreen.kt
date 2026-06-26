@@ -51,8 +51,8 @@ fun LoginScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val scrollState = rememberScrollState()
     LaunchedEffect(Unit) {
-        viewModel.navigateToBuyer.collect {
-            navController.navigate(NavGraph.BUYER){
+        viewModel.navigateToSplash.collect {
+            navController.navigate(NavGraph.AUTH){
                 popUpTo(0)
             }
         }
@@ -131,7 +131,7 @@ fun LoginScreen(
         Spacer(Modifier.height(5.dp))
         ButtonCustom(
             enabled = !state.passwordError and !state.emailError && state.selectedRole != null,
-            loading = !state.loading,
+            isNotLoading = !state.loading,
             title = "Login",
             onClick = {
                 viewModel.login()

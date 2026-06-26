@@ -22,10 +22,22 @@ class StoreRawMapper : Mapper<StoreResponse, StoreEntity>{
             id = store.id,
             name = store.name,
             address = store.address,
-            image = store.imageUrl,
-            latitude = store.latitude.toDouble(),
-            longitude = store.longitude.toDouble(),
-            phoneNumber = store.phoneNumber
+            image = store.imageUrl ?: "",
+            latitude = store.latitude,
+            longitude = store.longitude,
+            phoneNumber = store.phoneNumber,
+            province = type.province?.let {
+                RegionMapper().mapFromResponse(it)
+            },
+            city = type.city?.let {
+                RegionMapper().mapFromResponse(it)
+            },
+            district = type.district?.let {
+                RegionMapper().mapFromResponse(it)
+            },
+            village = type.village?.let {
+                RegionMapper().mapFromResponse(it)
+            }
         )
     }
 

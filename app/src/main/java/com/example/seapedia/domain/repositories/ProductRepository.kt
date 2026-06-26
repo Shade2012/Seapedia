@@ -8,4 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface ProductRepository {
     suspend fun getAllProduct(queries: AllProductQuery): Flow<CommonState<List<ProductEntity>>>
     suspend fun getDetailProduct(id: Int): Flow<CommonState<ProductEntity>>
+    suspend fun getAllSellerProduct(): Flow<CommonState<List<ProductEntity>>>
+    suspend fun updateProduct() : Unit
+    suspend fun createProduct(product: ProductEntity) : Flow<CommonState<String>>
 }

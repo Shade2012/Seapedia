@@ -20,10 +20,9 @@ import com.example.seapedia.ui.theme.Grey
 fun ButtonCustom(
     modifier: Modifier = Modifier,
     enabled: Boolean,
-    loading: Boolean,
+    isNotLoading: Boolean,
     title: String,
     onClick : () -> Unit
-
 ) {
     Button(
         modifier = modifier.fillMaxWidth(),
@@ -38,12 +37,12 @@ fun ButtonCustom(
             disabledContentColor = Black.copy(alpha = 0.38f)
         ),
         onClick = {
-            if(enabled && loading){
+            if(enabled && isNotLoading){
                 onClick()
             }
         }
     ){
-        if (loading){
+        if (isNotLoading){
             Text(
                 text = title,
             )

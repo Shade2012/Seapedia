@@ -133,7 +133,7 @@ fun RegisterScreen(
         Spacer(Modifier.height(5.dp))
         ButtonCustom(
             enabled = !state.passwordError and !state.emailError && state.selectedRole != null,
-            loading = !state.loading,
+            isNotLoading = !state.loading,
             title = "Register",
             onClick = {
                 viewModel.register()

@@ -14,7 +14,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -47,7 +46,7 @@ fun ProfileBuyerScreen(
     val state = profileBuyerViewModel.state.collectAsStateWithLifecycle().value
     val scrollState = rememberScrollState()
     LaunchedEffect(Unit) {
-        profileBuyerViewModel.navigateToBuyer.collect {
+        profileBuyerViewModel.navigateToAuth.collect {
             rootNavController.navigate(NavGraph.AUTH){
                 popUpTo(0)
             }
@@ -142,7 +141,7 @@ fun BodyProfile(
 
 @Composable
 fun LogoutSection(modifier: Modifier = Modifier,logout:() -> Unit) {
-    ButtonCustom(modifier, enabled = true, loading = true, title = "Logout") {
+    ButtonCustom(modifier, enabled = true, isNotLoading = true, title = "Logout") {
         logout()
     }
 }

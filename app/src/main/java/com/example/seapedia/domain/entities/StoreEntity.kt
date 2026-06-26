@@ -7,5 +7,10 @@ data class StoreEntity(
     val phoneNumber: String,
     val latitude: Double,
     val longitude: Double,
-    val image: String
+    val image: String,
+
+    val province: RegionEntity?,
+    val city: RegionEntity?,
+    val district: RegionEntity?,
+    val village: RegionEntity?
 )

@@ -26,7 +26,7 @@ fun EmptyCommonCustom(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            modifier = modifier.size(100.dp),
+            modifier = modifier.size(200.dp),
             painter = painterResource(imageId ?: R.drawable.empty),
             contentDescription = "Failed Image"
         )

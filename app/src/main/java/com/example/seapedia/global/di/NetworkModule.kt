@@ -2,11 +2,12 @@ package com.example.seapedia.global.di
 
 import com.example.seapedia.data.remote.services.AuthService
 import com.example.seapedia.data.remote.services.ProductService
+import com.example.seapedia.data.remote.services.RegionService
 import com.example.seapedia.data.remote.services.ReviewService
+import com.example.seapedia.data.remote.services.StoreService
 import com.example.seapedia.data.remote.services.UserService
 import com.example.seapedia.global.networks.NetworkConstant
 import com.example.seapedia.global.utils.auth.AuthAuthenticator
-//import com.example.seapedia.global.utils.auth.AuthAuthenticator
 import com.example.seapedia.global.utils.auth.AuthInterceptor
 import dagger.Module
 import dagger.Provides
@@ -19,6 +20,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -57,6 +59,25 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    @Named("regional")
+    fun provideRegionalRetrofit(
+        okHttpClient: OkHttpClient
+    ): Retrofit {
+        val json = Json{
+            ignoreUnknownKeys = true
+            coerceInputValues = true
+        }
+        return Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl(NetworkConstant.BASE_URL_REGION)
+            .addConverterFactory(
+                json.asConverterFactory("application/json".toMediaType())
+            )
+            .build()
+    }
+
+    @Provides
+    @Singleton
     fun provideAuthService(retrofit: Retrofit): AuthService{
         return retrofit.create<AuthService>(AuthService::class.java)
     }
@@ -76,5 +97,20 @@ object NetworkModule {
     @Singleton
     fun provideReviewService(retrofit: Retrofit): ReviewService{
         return retrofit.create<ReviewService>(ReviewService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideStoreService(retrofit: Retrofit): StoreService{
+        return retrofit.create<StoreService>(StoreService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRegionService(
+        @Named("regional")
+        retrofit: Retrofit
+    ): RegionService{
+        return retrofit.create<RegionService>(RegionService::class.java)
     }
 }

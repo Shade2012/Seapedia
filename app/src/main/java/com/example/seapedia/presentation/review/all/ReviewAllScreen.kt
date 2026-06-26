@@ -20,6 +20,7 @@ import com.example.seapedia.domain.entities.ReviewEntity
 import com.example.seapedia.global.navigation.review.ReviewRoutes
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.presentation.buyer.home.shimmer.ReviewCardShimmer
+import com.example.seapedia.presentation.common.CommonFloatingActionButton
 import com.example.seapedia.presentation.common.FailedCommonCustom
 import com.example.seapedia.presentation.common.RefreshCommon
 import com.example.seapedia.presentation.common.TopAppBarCustom
@@ -47,18 +48,12 @@ fun ReviewAllScreen(
 
     Scaffold(
         floatingActionButton = {
-            FloatingActionButton(
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = White,
+            CommonFloatingActionButton(
                 onClick = {
-                   navController.navigate(ReviewRoutes.CreateReview.route)
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Add Review"
-                )
-            }
+                    navController.navigate(ReviewRoutes.CreateReview.route)
+                },
+                contentDescription = "Add Review"
+            )
         }
     ) { padding ->
         RefreshCommon(

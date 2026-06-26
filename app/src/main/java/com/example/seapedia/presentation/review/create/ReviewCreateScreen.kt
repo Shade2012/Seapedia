@@ -1,6 +1,5 @@
 package com.example.seapedia.presentation.review.create
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -79,7 +78,7 @@ fun ReviewCreateScreen(
                         state.reviewerName.isNotEmpty() &&
                         state.comment.isNotEmpty() &&
                         !state.loading,
-                loading = !state.loading,
+                isNotLoading = !state.loading,
             ) {
                 reviewCreateScreenViewModel.onCreateReview()
             }

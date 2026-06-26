@@ -31,7 +31,7 @@ class ProfileBuyerViewModel @Inject constructor(
 ) : ViewModel() {
     private val _state = MutableStateFlow<CommonState<UserProfileEntity>>(CommonState.Loading())
     private val _navigateToLogin = MutableSharedFlow<Unit>()
-    val navigateToBuyer = _navigateToLogin.asSharedFlow()
+    val navigateToAuth = _navigateToLogin.asSharedFlow()
     val state = _state.asStateFlow()
     val sessionState = sessionRepository.sessionState
 

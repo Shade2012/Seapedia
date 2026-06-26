@@ -20,7 +20,7 @@ class ProductRepositoryImpl @Inject constructor(
         emit(CommonState.Loading())
         try {
             val response = productRemoteDataSources.getAllProduct(queries)
-            val products = response.data.map {
+            val products = response.data!!.map {
                 ProductRawMapper().mapFromResponse(it)
             }.toList()
             emit(CommonState.Success<List<ProductEntity>>(data = products))
@@ -43,6 +43,30 @@ class ProductRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             emit(CommonState.Error(message = e.message.toString()))
         }
+    }
+
+    override suspend fun getAllSellerProduct(): Flow<CommonState<List<ProductEntity>>> = flow{
+        emit(CommonState.Loading())
+        try {
+            val response = productRemoteDataSources.getAllProductSellers()
+            val products = response.data.map {
+                ProductRawMapper().mapFromResponse(it)
+            }.toList()
+            emit(CommonState.Success<List<ProductEntity>>(data = products))
+        } catch (e: retrofit2.HttpException) {
+            val message = e.getErrorMessage()
+            emit(CommonState.Error(message = message))
+        } catch (e: Exception) {
+            emit(CommonState.Error(message = e.message.toString()))
+        }
+    }
+
+    override suspend fun updateProduct() {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun createProduct(product: ProductEntity): Flow<CommonState<String>> {
+        TODO("Not yet implemented")
     }
 
 }

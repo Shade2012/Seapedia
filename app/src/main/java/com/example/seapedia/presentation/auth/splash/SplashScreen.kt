@@ -1,5 +1,6 @@
 package com.example.seapedia.presentation.auth.splash
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,6 +34,7 @@ fun SplashScreen(
             }
             return@LaunchedEffect
         }
+        Log.d("User role","${sessionState.role}")
         when (sessionState.role) {
             null -> {
                 navController.navigate(NavGraph.BUYER){
@@ -56,7 +58,11 @@ fun SplashScreen(
                 }
             }
             UserRole.Seller -> {
-                navController.navigate(NavGraph.SELLER)
+                navController.navigate(NavGraph.SELLER){
+                    popUpTo(NavGraph.AUTH){
+                        inclusive = true
+                    }
+                }
             }
             UserRole.Driver -> {
                 navController.navigate(NavGraph.DRIVER)

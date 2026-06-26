@@ -17,5 +17,6 @@ class ProductRemoteDataSources @Inject constructor(
     private val productService: ProductService,
 ) {
     suspend fun getAllProduct(queries: AllProductQuery): BaseResponse<List<ProductResponse>> = productService.getAllProduct(queries.toMap())
+    suspend fun getAllProductSellers(): BaseResponse<List<ProductResponse>> = productService.getAllProductSeller()
     suspend fun getDetailProduct(id: Int): BaseResponse<List<ProductResponse>> = productService.getDetailProduct(id)
 }

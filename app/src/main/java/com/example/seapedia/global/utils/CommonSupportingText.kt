@@ -47,3 +47,48 @@ object PasswordSupportingText : BaseSupportingText{
 //                && text.any{it.isLowerCase()}
     }
 }
+
+object NormalSupportingText : BaseSupportingText{
+    @Composable
+    override fun SupportText(text: String, style: TextStyle) {
+        if (text.isBlank())
+            Text("Cannot be blank",style = style)
+    }
+
+    @Composable
+    fun SupportText(
+        text: String,
+        title: String,
+        style: TextStyle = Typography.error
+    ) {
+        if (text.isBlank())
+            Text("$title Cannot be blank",style = style)
+    }
+
+    override fun validate(text: String): Boolean {
+        return text.isNotBlank()
+    }
+}
+
+object PhoneNumberSupportingText : BaseSupportingText{
+    private val phoneRegex = Regex("^\\+62\\d{8,13}$")
+
+    @Composable
+    override fun SupportText(text: String, style: TextStyle) {
+        if (text.isBlank()) {
+            Text(
+                text = "Phone number cannot be blank",
+                style = style
+            )
+        } else if (!validate(text)) {
+            Text(
+                text = "Phone number must be in format +628xxxxxxxxxx",
+                style = style
+            )
+        }
+    }
+
+    override fun validate(text: String): Boolean {
+        return phoneRegex.matches(text)
+    }
+}

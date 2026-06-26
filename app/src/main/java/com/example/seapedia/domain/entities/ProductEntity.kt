@@ -7,7 +7,7 @@ data class ProductEntity(
     val stock: Int,
     val isAvailable: Boolean,
     val listImages: List<ProductImageEntity>,
-    val store: StoreEntity,
+    val store: StoreEntity? = null,
     val category: ProductCategoryEntity,
     val types : List<ProductType>
 )

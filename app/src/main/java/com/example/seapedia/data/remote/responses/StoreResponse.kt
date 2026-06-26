@@ -10,8 +10,13 @@ data class StoreResponse(
     val address: String,
     @SerialName("phone_number")
     val phoneNumber: String,
-    val latitude: String,
-    val longitude: String,
+    val latitude: Double,
+    val longitude: Double,
     @SerialName("image_url")
-    val imageUrl: String
+    val imageUrl: String?,
+
+    val province: RegionResponse? = null,
+    val city: RegionResponse? = null,
+    val district: RegionResponse? = null,
+    val village: RegionResponse? = null,
 )

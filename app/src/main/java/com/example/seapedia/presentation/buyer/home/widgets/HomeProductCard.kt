@@ -74,7 +74,7 @@ fun HomeProductCard(
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = product.store.name,
+                    text = product.store!!.name,
                     maxLines = 1,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary

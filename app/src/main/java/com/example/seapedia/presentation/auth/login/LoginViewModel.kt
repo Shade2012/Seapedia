@@ -1,6 +1,5 @@
 package com.example.seapedia.presentation.auth.login
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.seapedia.domain.usecases.auth.LoginUseCase
@@ -34,8 +33,8 @@ class LoginViewModel @Inject constructor(
 ): ViewModel() {
     private val _state : MutableStateFlow<LoginState> = MutableStateFlow<LoginState>(LoginState())
     val state = _state.asStateFlow()
-    private val _navigateToBuyer = MutableSharedFlow<Unit>()
-    val navigateToBuyer = _navigateToBuyer.asSharedFlow()
+    private val _navigateToSplash = MutableSharedFlow<Unit>()
+    val navigateToSplash = _navigateToSplash.asSharedFlow()
 
     fun login(){
         viewModelScope.launch(Dispatchers.IO) {
@@ -77,7 +76,7 @@ class LoginViewModel @Inject constructor(
                             isLoggedIn = true,
                             role = state.value.selectedRole,
                         )
-                        _navigateToBuyer.emit(Unit)
+                        _navigateToSplash.emit(Unit)
                     }
                 }
             }
@@ -121,7 +120,7 @@ class LoginViewModel @Inject constructor(
                 isLoggedIn = true,
                 role = UserRole.Guest
             )
-            _navigateToBuyer.emit(Unit)
+            _navigateToSplash.emit(Unit)
         }
     }
     private fun updateState(

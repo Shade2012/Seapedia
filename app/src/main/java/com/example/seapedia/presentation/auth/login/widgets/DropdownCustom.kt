@@ -22,7 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.seapedia.ui.theme.Black
 import com.example.seapedia.ui.theme.Dimens
+import com.example.seapedia.ui.theme.Grey
 import com.example.seapedia.ui.theme.White
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -33,7 +35,8 @@ fun <T> DropdownCustom(
     selectedItem: T?,
     onItemSelected: (T) -> Unit,
     itemLabel: (T) -> String,
-    label: String
+    label: String,
+    isLoading: Boolean = false
 ) {
     var expanded by remember { mutableStateOf(false) }
     val shape = if (expanded) {
@@ -53,7 +56,7 @@ fun <T> DropdownCustom(
     ){
         Text(label, style = MaterialTheme.typography.labelMedium)
         ExposedDropdownMenuBox(
-            expanded = expanded,
+            expanded = expanded && !isLoading,
             onExpandedChange = { expanded = !expanded },
             modifier = modifier.fillMaxWidth()
         ) {
@@ -62,14 +65,23 @@ fun <T> DropdownCustom(
                     .fillMaxWidth()
                     .menuAnchor()
                     .clip(shape = shape)
-                    .background(MaterialTheme.colorScheme.tertiary)
-                    //                .clickable { expanded = true }
+                    .background(
+                        if (!isLoading)
+                            MaterialTheme.colorScheme.tertiary
+                        else
+                            Grey.copy(alpha = 0.5f)
+                    )
+
                     .padding(horizontal = 12.dp, vertical = 20.dp)
             ) {
                 Text(
                     text = selectedItem?.let(itemLabel) ?: "Select item",
-                    color = White,
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = if (!isLoading)
+                            White
+                        else
+                            Black.copy(alpha = 0.38f)
+                    )
                 )
             }
 
