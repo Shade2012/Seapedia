@@ -159,4 +159,17 @@ class ProductRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun deleteProduct(id: Int): Flow<CommonState<String>> = flow{
+        try {
+            val response = productRemoteDataSources.deleteProduct(id)
+            emit(CommonState.Success<String>(data = response.message))
+        } catch (e: retrofit2.HttpException) {
+            val message = e.getErrorMessage()
+            emit(CommonState.Error(message = message))
+        } catch (e: Exception) {
+            Log.d("Error Exception Repo",e.message.toString())
+            emit(CommonState.Error(message = e.message.toString()))
+        }
+    }
+
 }

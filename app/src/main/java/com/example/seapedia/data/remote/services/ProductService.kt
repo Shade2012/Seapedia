@@ -63,4 +63,7 @@ interface ProductService {
         hasBody = true
     )
     suspend fun deleteProductImages(@Body body: ProductImageBody) : BaseResponse<List<ProductImageResponse>>
+
+    @DELETE("${NetworkConstant.PRODUCTS}/{id}")
+    suspend fun deleteProduct(@Path("id") id: Int,) : BaseMessage
 }

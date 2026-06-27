@@ -138,7 +138,7 @@ fun ProductSellerScreen(
         },
         onConfirm = {
             productToDelete?.let {
-                viewModel.onDelete(it)
+                viewModel.deleteProduct(it.id)
             }
             productToDelete = null
         }

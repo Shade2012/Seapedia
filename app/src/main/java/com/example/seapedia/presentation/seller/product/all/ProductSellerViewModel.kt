@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.seapedia.data.remote.query.AllProductQuery
 import com.example.seapedia.data.remote.query.AllProductSellerQuery
 import com.example.seapedia.domain.entities.ProductEntity
+import com.example.seapedia.domain.usecases.product.DeleteProductUseCase
 import com.example.seapedia.domain.usecases.product.GetAllSellerProductUseCase
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.global.utils.ui.AppEventBus
@@ -27,7 +28,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductSellerViewModel
     @Inject constructor(
-        private val getAllSellerProductUseCase: GetAllSellerProductUseCase
+        private val getAllSellerProductUseCase: GetAllSellerProductUseCase,
+        private val deleteProductUseCase: DeleteProductUseCase
     ) : ViewModel() {
         private val _state = MutableStateFlow<ProductSellerState>(ProductSellerState())
         val state = _state.asStateFlow()
@@ -36,9 +38,6 @@ class ProductSellerViewModel
         observeProduct()
     }
 
-    fun onDelete(product: ProductEntity){
-
-    }
     fun getProducts(){
         viewModelScope.launch {
             updateState {
@@ -72,6 +71,41 @@ class ProductSellerViewModel
                     }
                 }
             }
+        }
+    }
+
+    fun deleteProduct(id: Int){
+        viewModelScope.launch {
+            updateState {
+                copy(data = CommonState.Loading())
+            }
+            deleteProductUseCase.run(id).collect {
+                    result ->
+                when(result){
+                    is CommonState.Error<*> -> {
+                        AppEventBus.events.emit(UiEvent.ShowSnackbar(
+                            data = CustomSnackbarVisuals(
+                                message = "Failed to delete products",
+                                type = SnackbarType.ERROR
+                            )
+                        ))
+                    }
+                    is CommonState.Loading<*> -> {
+                        updateState {
+                            copy(data = CommonState.Loading())
+                        }
+                    }
+                    is CommonState.Success-> {
+                        AppEventBus.events.emit(UiEvent.ShowSnackbar(
+                            data = CustomSnackbarVisuals(
+                                message = result.data,
+                                type = SnackbarType.SUCCESS
+                            )
+                        ))
+                    }
+                }
+            }
+            refreshProduct()
         }
     }
     fun refreshProduct(){

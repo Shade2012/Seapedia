@@ -45,4 +45,5 @@ class ProductRemoteDataSources @Inject constructor(
     suspend fun getProductImages(queries: ProductImagesQuery): BaseResponse<List<ProductImageResponse>> = productService.getProductImages(queries = queries.toMap())
     suspend fun addProductImage(id:Int, images: List<MultipartBody.Part>): BaseResponse<List<ProductImageResponse>> = productService.addProductImages(id = id,images = images)
     suspend fun deleteProductImages(body: ProductImageBody): BaseResponse<List<ProductImageResponse>> = productService.deleteProductImages(body)
+    suspend fun deleteProduct(id: Int): BaseMessage = productService.deleteProduct(id)
 }

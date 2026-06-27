@@ -22,4 +22,6 @@ interface ProductRepository {
     suspend fun getAllProductImages(queries: ProductImagesQuery): Flow<CommonState<List<ProductImageEntity>>>
     suspend fun addProductImages(id:Int, images: List<Uri>) : Flow<CommonState<String>>
     suspend fun deleteProductImages(product: ProductImageBody) : Flow<CommonState<String>>
+
+    suspend fun deleteProduct(id:Int): Flow<CommonState<String>>
 }
