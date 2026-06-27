@@ -56,17 +56,12 @@ fun ProductDetailBuyerScreen(
             }
             is CommonState.Success<ProductEntity> -> {
                 val product = state.product.data
-                if(state.selectedImage != null)
-                    ProductDetailImages(
-                        modifier,
-                        productImages = product.listImages,
-                        onClick = {
-                            productDetailBuyerViewModel.onClickDetailImage(it)
-                        },
-                        primaryImageUrl = state.selectedImage
-                    )
-                StoreOverviewWidget(store = product.store!!)
-                ProductDetailBody(modifier,product)
+                ProductDetailSection(
+                    modifier,
+                    state.selectedImage,
+                    product,
+                    productDetailBuyerViewModel::onClickDetailImage
+                )
                 if(!isGuest)
                     ButtonCustom(
                         enabled = true,
@@ -79,6 +74,23 @@ fun ProductDetailBuyerScreen(
     }
 }
 
+@Composable
+fun ProductDetailSection(
+    modifier: Modifier = Modifier,
+    selectedImage : String? = null,
+    product: ProductEntity,
+    onClick: (String) -> Unit,
+) {
+    if(selectedImage != null)
+        ProductDetailImages(
+            modifier,
+            productImages = product.listImages,
+            onClick = onClick,
+            primaryImageUrl = selectedImage
+        )
+    StoreOverviewWidget(store = product.store!!)
+    ProductDetailBody(modifier,product)
+}
 
 
 

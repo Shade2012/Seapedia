@@ -20,9 +20,9 @@ import com.example.seapedia.presentation.seller.store.state.StoreFormState
 fun StoreForm(
     state: StoreFormState,
 
-    onNameChange: (String) -> Unit,
-    onPhoneChange: (String) -> Unit,
-    onAddressChange: (String) -> Unit,
+    onChangeName: (String) -> Unit,
+    onChangePhoneNumber: (String) -> Unit,
+    onChangeAddress: (String) -> Unit,
     onImageSelected: (Uri?) -> Unit,
 
     onProvinceSelected: (RegionEntity) -> Unit,
@@ -30,7 +30,7 @@ fun StoreForm(
     onDistrictSelected: (RegionEntity) -> Unit,
     onVillageSelected: (RegionEntity) -> Unit,
 
-) {
+    ) {
     SingleImageCustom(
         image = state.image,
         imageUrl = state.imageUrl,
@@ -48,7 +48,7 @@ fun StoreForm(
             IconCustom(id = 0, icon = ImageVector.vectorResource(R.drawable.store_icon), contentDescription = "Store Name Icon")
         },
     ) {
-        onNameChange(it)
+        onChangeName(it)
     }
 
     TextFieldCustom(
@@ -63,7 +63,7 @@ fun StoreForm(
             IconCustom(id = 0, icon = Icons.Default.Phone, contentDescription = "Phone Number Icon")
         },
     ) {
-        onPhoneChange(it)
+        onChangePhoneNumber(it)
     }
 
     RegionDropdown(
@@ -84,6 +84,6 @@ fun StoreForm(
         supportingText = NormalSupportingText,
         imeAction = ImeAction.Done,
     ) {
-        onAddressChange(it)
+        onChangeAddress(it)
     }
 }

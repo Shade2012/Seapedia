@@ -36,7 +36,7 @@ val AppTypography = Typography(
     ),
     titleMedium = TextStyle(
         fontFamily = monserratFontFamily,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.Medium,
         fontSize = 20.sp,
     ),
     titleSmall = TextStyle(

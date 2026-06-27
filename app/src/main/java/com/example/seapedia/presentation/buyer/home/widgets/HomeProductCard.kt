@@ -79,12 +79,13 @@ fun HomeProductCard(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary
                 )
-                Text(
-                    text = product.category.name,
-                    maxLines = 1,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                if(product.category != null)
+                    Text(
+                        text = product.category.name ,
+                        maxLines = 1,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                 Text(
                     text = "Rp ${Formatting.rupiahFormatter.format(product.price)}",
                     style = MaterialTheme.typography.titleSmall,

@@ -1,5 +1,6 @@
 package com.example.seapedia.global.utils
 
+import android.util.Log
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
@@ -70,6 +71,45 @@ object NormalSupportingText : BaseSupportingText{
     }
 }
 
+object NumberSupportingText : BaseSupportingText{
+    @Composable
+    override fun SupportText(text: String, style: TextStyle) {
+        if (text.isBlank())
+            Text("Cannot be blank",style = style)
+        if (text.toInt() < 0)
+            Text("Cannot be lower than 0",style = style)
+    }
+
+    override fun validate(text: String): Boolean {
+        return text.isNotBlank() && text.toInt() > 0
+    }
+
+}
+
+object RupiahSupportingText : BaseSupportingText{
+    @Composable
+    override fun SupportText(text: String, style: TextStyle) {
+        val value = text
+            .removePrefix("Rp ")
+            .replace(".", "")
+            .trim()
+        if(value.isBlank())
+            Text("Cannot be blank",style = style)
+        val price = value.toIntOrNull() ?: 0
+        if (price < 0)
+            Text("Cannot be lower than 0",style = style)
+    }
+
+    override fun validate(text: String): Boolean {
+        val value = text
+            .removePrefix("Rp ")
+            .replace(".", "")
+            .trim()
+
+        return value.isNotBlank() && value.toInt() > 0
+    }
+
+}
 object PhoneNumberSupportingText : BaseSupportingText{
     private val phoneRegex = Regex("^\\+62\\d{8,13}$")
 

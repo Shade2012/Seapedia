@@ -1,16 +1,13 @@
 package com.example.seapedia.presentation.seller.store.update
 
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.seapedia.presentation.common.ButtonCustom
 import com.example.seapedia.presentation.common.TopAppBarCustom
-import com.example.seapedia.presentation.seller.store.create.StoreSellerCreateViewModel
 import com.example.seapedia.presentation.seller.store.widgets.StoreForm
 import com.example.seapedia.presentation.seller.widgets.SellerBody
 
@@ -37,9 +34,9 @@ fun StoreUpdateScreen(
             onCitySelected = viewModel::onChangeCity,
             onDistrictSelected = viewModel::onChangeDistrict,
             onVillageSelected = viewModel::onChangeVillage,
-            onNameChange = viewModel::onChangeName,
-            onPhoneChange = viewModel::onChangePhoneNumber,
-            onAddressChange = viewModel::onChangeAddress,
+            onChangeName = viewModel::onChangeName,
+            onChangePhoneNumber = viewModel::onChangePhoneNumber,
+            onChangeAddress = viewModel::onChangeAddress,
             onImageSelected = viewModel::onImageSelected,
         )
 

@@ -70,7 +70,6 @@ fun MainSellerScreen(
                         if(isValidStore){
                             sellerNavController.navigate(SellerRoute.ProductCreate.route)
                         }
-
                     },
                     contentDescription = "Add Product"
                 )

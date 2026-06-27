@@ -9,6 +9,12 @@ data class BaseResponse<T>(
 )
 
 @Serializable
+data class BaseMessage(
+    val message:String
+)
+
+
+@Serializable
 data class BaseResponseNullable<T>(
     val message:String,
     val data:T? = null

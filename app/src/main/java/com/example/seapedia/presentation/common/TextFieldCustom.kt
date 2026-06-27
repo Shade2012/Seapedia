@@ -58,9 +58,7 @@ fun TextFieldCustom(
             minLines = minLines,
             visualTransformation = visualTransformation,
             value = text,
-            textStyle = MaterialTheme.typography.bodyMedium.copy(
-                color = White
-            ),
+            textStyle = MaterialTheme.typography.bodyMedium,
             placeholder = {
                 Text(hint, style = MaterialTheme.typography.bodyMedium.copy(
                     color = White
@@ -69,6 +67,8 @@ fun TextFieldCustom(
             colors = OutlinedTextFieldDefaults.colors(
                 disabledContainerColor = Grey.copy(alpha = 0.5f),
                 disabledTextColor = Black.copy(alpha = 0.38f),
+                unfocusedTextColor = White,
+                focusedTextColor = White,
                 cursorColor = White,
                 selectionColors = TextSelectionColors(
                     handleColor = MaterialTheme.colorScheme.tertiary,
@@ -94,7 +94,6 @@ fun TextFieldCustom(
             leadingIcon = leadingIcon,
             trailingIcon = trailingIcon
         )
-        Spacer(modifier.padding(Dimens.SpacePadding))
         supportingText?.SupportText(text)
     }
 }

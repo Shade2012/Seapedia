@@ -26,6 +26,17 @@ sealed class SellerRoute(val route: String,val name: String){
         }
     }
 
+    object ProductImageUpdate : SellerRoute(
+        "seller_product_image_update/{productId}",
+        "seller_product_image_update_screen"
+    ) {
+        const val PRODUCT_ID = "productId"
+
+        fun createRoute(productId: Int) : String {
+            return "seller_product_image_update/$productId"
+        }
+    }
+
 //    Store
     object StoreCreate : SellerRoute(
         "seller_store_create",

@@ -3,13 +3,20 @@ package com.example.seapedia.global.navigation.seller
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import com.example.seapedia.global.navigation.buyer.BuyerRoute
+import com.example.seapedia.presentation.buyer.product.ProductDetailBuyerScreen
 import com.example.seapedia.presentation.seller.home.HomeSellerScreen
 import com.example.seapedia.presentation.seller.main.MainSellerViewModel
 import com.example.seapedia.presentation.seller.order.OrderSellerScreen
 import com.example.seapedia.presentation.seller.product.all.ProductSellerScreen
 import com.example.seapedia.presentation.seller.product.create.ProductSellerCreateScreen
+import com.example.seapedia.presentation.seller.product.detail.ProductSellerDetailScreen
+import com.example.seapedia.presentation.seller.product.update.ProductSellerUpdateScreen
+import com.example.seapedia.presentation.seller.product.update.image.ProductSellerUpdateImage
 import com.example.seapedia.presentation.seller.profile.ProfileSellerScreen
 import com.example.seapedia.presentation.seller.store.all.StoreSellerScreen
 import com.example.seapedia.presentation.seller.store.create.StoreSellerCreateScreen
@@ -55,12 +62,51 @@ fun SellerNavHost(
         }
 
         composable(
+            route = SellerRoute.ProductDetail.route,
+            arguments = listOf(
+                navArgument("productId"){
+                    type = NavType.IntType
+                }
+            )
+        ) { backStackEntry ->
+            ProductSellerDetailScreen(
+                sellerNavController = sellerNavController,
+            )
+        }
+
+        composable(
             SellerRoute.ProductCreate.route
         ) {
             ProductSellerCreateScreen(
                 sellerNavController
             )
         }
+
+        composable(
+            route = SellerRoute.ProductUpdate.route,
+            arguments = listOf(
+                navArgument("productId"){
+                    type = NavType.IntType
+                }
+            )
+        ) { backStackEntry ->
+            ProductSellerUpdateScreen(
+                sellerNavController
+            )
+        }
+        composable(
+            route = SellerRoute.ProductImageUpdate.route,
+            arguments = listOf(
+                navArgument("productId"){
+                    type = NavType.IntType
+                }
+            )
+        ) { backStackEntry ->
+            ProductSellerUpdateImage(
+                sellerNavController
+            )
+        }
+
 
 //        Store
         composable(
@@ -86,6 +132,7 @@ fun SellerNavHost(
                 sellerNavController
             )
         }
+
 
 //        Profile
         composable(

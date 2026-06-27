@@ -21,7 +21,7 @@ class ProductRawMapper : Mapper<ProductResponse, ProductEntity>{
             stock = product.stock,
             id = product.id,
             price = product.price,
-            category = ProductCategoryRawMapper().mapFromResponse(product.category),
+            category = product.category?.let(ProductCategoryRawMapper()::mapFromResponse),
             isAvailable = product.isAvailable,
             store = product.store?.let(StoreRawMapper()::mapFromResponse),
             types = product.types.map {

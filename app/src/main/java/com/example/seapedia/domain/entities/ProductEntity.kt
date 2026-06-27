@@ -1,5 +1,8 @@
 package com.example.seapedia.domain.entities
 
+import com.example.seapedia.data.remote.body.CreateProductType
+import com.example.seapedia.data.remote.body.CreateProductTypeItem
+
 data class ProductEntity(
     val id: Int,
     val name: String,
@@ -8,7 +11,7 @@ data class ProductEntity(
     val isAvailable: Boolean,
     val listImages: List<ProductImageEntity>,
     val store: StoreEntity? = null,
-    val category: ProductCategoryEntity,
+    val category: ProductCategoryEntity? = null,
     val types : List<ProductType>
 )
 data class ProductImageEntity(
@@ -31,4 +34,17 @@ data class ProductTypeItem(
 data class ProductCategoryEntity(
     val id: Int,
     val name: String
+)
+
+fun ProductType.toCreateProductType() = CreateProductType(
+    name = name,
+    isMultiple = isMultiple,
+    isRequired = isRequired,
+    items = listItems.map { it.toCreateProductTypeItem() }
+)
+
+fun ProductTypeItem.toCreateProductTypeItem() = CreateProductTypeItem(
+    name = name,
+    price = price,
+    stock = stock
 )

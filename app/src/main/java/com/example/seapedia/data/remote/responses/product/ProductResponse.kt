@@ -15,5 +15,5 @@ data class ProductResponse(
     val images : List<ProductImageResponse>,
     val types : List<ProductTypeResponse>,
     val store : StoreResponse? = null,
-    val category : ProductCategoryResponse
+    val category : ProductCategoryResponse? = null
 )

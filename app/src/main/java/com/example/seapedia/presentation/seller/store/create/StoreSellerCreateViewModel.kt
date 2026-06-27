@@ -155,7 +155,7 @@ class StoreSellerCreateViewModel @Inject constructor(
                         }
                         AppEventBus.events.emit(
                             UiEvent.ShowSnackbar(CustomSnackbarVisuals(
-                                message = "Failed to create store",
+                                message = result.message,
                                 type = SnackbarType.ERROR
                             ))
                         )
@@ -189,7 +189,7 @@ class StoreSellerCreateViewModel @Inject constructor(
         updateState {
             copy(
                 name = value,
-                nameError=!NormalSupportingText.validate(value)
+                nameError= !NormalSupportingText.validate(value)
             )
         }
     }
