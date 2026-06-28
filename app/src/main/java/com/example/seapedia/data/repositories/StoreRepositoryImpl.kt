@@ -3,7 +3,7 @@ package com.example.seapedia.data.repositories
 import android.content.Context
 import android.net.Uri
 import android.util.Log
-import com.example.seapedia.data.remote.StoreRemoteDataSources
+import com.example.seapedia.data.remote.sources.StoreRemoteDataSources
 import com.example.seapedia.data.remote.body.StoreBody
 import com.example.seapedia.domain.entities.Store
 import com.example.seapedia.domain.repositories.StoreRepository

@@ -2,9 +2,10 @@ package com.example.seapedia.presentation.buyer.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.seapedia.domain.entities.BuyerProfile
 import com.example.seapedia.domain.entities.UserProfile
 import com.example.seapedia.domain.usecases.auth.LogoutUseCase
-import com.example.seapedia.domain.usecases.user.GetProfileUseCase
+import com.example.seapedia.domain.usecases.user.GetBuyerProfileUseCase
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.global.utils.UserRole
 import com.example.seapedia.global.utils.session.SessionRepository
@@ -19,17 +20,18 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileBuyerViewModel @Inject constructor(
-    private val getProfileUseCase: GetProfileUseCase,
+    private val getBuyerProfileUseCase: GetBuyerProfileUseCase,
     private val sessionRepository: SessionRepository,
     private val logoutUseCase: LogoutUseCase
 
 ) : ViewModel() {
-    private val _state = MutableStateFlow<CommonState<UserProfile>>(CommonState.Loading())
+    private val _state = MutableStateFlow<ProfileBuyerState>(ProfileBuyerState())
     private val _navigateToLogin = MutableSharedFlow<Unit>()
     val navigateToAuth = _navigateToLogin.asSharedFlow()
     val state = _state.asStateFlow()
@@ -49,13 +51,13 @@ class ProfileBuyerViewModel @Inject constructor(
         if(sessionState.value.role != UserRole.Guest){
             viewModelScope.launch(Dispatchers.IO){
                 delay(200)
-                getProfileUseCase.run().collect {
+                getBuyerProfileUseCase.run().collect {
                         result ->
                     when(result){
-                        is CommonState.Error<*> -> {
-                            _state.emit(CommonState.Error(
-                                message = result.message
-                            ))
+                        is CommonState.Error -> {
+                            updateState {
+                                copy(userProfile = CommonState.Error(result.message))
+                            }
                             AppEventBus.events.emit(
                                 UiEvent.ShowSnackbar(CustomSnackbarVisuals(
                                     message = "Failed get profile, ${result.message}",
@@ -64,18 +66,34 @@ class ProfileBuyerViewModel @Inject constructor(
                             )
                         }
                         is CommonState.Loading<*> -> {
-                            _state.emit(CommonState.Loading())
+                            updateState {
+                                copy(userProfile = CommonState.Loading())
+                            }
                         }
-                        is CommonState.Success<UserProfile> -> {
-                            _state.emit(result)
+                        is CommonState.Success<BuyerProfile> -> {
+                            updateState {
+                                copy(
+                                    userProfile = CommonState.Success(result.data.user),
+                                    phoneNumber = result.data.phoneNumber ?: ""
+                                )
+                            }
                         }
                     }
                 }
             }
         }else{
             viewModelScope.launch {
-                _state.emit(CommonState.Success(UserProfile.GUEST_PROFILE_ENTITY))
+                updateState {
+                    copy(userProfile = CommonState.Success(UserProfile.GUEST_PROFILE_ENTITY))
+                }
             }
+        }
+    }
+    private fun updateState(
+        updateState: ProfileBuyerState.() -> ProfileBuyerState
+    ){
+        _state.update {
+            it.updateState()
         }
     }
 }

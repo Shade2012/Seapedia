@@ -1,13 +1,29 @@
-package com.example.seapedia.presentation.seller.store.widgets
+package com.example.seapedia.presentation.common
 
 import androidx.compose.runtime.Composable
 import com.example.seapedia.domain.entities.Region
-import com.example.seapedia.presentation.common.SearchableDropdown
-import com.example.seapedia.presentation.seller.store.state.StoreFormState
 
 @Composable
 fun RegionDropdown(
-    state: StoreFormState,
+    province: Region?,
+    provinceLoading: Boolean,
+
+    city: Region?,
+    cityLoading: Boolean,
+
+    district: Region?,
+    districtLoading: Boolean,
+
+    village: Region?,
+    villageLoading: Boolean,
+
+    isLoading: Boolean,
+
+    provinceList:List<Region>,
+    cityList:List<Region>,
+    districtList:List<Region>,
+    villageList:List<Region>,
+
     onProvinceSelected: (Region) -> Unit,
     onCitySelected: (Region) -> Unit,
     onDistrictSelected: (Region) -> Unit,
@@ -15,9 +31,9 @@ fun RegionDropdown(
 ) {
     SearchableDropdown(
         label = "Province",
-        list = state.provinceList,
-        selectedItem = state.province,
-        isLoading = state.provinceLoading or state.isLoading,
+        list = provinceList,
+        selectedItem = province,
+        isLoading = provinceLoading or isLoading,
         itemLabel = { it.name },
         onItemSelected = {
             onProvinceSelected(it)
@@ -26,9 +42,9 @@ fun RegionDropdown(
 
     SearchableDropdown(
         label = "City",
-        list = state.cityList,
-        selectedItem = state.city,
-        isLoading = state.cityLoading or state.isLoading,
+        list = cityList,
+        selectedItem = city,
+        isLoading = cityLoading or isLoading,
         itemLabel = { it.name },
         onItemSelected = {
             onCitySelected(it)
@@ -37,9 +53,9 @@ fun RegionDropdown(
 
     SearchableDropdown(
         label = "District",
-        list = state.districtList,
-        selectedItem = state.district,
-        isLoading = state.districtLoading or state.isLoading,
+        list = districtList,
+        selectedItem = district,
+        isLoading = districtLoading or isLoading,
         itemLabel = { it.name },
         onItemSelected = {
             onDistrictSelected(it)
@@ -48,9 +64,9 @@ fun RegionDropdown(
 
     SearchableDropdown(
         label = "Village",
-        list = state.villageList,
-        selectedItem = state.village,
-        isLoading = state.villageLoading or state.isLoading,
+        list = villageList,
+        selectedItem = village,
+        isLoading = villageLoading or isLoading,
         itemLabel = { it.name },
         onItemSelected = {
             onVillageSelected(it)

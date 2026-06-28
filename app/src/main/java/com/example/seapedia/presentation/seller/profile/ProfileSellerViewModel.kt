@@ -6,6 +6,7 @@ import com.example.seapedia.domain.entities.UserProfile
 import com.example.seapedia.domain.usecases.auth.LogoutUseCase
 import com.example.seapedia.domain.usecases.user.GetProfileUseCase
 import com.example.seapedia.global.utils.CommonState
+import com.example.seapedia.global.utils.session.SessionRepository
 import com.example.seapedia.global.utils.ui.AppEventBus
 import com.example.seapedia.global.utils.ui.CustomSnackbarVisuals
 import com.example.seapedia.global.utils.ui.SnackbarType
@@ -23,7 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileSellerViewModel @Inject constructor(
     private val getProfileUseCase: GetProfileUseCase,
-    private val logoutUseCase: LogoutUseCase
+    private val logoutUseCase: LogoutUseCase,
 
 ) : ViewModel() {
     private val _state = MutableStateFlow<CommonState<UserProfile>>(CommonState.Loading())

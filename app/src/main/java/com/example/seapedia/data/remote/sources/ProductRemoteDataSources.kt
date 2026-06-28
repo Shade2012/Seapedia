@@ -1,4 +1,4 @@
-package com.example.seapedia.data.remote
+package com.example.seapedia.data.remote.sources
 
 import com.example.seapedia.data.remote.body.CreateProductBody
 import com.example.seapedia.data.remote.body.ProductImageBody

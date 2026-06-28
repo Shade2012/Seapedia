@@ -1,17 +1,12 @@
-package com.example.seapedia.data.remote
+package com.example.seapedia.data.remote.sources
 
-import android.content.Context
-import android.net.Uri
 import com.example.seapedia.data.remote.body.StoreBody
 import com.example.seapedia.data.remote.responses.BaseResponse
 import com.example.seapedia.data.remote.responses.BaseResponseNullable
 import com.example.seapedia.data.remote.responses.StoreResponse
 import com.example.seapedia.data.remote.services.StoreService
-import com.example.seapedia.global.utils.toMultipart
-import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import retrofit2.http.Multipart
 import javax.inject.Inject
 import javax.inject.Singleton
 

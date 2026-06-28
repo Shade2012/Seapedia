@@ -1,6 +1,6 @@
 package com.example.seapedia.data.repositories
 
-import com.example.seapedia.data.remote.ReviewRemoteDataSources
+import com.example.seapedia.data.remote.sources.ReviewRemoteDataSources
 import com.example.seapedia.data.remote.query.AllReviewQuery
 import com.example.seapedia.domain.entities.Review
 import com.example.seapedia.domain.entities.toBody

@@ -7,7 +7,6 @@ import kotlin.time.ExperimentalTime
 
 
 class RegionMapper : Mapper<RegionResponse, Region> {
-    @OptIn(ExperimentalTime::class)
     override fun mapFromResponse(type: RegionResponse): Region {
         return Region(
             id = type.id.toString(),

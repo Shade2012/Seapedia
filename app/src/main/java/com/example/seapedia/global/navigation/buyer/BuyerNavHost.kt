@@ -7,6 +7,9 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.seapedia.presentation.buyer.address.all.BuyerAddressScreen
+import com.example.seapedia.presentation.buyer.address.create.BuyerAddressCreateScreen
+import com.example.seapedia.presentation.buyer.address.update.BuyerAddressUpdateScreen
 import com.example.seapedia.presentation.buyer.cart.CartBuyerScreen
 import com.example.seapedia.presentation.buyer.home.HomeBuyerScreen
 import com.example.seapedia.presentation.buyer.profile.ProfileBuyerScreen
@@ -36,14 +39,46 @@ fun BuyerNavHost(
                 rootNavController = rootNavController
             )
         }
+
         composable(
             BuyerRoute.Profile.route
         ) {
             ProfileBuyerScreen(
                 isGuest = isGuest,
-                rootNavController = rootNavController
+                rootNavController = rootNavController,
+                buyerNavController = buyerNavController,
             )
         }
+
+        composable(
+            BuyerRoute.BuyerAddress.route
+        ) {
+            BuyerAddressScreen(
+                buyerNavController,
+            )
+        }
+
+        composable(
+            BuyerRoute.BuyerCreateAddress.route
+        ) {
+            BuyerAddressCreateScreen(
+                buyerNavController,
+            )
+        }
+
+        composable(
+            route = BuyerRoute.BuyerUpdateAddress.route,
+            arguments = listOf(
+                navArgument("addressId"){
+                    type = NavType.IntType
+                }
+            )
+        ) { backStackEntry ->
+            BuyerAddressUpdateScreen(
+                buyerNavController
+            )
+        }
+
         composable(
             route = BuyerRoute.ProductDetail.route,
             arguments = listOf(

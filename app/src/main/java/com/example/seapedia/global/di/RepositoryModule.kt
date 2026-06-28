@@ -1,6 +1,8 @@
 package com.example.seapedia.global.di
 
+import com.example.seapedia.data.repositories.AddressRepositoryImpl
 import com.example.seapedia.data.repositories.AuthRepositoryImpl
+import com.example.seapedia.data.repositories.BuyerRepositoryImpl
 import com.example.seapedia.data.repositories.OrderRepositoryImpl
 import com.example.seapedia.data.repositories.ProductRepositoryImpl
 import com.example.seapedia.data.repositories.RegionRepositoryImpl
@@ -8,7 +10,9 @@ import com.example.seapedia.data.repositories.ReviewRepositoryImpl
 import com.example.seapedia.data.repositories.StoreRepositoryImpl
 import com.example.seapedia.data.repositories.UserRepositoryImpl
 import com.example.seapedia.data.repositories.WalletRepositoryImpl
+import com.example.seapedia.domain.repositories.AddressRepository
 import com.example.seapedia.domain.repositories.AuthRepository
+import com.example.seapedia.domain.repositories.BuyerRepository
 import com.example.seapedia.domain.repositories.OrderRepository
 import com.example.seapedia.domain.repositories.ProductRepository
 import com.example.seapedia.domain.repositories.RegionRepository
@@ -71,7 +75,19 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindOWalletRepository(
+    abstract fun bindWalletRepository(
         impl: WalletRepositoryImpl
     ): WalletRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindBuyerRepository(
+        impl: BuyerRepositoryImpl
+    ): BuyerRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindAddressRepository(
+        impl: AddressRepositoryImpl
+    ): AddressRepository
 }

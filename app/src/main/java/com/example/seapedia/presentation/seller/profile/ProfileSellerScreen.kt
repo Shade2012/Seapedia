@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.seapedia.global.navigation.NavGraph
 import com.example.seapedia.global.utils.CommonState
+import com.example.seapedia.global.utils.UserRole
 import com.example.seapedia.presentation.buyer.profile.BodyProfile
 import com.example.seapedia.presentation.buyer.profile.IconProfile
 import com.example.seapedia.presentation.buyer.profile.LogoutSection
@@ -44,7 +45,12 @@ fun ProfileSellerScreen(
             }
             is CommonState.Success -> {
                 IconProfile()
-                BodyProfile(user = state.data)
+                BodyProfile(
+                    user = state.data,
+                    currentRole = UserRole.Seller,
+                    onClickAddress = {},
+                    isGuest = false
+                )
             }
         }
         if(state !is CommonState.Loading){

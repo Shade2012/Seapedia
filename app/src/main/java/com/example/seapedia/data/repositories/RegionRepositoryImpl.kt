@@ -1,6 +1,6 @@
 package com.example.seapedia.data.repositories
 
-import com.example.seapedia.data.remote.RegionRemoteDataSources
+import com.example.seapedia.data.remote.sources.RegionRemoteDataSources
 import com.example.seapedia.domain.entities.Region
 import com.example.seapedia.domain.repositories.RegionRepository
 import com.example.seapedia.global.utils.CommonState

@@ -13,6 +13,7 @@ import com.example.seapedia.domain.entities.Region
 import com.example.seapedia.global.utils.NormalSupportingText
 import com.example.seapedia.global.utils.PhoneNumberSupportingText
 import com.example.seapedia.presentation.common.IconCustom
+import com.example.seapedia.presentation.common.RegionDropdown
 import com.example.seapedia.presentation.common.TextFieldCustom
 import com.example.seapedia.presentation.seller.store.state.StoreFormState
 
@@ -67,11 +68,23 @@ fun StoreForm(
     }
 
     RegionDropdown(
-        state = state,
-        onProvinceSelected =  onProvinceSelected,
+        onProvinceSelected = onProvinceSelected,
         onCitySelected = onCitySelected,
         onDistrictSelected = onDistrictSelected,
-        onVillageSelected =  onVillageSelected
+        onVillageSelected = onVillageSelected,
+        province = state.province,
+        provinceLoading = state.provinceLoading,
+        city = state.city,
+        cityLoading = state.cityLoading,
+        district = state.district,
+        districtLoading = state.districtLoading,
+        village = state.village,
+        villageLoading = state.villageLoading,
+        isLoading = state.isLoading,
+        provinceList = state.provinceList,
+        cityList = state.cityList,
+        districtList = state.districtList,
+        villageList = state.villageList,
     )
 
     TextFieldCustom(

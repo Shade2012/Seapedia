@@ -33,6 +33,7 @@ fun HomeProductCard(
     product: Product,
     isGuest: Boolean,
     onClick: () -> Unit,
+    onAddToCart:(Product) -> Unit,
 )
 {
     Card(
@@ -98,7 +99,7 @@ fun HomeProductCard(
                 if (!isGuest) {
                     Button(
                         modifier = Modifier.fillMaxWidth(),
-                        onClick = { }
+                        onClick = { onAddToCart(product) }
                     ) {
                         Text(text = "Add To Cart", style = MaterialTheme.typography.bodyMedium.copy(
                             color = White

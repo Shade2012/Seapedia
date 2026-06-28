@@ -2,7 +2,7 @@ package com.example.seapedia.data.repositories
 
 import android.util.Log
 import com.example.seapedia.data.local.AuthLocalDataSources
-import com.example.seapedia.data.remote.AuthRemoteDataSources
+import com.example.seapedia.data.remote.sources.AuthRemoteDataSources
 import com.example.seapedia.data.remote.body.LoginBody
 import com.example.seapedia.data.remote.body.RegisterBody
 import com.example.seapedia.domain.repositories.AuthRepository

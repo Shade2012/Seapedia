@@ -10,5 +10,6 @@ data class ReviewResponse (
     val reviewerName: String,
     val comment: String,
     val rating: Int,
+    @SerialName("created_at")
     val createdAt: String
 )

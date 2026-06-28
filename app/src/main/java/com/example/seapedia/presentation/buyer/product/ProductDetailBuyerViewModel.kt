@@ -7,6 +7,7 @@ import com.example.seapedia.domain.entities.Product
 import com.example.seapedia.domain.usecases.product.GetDetailProductUseCase
 import com.example.seapedia.global.navigation.buyer.BuyerRoute
 import com.example.seapedia.global.utils.CommonState
+import com.example.seapedia.global.utils.session.SessionRepository
 import com.example.seapedia.global.utils.ui.AppEventBus
 import com.example.seapedia.global.utils.ui.CustomSnackbarVisuals
 import com.example.seapedia.global.utils.ui.SnackbarType
@@ -21,10 +22,14 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductDetailBuyerViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val getDetailProductUseCase: GetDetailProductUseCase
+    private val getDetailProductUseCase: GetDetailProductUseCase,
+    private val sessionRepository: SessionRepository
 ): ViewModel(){
     private val _state : MutableStateFlow<ProductDetailBuyerState> = MutableStateFlow(ProductDetailBuyerState())
     val state = _state.asStateFlow()
+
+    val sessionState = sessionRepository.sessionState
+
     private val productId: Int = checkNotNull(savedStateHandle[BuyerRoute.ProductDetail.PRODUCT_ID])
 
     init {
@@ -36,6 +41,23 @@ class ProductDetailBuyerViewModel @Inject constructor(
             copy(selectedImage = url)
         }
     }
+
+    fun addToCart(product: Product){
+        viewModelScope.launch {
+            if(!sessionState.value.isValidBuyer){
+                AppEventBus.events.emit(
+                    UiEvent.ShowSnackbar(
+                        CustomSnackbarVisuals(
+                            message = "Please fill your information in profile first",
+                            type = SnackbarType.ERROR
+                        )
+                    )
+                )
+                return@launch
+            }
+        }
+    }
+
     private fun getProductDetail(id: Int){
         viewModelScope.launch {
             getDetailProductUseCase.run(id).collect {

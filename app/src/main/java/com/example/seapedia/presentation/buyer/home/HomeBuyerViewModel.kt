@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.seapedia.data.remote.query.AllProductQuery
 import com.example.seapedia.data.remote.query.AllReviewQuery
+import com.example.seapedia.domain.entities.Product
 import com.example.seapedia.domain.usecases.product.GetAllProductUseCase
 import com.example.seapedia.domain.usecases.review.GetAllReviewUseCase
 import com.example.seapedia.global.utils.CommonState
@@ -48,6 +49,21 @@ class HomeBuyerViewModel @Inject constructor(
         getReviews()
     }
 
+    fun addToCart(product: Product){
+        viewModelScope.launch {
+            if(!sessionState.value.isValidBuyer){
+                AppEventBus.events.emit(
+                    UiEvent.ShowSnackbar(
+                        CustomSnackbarVisuals(
+                            message = "Please fill your information in profile first",
+                            type = SnackbarType.ERROR
+                        )
+                    )
+                )
+                return@launch
+            }
+        }
+    }
     fun refreshHome() {
         viewModelScope.launch {
 

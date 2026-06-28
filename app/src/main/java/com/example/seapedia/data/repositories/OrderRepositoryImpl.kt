@@ -1,6 +1,6 @@
 package com.example.seapedia.data.repositories
 
-import com.example.seapedia.data.remote.OrderRemoteDataSources
+import com.example.seapedia.data.remote.sources.OrderRemoteDataSources
 import com.example.seapedia.data.remote.body.OrderStatusBody
 import com.example.seapedia.data.remote.query.AllOrderQuery
 import com.example.seapedia.data.remote.responses.order.OrderStatus

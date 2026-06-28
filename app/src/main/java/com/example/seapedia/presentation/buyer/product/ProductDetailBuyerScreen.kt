@@ -66,7 +66,9 @@ fun ProductDetailBuyerScreen(
                     ButtonCustom(
                         enabled = true,
                         title = "Add to Cart",
-                        onClick = {},
+                        onClick = {
+                            productDetailBuyerViewModel.addToCart(product)
+                        },
                         isNotLoading = true
                     )
             }

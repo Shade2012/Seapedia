@@ -9,6 +9,14 @@ sealed class BuyerRoute(val route: String,val name: String){
             return "buyer_product_detail/$productId"
         }
     }
+    object BuyerAddress : BuyerRoute("buyer_address","buyer_address_screen")
+    object BuyerCreateAddress : BuyerRoute("buyer_create_address","buyer_create_address_screen")
+    object BuyerUpdateAddress : BuyerRoute("buyer_update_address/{addressId}", name = "buyer_update_address"){
+        const val ADDRESS_ID = "addressId"
+        fun createRoute(addressId: Int): String{
+            return "buyer_update_address/$addressId"
+        }
+    }
     object Cart : BuyerRoute("cart_buyer", name = "cart_buyer_screen")
     object MainNavigation : BuyerRoute("main_buyer", name = "main_buyer_screen")
 }

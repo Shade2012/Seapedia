@@ -21,6 +21,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.seapedia.domain.entities.Product
 import com.example.seapedia.domain.entities.Review
@@ -117,13 +118,19 @@ fun HomeBuyerScreen(
                             products = productsState.data,
                             searchName = state.searchName,
                             isGuest = isGuest,
-                            buyerNavController = buyerNavController
+                            buyerNavController = buyerNavController,
+                            onAddToCart = {
+                                homeBuyerViewModel.addToCart(it)
+                            }
                         )
                     } else {
                         defaultProductSection(
                             products = productsState.data,
                             isGuest = isGuest,
-                            buyerNavController = buyerNavController
+                            buyerNavController = buyerNavController,
+                            onAddToCart = {
+                                homeBuyerViewModel.addToCart(it)
+                            }
                         )
                     }
 
@@ -131,7 +138,11 @@ fun HomeBuyerScreen(
             }
             when (val reviewState = state.reviews) {
                 is CommonState.Error<*> -> {
-
+                    item(
+                        span = {GridItemSpan(maxLineSpan)}
+                    ) {
+                        FailedCommonCustom(text = "Failed to load Reveiw,${state.reviews.message}")
+                    }
                 }
 
                 is CommonState.Loading -> {

@@ -1,6 +1,6 @@
 package com.example.seapedia.data.repositories
 
-import com.example.seapedia.data.remote.WalletRemoteDataSources
+import com.example.seapedia.data.remote.sources.WalletRemoteDataSources
 import com.example.seapedia.domain.entities.Wallet
 import com.example.seapedia.domain.entities.WalletTransaction
 import com.example.seapedia.domain.repositories.WalletRepository

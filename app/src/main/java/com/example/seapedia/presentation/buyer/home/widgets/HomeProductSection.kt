@@ -21,7 +21,8 @@ fun LazyGridScope.searchProductSection(
     products: List<Product>,
     searchName: String,
     buyerNavController: NavController,
-    isGuest: Boolean
+    isGuest: Boolean,
+    onAddToCart : (Product) -> Unit,
 ) {
     item(
         span = { GridItemSpan(maxLineSpan) }
@@ -54,6 +55,7 @@ fun LazyGridScope.searchProductSection(
                     .wrapContentHeight(),
                 product = product,
                 isGuest = isGuest,
+                onAddToCart = onAddToCart,
                 onClick = {
                     buyerNavController.navigate(BuyerRoute.ProductDetail.createRoute(product.id))
                 }
@@ -65,7 +67,8 @@ fun LazyGridScope.searchProductSection(
 fun LazyGridScope.defaultProductSection(
     products: List<Product>,
     buyerNavController: NavController,
-    isGuest: Boolean
+    isGuest: Boolean,
+    onAddToCart : (Product) -> Unit,
 ) {
 
     item(
@@ -94,9 +97,11 @@ fun LazyGridScope.defaultProductSection(
                         modifier = Modifier,
                         product = product,
                         isGuest = isGuest,
+                        onAddToCart = onAddToCart,
                         onClick = {
                             buyerNavController.navigate(BuyerRoute.ProductDetail.createRoute(product.id))
-                        }
+                        },
+
                     )
                 }
             }

@@ -1,6 +1,8 @@
 package com.example.seapedia.global.di
 
+import com.example.seapedia.data.remote.services.AddressService
 import com.example.seapedia.data.remote.services.AuthService
+import com.example.seapedia.data.remote.services.BuyerService
 import com.example.seapedia.data.remote.services.OrderService
 import com.example.seapedia.data.remote.services.ProductService
 import com.example.seapedia.data.remote.services.RegionService
@@ -117,6 +119,18 @@ object NetworkModule {
     @Singleton
     fun provideWalletService(retrofit: Retrofit): WalletService{
         return retrofit.create<WalletService>(WalletService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideBuyerService(retrofit: Retrofit): BuyerService{
+        return retrofit.create<BuyerService>(BuyerService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAddressService(retrofit: Retrofit): AddressService{
+        return retrofit.create<AddressService>(AddressService::class.java)
     }
 
     @Provides

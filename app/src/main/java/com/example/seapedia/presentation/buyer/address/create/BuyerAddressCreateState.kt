@@ -1,0 +1,40 @@
+package com.example.seapedia.presentation.buyer.address.create
+
+import android.net.Uri
+import com.example.seapedia.domain.entities.Region
+import com.example.seapedia.presentation.buyer.address.state.AddressFormState
+
+
+data class BuyerAddressCreateState(
+    override val name: String = "Rumah",
+    override val receiverName: String = "+6282124654352",
+    override val addressDetail: String = "Jalan Garuda A9",
+
+    override val provinceList: List<Region> = emptyList(),
+    override val cityList: List<Region> = emptyList(),
+    override val districtList: List<Region> = emptyList(),
+    override val villageList: List<Region> = emptyList(),
+
+    override val province: Region? = null,
+    override val city: Region? = null,
+    override val district: Region? = null,
+    override val village: Region? = null,
+
+    override val isLoading: Boolean = false,
+
+    override val provinceLoading: Boolean = true,
+    override val cityLoading: Boolean = true,
+    override val districtLoading: Boolean = true,
+    override val villageLoading: Boolean = true,
+
+    override val error: String = "",
+
+    override val nameError: Boolean = true,
+    override val addressDetailError: Boolean = true,
+    override val receiverNameError: Boolean = true,
+    override val provinceError: Boolean = true,
+    override val cityError: Boolean = true,
+    override val districtError: Boolean = true,
+    override val villageError: Boolean = true
+
+) : AddressFormState

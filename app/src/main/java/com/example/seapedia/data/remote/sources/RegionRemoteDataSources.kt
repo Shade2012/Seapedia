@@ -1,4 +1,4 @@
-package com.example.seapedia.data.remote
+package com.example.seapedia.data.remote.sources
 
 import com.example.seapedia.data.remote.responses.BaseResponse
 import com.example.seapedia.data.remote.responses.RegionResponse
