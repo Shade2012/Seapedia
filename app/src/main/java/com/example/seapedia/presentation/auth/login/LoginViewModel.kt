@@ -5,10 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.seapedia.domain.usecases.auth.LoginUseCase
 import com.example.seapedia.domain.usecases.auth.SetAccessTokenUseCase
 import com.example.seapedia.domain.usecases.auth.SetRoleUseCase
+import com.example.seapedia.domain.usecases.auth.SetUserIdUseCase
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.global.utils.EmailSupportingText
 import com.example.seapedia.global.utils.PasswordSupportingText
 import com.example.seapedia.global.utils.UserRole
+import com.example.seapedia.global.utils.auth.decodeJwt
 import com.example.seapedia.global.utils.session.SessionRepository
 import com.example.seapedia.global.utils.ui.AppEventBus
 import com.example.seapedia.global.utils.ui.CustomSnackbarVisuals
@@ -29,6 +31,7 @@ class LoginViewModel @Inject constructor(
     private val sessionRepository: SessionRepository,
     private val loginUseCase: LoginUseCase,
     private val setRoleUseCase: SetRoleUseCase,
+    private val setUserIdUseCase: SetUserIdUseCase,
     private val setAccessTokenUseCase: SetAccessTokenUseCase
 ): ViewModel() {
     private val _state : MutableStateFlow<LoginState> = MutableStateFlow<LoginState>(LoginState())
@@ -43,7 +46,7 @@ class LoginViewModel @Inject constructor(
                 when(result){
                     is CommonState.Error<*> -> {
                         updateState {
-                            copy(error = result.message, loading = false)
+                            copy(error = result.message, isLoading = false)
                         }
                         AppEventBus.events.emit(
                             UiEvent.ShowSnackbar(CustomSnackbarVisuals(
@@ -55,13 +58,13 @@ class LoginViewModel @Inject constructor(
 
                     is CommonState.Loading<*> -> {
                         updateState {
-                            copy(loading = true)
+                            copy(isLoading = true)
                         }
                     }
 
                     is CommonState.Success<String> -> {
                         updateState {
-                            copy(loading = false)
+                            copy(isLoading = false)
                         }
                         AppEventBus.events.emit(
                             UiEvent.ShowSnackbar(CustomSnackbarVisuals(
@@ -69,6 +72,8 @@ class LoginViewModel @Inject constructor(
                                 type = SnackbarType.SUCCESS
                             ))
                         )
+                        val payload = decodeJwt(result.data)
+                        setUserIdUseCase.run(payload.sub)
                         setRoleUseCase.run(state.value.selectedRole!!)
                         setAccessTokenUseCase.run(result.data)
                         sessionRepository.login(

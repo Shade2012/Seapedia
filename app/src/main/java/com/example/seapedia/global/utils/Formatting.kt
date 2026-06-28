@@ -12,7 +12,6 @@ class Formatting {
 
     fun formatRupiah(value: String): String {
         if (value.isBlank()) return ""
-
         return "Rp ${Formatting.rupiahFormatter.format(value.toLong())}"
     }
 

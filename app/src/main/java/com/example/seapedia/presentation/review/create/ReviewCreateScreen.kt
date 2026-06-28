@@ -47,11 +47,11 @@ fun ReviewCreateScreen(
             },title = "Create Public Review")
             RatingBar(
                 size = 32.dp,
-                readOnly = state.loading, ratingState = state.rating){
+                readOnly = state.isLoading, ratingState = state.rating){
                 reviewCreateScreenViewModel.onChangeRating(it)
             }
             TextFieldCustom(
-                enabled = !state.loading,
+                enabled = !state.isLoading,
                 title = "Reviewer Name",
                 hint = "Input your name",
                 imeAction = ImeAction.Next,
@@ -65,7 +65,7 @@ fun ReviewCreateScreen(
                 title = "Comment",
                 hint = "Input your comment",
                 minLines = 5,
-                enabled = !state.loading,
+                enabled = !state.isLoading,
                 imeAction = ImeAction.Done,
                 keyboardType = KeyboardType.Text,
                 text = state.comment,
@@ -77,8 +77,8 @@ fun ReviewCreateScreen(
                 enabled = state.rating > 0 &&
                         state.reviewerName.isNotEmpty() &&
                         state.comment.isNotEmpty() &&
-                        !state.loading,
-                isNotLoading = !state.loading,
+                        !state.isLoading,
+                isNotLoading = !state.isLoading,
             ) {
                 reviewCreateScreenViewModel.onCreateReview()
             }

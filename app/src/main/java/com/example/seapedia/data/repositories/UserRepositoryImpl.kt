@@ -1,7 +1,7 @@
 package com.example.seapedia.data.repositories
 
 import com.example.seapedia.data.remote.UserRemoteDataSources
-import com.example.seapedia.domain.entities.UserProfileEntity
+import com.example.seapedia.domain.entities.UserProfile
 import com.example.seapedia.domain.repositories.UserRepository
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.global.utils.getErrorMessage
@@ -15,12 +15,12 @@ class UserRepositoryImpl @Inject constructor(
     private val userRemoteDataSources: UserRemoteDataSources
 ) : UserRepository {
     override suspend fun getProfile(
-    ): Flow<CommonState<UserProfileEntity>> = flow{
+    ): Flow<CommonState<UserProfile>> = flow{
         emit(CommonState.Loading())
         try {
             val response = userRemoteDataSources.getProfile()
             val entity = UserProfileMapper().mapFromResponse(response)
-            emit(CommonState.Success<UserProfileEntity>(data = entity))
+            emit(CommonState.Success<UserProfile>(data = entity))
         } catch (e: HttpException) {
             val message = e.getErrorMessage()
             emit(CommonState.Error(message = message))

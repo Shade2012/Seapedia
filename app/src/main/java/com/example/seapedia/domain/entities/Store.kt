@@ -1,6 +1,6 @@
 package com.example.seapedia.domain.entities
 
-data class StoreEntity(
+data class Store(
     val id: Int,
     val name: String,
     val address: String,
@@ -9,8 +9,8 @@ data class StoreEntity(
     val longitude: Double,
     val image: String,
 
-    val province: RegionEntity?,
-    val city: RegionEntity?,
-    val district: RegionEntity?,
-    val village: RegionEntity?
+    val province: Region?,
+    val city: Region?,
+    val district: Region?,
+    val village: Region?
 )

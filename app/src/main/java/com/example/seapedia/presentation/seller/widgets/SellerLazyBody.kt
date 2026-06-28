@@ -12,7 +12,9 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.example.seapedia.presentation.common.RefreshCommon
 import com.example.seapedia.ui.theme.Dimens
+import kotlin.Boolean
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -24,14 +26,12 @@ fun SellerLazyBody(
     content: LazyListScope.() -> Unit
 ) {
 
-    val refreshState = rememberPullToRefreshState()
     val listState = rememberLazyListState()
 
-    PullToRefreshBox(
+    RefreshCommon (
         modifier = modifier,
-        state = refreshState,
-        isRefreshing = isRefreshing,
-        onRefresh = onRefresh
+        refreshing = isRefreshing,
+        onRefresh=onRefresh
     ) {
 
         LazyColumn(

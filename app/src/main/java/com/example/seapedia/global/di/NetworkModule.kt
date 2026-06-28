@@ -1,11 +1,13 @@
 package com.example.seapedia.global.di
 
 import com.example.seapedia.data.remote.services.AuthService
+import com.example.seapedia.data.remote.services.OrderService
 import com.example.seapedia.data.remote.services.ProductService
 import com.example.seapedia.data.remote.services.RegionService
 import com.example.seapedia.data.remote.services.ReviewService
 import com.example.seapedia.data.remote.services.StoreService
 import com.example.seapedia.data.remote.services.UserService
+import com.example.seapedia.data.remote.services.WalletService
 import com.example.seapedia.global.networks.NetworkConstant
 import com.example.seapedia.global.utils.auth.AuthAuthenticator
 import com.example.seapedia.global.utils.auth.AuthInterceptor
@@ -103,6 +105,18 @@ object NetworkModule {
     @Singleton
     fun provideStoreService(retrofit: Retrofit): StoreService{
         return retrofit.create<StoreService>(StoreService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOrderService(retrofit: Retrofit): OrderService{
+        return retrofit.create<OrderService>(OrderService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideWalletService(retrofit: Retrofit): WalletService{
+        return retrofit.create<WalletService>(WalletService::class.java)
     }
 
     @Provides

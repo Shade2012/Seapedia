@@ -48,7 +48,7 @@ class ProductSellerUpdateImageViewModel @Inject constructor(
     fun confirmUpdateImage(){
         viewModelScope.launch {
             updateState {
-                copy(loading = true)
+                copy(isLoading = true)
             }
             try {
                 Log.d("VM ADADEH Add",state.value.listImageAdd.toString())
@@ -98,7 +98,7 @@ class ProductSellerUpdateImageViewModel @Inject constructor(
             } finally {
                 updateState {
                     copy(
-                        loading = false
+                        isLoading = false
                     )
                 }
             }
@@ -156,7 +156,7 @@ class ProductSellerUpdateImageViewModel @Inject constructor(
                         )
                         updateState {
                             copy(
-                                loading = false,
+                                isLoading = false,
                                 listImage = result
                             )
                         }
@@ -164,14 +164,14 @@ class ProductSellerUpdateImageViewModel @Inject constructor(
                     is CommonState.Loading<*> -> {
                         updateState {
                             copy(
-                                loading = true
+                                isLoading = true
                             )
                         }
                     }
                     is CommonState.Success -> {
                         updateState {
                             copy(
-                                loading = false,
+                                isLoading = false,
                                 listImage = result
                             )
                         }

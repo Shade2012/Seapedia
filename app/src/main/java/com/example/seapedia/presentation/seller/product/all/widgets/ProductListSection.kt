@@ -10,17 +10,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.seapedia.domain.entities.ProductEntity
+import com.example.seapedia.domain.entities.Product
 import com.example.seapedia.ui.theme.Dimens
 
 @Composable
 fun ProductListRowSection(
     title: String,
     titleColor: Color? = null,
-    products: List<ProductEntity>,
-    onDelete: (ProductEntity) -> Unit,
-    onEdit: (ProductEntity) -> Unit,
-    onDetail : (ProductEntity) -> Unit
+    products: List<Product>,
+    onDelete: (Product) -> Unit,
+    onEdit: (Product) -> Unit,
+    onDetail : (Product) -> Unit
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(Dimens.SpacePadding)

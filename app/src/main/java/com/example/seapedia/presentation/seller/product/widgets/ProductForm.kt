@@ -71,7 +71,7 @@ fun ProductForm(
         )
 
     TextFieldCustom(
-        enabled = !state.loading,
+        enabled = !state.isLoading,
         title = "Name",
         hint = "Input your product name",
         keyboardType = KeyboardType.Text,
@@ -86,7 +86,7 @@ fun ProductForm(
     }
 
     TextFieldCustom(
-        enabled = !state.loading,
+        enabled = !state.isLoading,
         title = "Price",
         hint = "Input your price",
         keyboardType = KeyboardType.Number,
@@ -99,7 +99,7 @@ fun ProductForm(
     }
 
     TextFieldCustom(
-        enabled = !state.loading,
+        enabled = !state.isLoading,
         title = "Stock",
         hint = "Input your stock",
         keyboardType = KeyboardType.Number,

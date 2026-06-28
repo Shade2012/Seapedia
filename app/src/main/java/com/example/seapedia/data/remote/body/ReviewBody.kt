@@ -1,6 +1,5 @@
 package com.example.seapedia.data.remote.body
 
-import com.example.seapedia.domain.entities.ReviewEntity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

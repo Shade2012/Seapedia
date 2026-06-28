@@ -67,7 +67,7 @@ fun RegisterScreen(
     ){
         TopIconAppAuth()
         TextFieldCustom(
-            enabled = !state.loading,
+            enabled = !state.isLoading,
             title = "Full name",
             hint = "Input your full name",
             keyboardType = KeyboardType.Text,
@@ -81,7 +81,7 @@ fun RegisterScreen(
         }
 
         TextFieldCustom(
-            enabled = !state.loading,
+            enabled = !state.isLoading,
             title = "Email",
             hint = "Input your email",
             keyboardType = KeyboardType.Email,
@@ -96,7 +96,7 @@ fun RegisterScreen(
         }
 
         TextFieldCustom(
-            enabled = !state.loading,
+            enabled = !state.isLoading,
             title = "Password",
             hint = "Input your password",
             keyboardType = KeyboardType.Password,
@@ -133,7 +133,7 @@ fun RegisterScreen(
         Spacer(Modifier.height(5.dp))
         ButtonCustom(
             enabled = !state.passwordError and !state.emailError && state.selectedRole != null,
-            isNotLoading = !state.loading,
+            isNotLoading = !state.isLoading,
             title = "Register",
             onClick = {
                 viewModel.register()

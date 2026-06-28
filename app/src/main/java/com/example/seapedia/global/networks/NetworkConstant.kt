@@ -5,12 +5,14 @@ object NetworkConstant {
     const val BASE_URL_REGION = "https://api-regional-indonesia.vercel.app/api/"
     const val PRODUCTS = "products"
     const val PRODUCT_IMAGES = "product-image"
-
+    const val ORDERS = "orders"
     const val SELLERS = "seller"
     const val USERS = "users"
     const val REVIEWS = "reviews"
     const val STORES = "stores"
-
+    const val WALLET_TRANSACTION = "wallet-transactions"
+    const val WALLET = "wallet"
+    const val HISTORY = "history"
     const val PROVINCE = "provinces"
     const val CITY = "cities"
     const val DISTRICT = "districts"

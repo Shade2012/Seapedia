@@ -58,7 +58,7 @@ fun ProductSellerCreateScreen(
                                     item.name.isNotBlank()
                                 }
                     },
-            isNotLoading = !state.loading,
+            isNotLoading = !state.isLoading,
             title = "Create Product",
             onClick = viewModel::createProduct
         )
@@ -75,7 +75,7 @@ fun ProductSellerCreateScreen(
 //            stock=${state.stock}
 //            images=${state.images.size}
 //            types=${state.types}
-//            loading=${state.loading}
+//            isLoading=${state.isLoading}
 //            nameError=${state.nameError}
 //            priceError=${state.priceError}
 //            stockError=${state.stockError}

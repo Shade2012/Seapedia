@@ -7,11 +7,10 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.seapedia.global.navigation.buyer.BuyerRoute
-import com.example.seapedia.presentation.buyer.product.ProductDetailBuyerScreen
 import com.example.seapedia.presentation.seller.home.HomeSellerScreen
 import com.example.seapedia.presentation.seller.main.MainSellerViewModel
-import com.example.seapedia.presentation.seller.order.OrderSellerScreen
+import com.example.seapedia.presentation.seller.order.all.OrderSellerScreen
+import com.example.seapedia.presentation.seller.order.detail.OrderSellerDetailScreen
 import com.example.seapedia.presentation.seller.product.all.ProductSellerScreen
 import com.example.seapedia.presentation.seller.product.create.ProductSellerCreateScreen
 import com.example.seapedia.presentation.seller.product.detail.ProductSellerDetailScreen
@@ -41,6 +40,7 @@ fun SellerNavHost(
             SellerRoute.Home.route
         ) {
             HomeSellerScreen(
+                rootNavController,
                 sellerNavController
             )
         }
@@ -52,6 +52,20 @@ fun SellerNavHost(
                 sellerNavController
             )
         }
+
+        composable(
+            route = SellerRoute.OrderDetail.route,
+            arguments = listOf(
+                navArgument("orderId"){
+                    type = NavType.IntType
+                }
+            )
+        ) { backStackEntry ->
+            OrderSellerDetailScreen(
+                sellerNavController
+            )
+        }
+
 
         composable(
             SellerRoute.ProductList.route

@@ -3,7 +3,7 @@ package com.example.seapedia.presentation.buyer.product
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.seapedia.domain.entities.ProductEntity
+import com.example.seapedia.domain.entities.Product
 import com.example.seapedia.domain.usecases.product.GetDetailProductUseCase
 import com.example.seapedia.global.navigation.buyer.BuyerRoute
 import com.example.seapedia.global.utils.CommonState
@@ -60,7 +60,7 @@ class ProductDetailBuyerViewModel @Inject constructor(
                         }
 
                     }
-                    is CommonState.Success<ProductEntity> -> {
+                    is CommonState.Success<Product> -> {
                         updateState {
                             copy(
                                 product = result,

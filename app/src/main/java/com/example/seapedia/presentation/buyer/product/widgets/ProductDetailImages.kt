@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
-import com.example.seapedia.domain.entities.ProductImageEntity
+import com.example.seapedia.domain.entities.ProductImage
 import com.example.seapedia.presentation.common.ImageCustom
 import com.example.seapedia.ui.theme.Dimens
 import kotlin.collections.forEach
@@ -27,7 +27,7 @@ import kotlin.collections.forEach
 @Composable
 fun ProductDetailImages(
     modifier: Modifier = Modifier,
-    productImages: List<ProductImageEntity>,
+    productImages: List<ProductImage>,
     onClick: (String) -> Unit,
     primaryImageUrl: String
 ) {

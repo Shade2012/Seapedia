@@ -1,12 +1,11 @@
 package com.example.seapedia.presentation.seller.store.update
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.seapedia.data.remote.body.StoreBody
-import com.example.seapedia.domain.entities.RegionEntity
-import com.example.seapedia.domain.entities.StoreEntity
+import com.example.seapedia.domain.entities.Region
+import com.example.seapedia.domain.entities.Store
 import com.example.seapedia.domain.usecases.region.GetAllCityUseCase
 import com.example.seapedia.domain.usecases.region.GetAllDistrictUseCase
 import com.example.seapedia.domain.usecases.region.GetAllProvinceUseCase
@@ -58,7 +57,7 @@ class StoreUpdateViewModel
         viewModelScope.launch{
             updateState {
                 copy(
-                    loading=true,
+                    isLoading=true,
                     provinceLoading = true,
                     cityLoading = true,
                     districtLoading = true,
@@ -66,27 +65,27 @@ class StoreUpdateViewModel
             }
             try {
                 val store = getStoreUseCase.run()
-                    .filterIsInstance<CommonState.Success<StoreEntity>>()
+                    .filterIsInstance<CommonState.Success<Store>>()
                     .first()
                     .data
 
                 val provinces = getAllProvinceUseCase.run()
-                    .filterIsInstance<CommonState.Success<List<RegionEntity>>>()
+                    .filterIsInstance<CommonState.Success<List<Region>>>()
                     .first()
                     .data
 
                 val cities = getAllCityUseCase.run(store.province!!.id)
-                    .filterIsInstance<CommonState.Success<List<RegionEntity>>>()
+                    .filterIsInstance<CommonState.Success<List<Region>>>()
                     .first()
                     .data
 
                 val districts = getAllDistrictUseCase.run(store.city!!.id)
-                    .filterIsInstance<CommonState.Success<List<RegionEntity>>>()
+                    .filterIsInstance<CommonState.Success<List<Region>>>()
                     .first()
                     .data
 
                 val villages = getAllVillageUseCase.run(store.district!!.id)
-                    .filterIsInstance<CommonState.Success<List<RegionEntity>>>()
+                    .filterIsInstance<CommonState.Success<List<Region>>>()
                     .first()
                     .data
                 val addressNew = store.address.split(", ").dropLast(4).joinToString(", ")
@@ -121,7 +120,7 @@ class StoreUpdateViewModel
                         cityLoading = false,
                         districtLoading = false,
                         villageLoading = false,
-                        loading = false
+                        isLoading = false
                     )
                 }
             } catch (e: Exception){
@@ -141,7 +140,7 @@ class StoreUpdateViewModel
     fun updateStore(){
         viewModelScope.launch {
             updateState {
-                copy(loading = true)
+                copy(isLoading = true)
             }
             delay(1000)
             val value = state.value
@@ -169,7 +168,7 @@ class StoreUpdateViewModel
                         updateState {
                             copy(
                                 error = result.message,
-                                loading = false
+                                isLoading = false
                             )
                         }
                         AppEventBus.events.emit(
@@ -182,14 +181,14 @@ class StoreUpdateViewModel
                     is CommonState.Loading<*> -> {
                         updateState {
                             copy(
-                                loading = true
+                                isLoading = true
                             )
                         }
                     }
                     is CommonState.Success -> {
                         updateState {
                             copy(
-                                loading = false
+                                isLoading = false
                             )
                         }
                         AppEventBus.events.emit(
@@ -230,7 +229,7 @@ class StoreUpdateViewModel
         }
     }
 
-    fun onChangeProvince(value: RegionEntity){
+    fun onChangeProvince(value: Region){
         viewModelScope.launch {
             updateState {
                 copy(
@@ -239,19 +238,19 @@ class StoreUpdateViewModel
             }
             updateStateLoadingCity()
             val cities = getAllCityUseCase.run(value.id)
-                .filterIsInstance<CommonState.Success<List<RegionEntity>>>()
+                .filterIsInstance<CommonState.Success<List<Region>>>()
                 .first()
                 .data
             val city = cities.first()
 
             val districts = getAllDistrictUseCase.run(city.id)
-                .filterIsInstance<CommonState.Success<List<RegionEntity>>>()
+                .filterIsInstance<CommonState.Success<List<Region>>>()
                 .first()
                 .data
             val district = districts.first()
 
             val villages = getAllVillageUseCase.run(district.id)
-                .filterIsInstance<CommonState.Success<List<RegionEntity>>>()
+                .filterIsInstance<CommonState.Success<List<Region>>>()
                 .first()
                 .data
             val village = villages.first()
@@ -279,7 +278,7 @@ class StoreUpdateViewModel
         }
     }
 
-    fun onChangeCity(value: RegionEntity){
+    fun onChangeCity(value: Region){
         viewModelScope.launch {
             updateState {
                 copy(
@@ -288,13 +287,13 @@ class StoreUpdateViewModel
             }
             updateStateLoadingDistrict()
             val districts = getAllDistrictUseCase.run(value.id)
-                .filterIsInstance<CommonState.Success<List<RegionEntity>>>()
+                .filterIsInstance<CommonState.Success<List<Region>>>()
                 .first()
                 .data
             val district = districts.first()
 
             val villages = getAllVillageUseCase.run(district.id)
-                .filterIsInstance<CommonState.Success<List<RegionEntity>>>()
+                .filterIsInstance<CommonState.Success<List<Region>>>()
                 .first()
                 .data
             val village = villages.first()
@@ -317,7 +316,7 @@ class StoreUpdateViewModel
         }
     }
 
-    fun onChangeDistrict(value: RegionEntity){
+    fun onChangeDistrict(value: Region){
         viewModelScope.launch {
             updateState {
                 copy(
@@ -326,7 +325,7 @@ class StoreUpdateViewModel
             }
             updateStateLoadingVillage()
             val villages = getAllVillageUseCase.run(value.id)
-                .filterIsInstance<CommonState.Success<List<RegionEntity>>>()
+                .filterIsInstance<CommonState.Success<List<Region>>>()
                 .first()
                 .data
             val village = villages.first()
@@ -344,7 +343,7 @@ class StoreUpdateViewModel
         }
     }
 
-    fun onChangeVillage(value: RegionEntity){
+    fun onChangeVillage(value: Region){
         updateState {
             copy(
                 village = value,

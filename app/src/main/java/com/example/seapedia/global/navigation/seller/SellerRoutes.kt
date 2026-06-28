@@ -47,5 +47,16 @@ sealed class SellerRoute(val route: String,val name: String){
         "seller_store_update_screen"
     )
     object Order : SellerRoute("order_seller", name = "order_seller_screen")
+
+    object OrderDetail : SellerRoute(
+        "seller_order_detail/{orderId}",
+        "seller_order_detail_screen"
+    ) {
+        const val ORDER_ID = "orderId"
+
+        fun createRoute(orderId: Int) : String {
+            return "seller_order_detail/$orderId"
+        }
+    }
     object MainNavigation : SellerRoute("main_seller", name = "main_seller_screen")
 }

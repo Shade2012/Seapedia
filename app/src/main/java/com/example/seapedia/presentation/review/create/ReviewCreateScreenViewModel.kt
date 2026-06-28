@@ -2,7 +2,7 @@ package com.example.seapedia.presentation.review.create
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.seapedia.domain.entities.ReviewEntity
+import com.example.seapedia.domain.entities.Review
 import com.example.seapedia.domain.usecases.review.CreateReviewUseCase
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.global.utils.ui.AppEventBus
@@ -34,7 +34,7 @@ class ReviewCreateScreenViewModel @Inject constructor(
     fun onCreateReview(){
         viewModelScope.launch(Dispatchers.IO){
             createReviewUseCase.run(
-                ReviewEntity(
+                Review(
                     reviewerName = state.value.reviewerName,
                     comment = state.value.comment,
                     rating = state.value.rating,
@@ -44,7 +44,7 @@ class ReviewCreateScreenViewModel @Inject constructor(
                 when(result){
                     is CommonState.Error<*> -> {
                         updateState{
-                            copy(loading=false)
+                            copy(isLoading=false)
                         }
                         AppEventBus.events.emit(UiEvent.ShowSnackbar(
                             data = CustomSnackbarVisuals(
@@ -55,12 +55,12 @@ class ReviewCreateScreenViewModel @Inject constructor(
                     }
                     is CommonState.Loading<*> -> {
                         updateState{
-                            copy(loading=true)
+                            copy(isLoading=true)
                         }
                     }
                     is CommonState.Success<*> -> {
                         updateState{
-                            copy(loading=false)
+                            copy(isLoading=false)
                         }
                         AppEventBus.events.emit(UiEvent.ShowSnackbar(
                             data = CustomSnackbarVisuals(

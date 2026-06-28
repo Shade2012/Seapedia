@@ -16,8 +16,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -84,12 +82,10 @@ fun TypeWidget(
     OutlinedCard(
         modifier = Modifier.fillMaxWidth().animateContentSize()
     ) {
-
         Column(
             modifier = Modifier.padding(Dimens.InnerPadding),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-
             // Header
             Row(
                 modifier = Modifier

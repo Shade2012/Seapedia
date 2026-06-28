@@ -2,9 +2,7 @@ package com.example.seapedia.presentation.seller.product.all
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.seapedia.data.remote.query.AllProductQuery
 import com.example.seapedia.data.remote.query.AllProductSellerQuery
-import com.example.seapedia.domain.entities.ProductEntity
 import com.example.seapedia.domain.usecases.product.DeleteProductUseCase
 import com.example.seapedia.domain.usecases.product.GetAllSellerProductUseCase
 import com.example.seapedia.global.utils.CommonState

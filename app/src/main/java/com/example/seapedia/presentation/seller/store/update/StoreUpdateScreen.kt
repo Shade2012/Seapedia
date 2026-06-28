@@ -43,7 +43,7 @@ fun StoreUpdateScreen(
         ButtonCustom(
             enabled = !state.nameError and !state.phoneNumberError and !state.addressError and !state.provinceError and
                     !state.cityError and !state.districtError and !state.villageError,
-            isNotLoading = !state.loading,
+            isNotLoading = !state.isLoading,
             title = "Update Store",
             onClick = viewModel::updateStore
         )

@@ -108,8 +108,8 @@ fun ProductSellerUpdateImage(
                 )
                 ButtonCustom(
                     modifier = Modifier,
-                    enabled = !state.loading,
-                    isNotLoading = !state.loading,
+                    enabled = !state.isLoading,
+                    isNotLoading = !state.isLoading,
                     title = "Add Image",
                     onClick = {
                         launcher.launch(
@@ -121,8 +121,8 @@ fun ProductSellerUpdateImage(
                 )
                 ButtonCustom(
                     modifier = Modifier,
-                    enabled = !state.loading,
-                    isNotLoading = !state.loading,
+                    enabled = !state.isLoading,
+                    isNotLoading = !state.isLoading,
                     title = "Confirm",
                     onClick = viewModel::confirmUpdateImage
                 )

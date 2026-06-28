@@ -20,8 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.seapedia.domain.entities.ProductEntity
-import com.example.seapedia.global.navigation.buyer.BuyerRoute
+import com.example.seapedia.domain.entities.Product
 import com.example.seapedia.global.utils.Formatting
 import com.example.seapedia.presentation.common.ImageCustom
 import com.example.seapedia.ui.theme.Dimens
@@ -31,7 +30,7 @@ import com.example.seapedia.ui.theme.White
 @Composable
 fun HomeProductCard(
     modifier: Modifier,
-    product: ProductEntity,
+    product: Product,
     isGuest: Boolean,
     onClick: () -> Unit,
 )

@@ -12,13 +12,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.example.seapedia.domain.entities.ProductEntity
+import com.example.seapedia.domain.entities.Product
 import com.example.seapedia.global.navigation.buyer.BuyerRoute
 import com.example.seapedia.presentation.common.EmptyCommonCustom
 import com.example.seapedia.ui.theme.Dimens
 
 fun LazyGridScope.searchProductSection(
-    products: List<ProductEntity>,
+    products: List<Product>,
     searchName: String,
     buyerNavController: NavController,
     isGuest: Boolean
@@ -63,7 +63,7 @@ fun LazyGridScope.searchProductSection(
 }
 
 fun LazyGridScope.defaultProductSection(
-    products: List<ProductEntity>,
+    products: List<Product>,
     buyerNavController: NavController,
     isGuest: Boolean
 ) {

@@ -46,7 +46,7 @@ class RegisterViewModel @Inject constructor(
                 when(result){
                     is CommonState.Error<*> -> {
                         updateState {
-                            copy(error = result.message, loading = false)
+                            copy(error = result.message, isLoading = false)
                         }
                         Log.d("Register View Model",result.message)
                         AppEventBus.events.emit(
@@ -59,13 +59,13 @@ class RegisterViewModel @Inject constructor(
                     is CommonState.Loading<*> -> {
                         updateState {
                             copy(
-                                loading = true
+                                isLoading = true
                             )
                         }
                     }
                     is CommonState.Success<String> -> {
                         updateState {
-                            copy(loading = false)
+                            copy(isLoading = false)
                         }
                         AppEventBus.events.emit(
                             UiEvent.ShowSnackbar(CustomSnackbarVisuals(

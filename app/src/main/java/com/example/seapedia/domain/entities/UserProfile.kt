@@ -2,7 +2,7 @@ package com.example.seapedia.domain.entities
 
 import com.example.seapedia.global.utils.UserRole
 
-data class UserProfileEntity(
+data class UserProfile(
     val id: Int,
     val message:String,
     val fullName: String,
@@ -10,7 +10,7 @@ data class UserProfileEntity(
     val listRoles: List<UserRole>
 ){
     companion object{
-        val GUEST_PROFILE_ENTITY = UserProfileEntity(id = 0, message = "", fullName = "Guest", email = "", listRoles = listOf(
+        val GUEST_PROFILE_ENTITY = UserProfile(id = 0, message = "", fullName = "Guest", email = "", listRoles = listOf(
             UserRole.Guest))
     }
 }

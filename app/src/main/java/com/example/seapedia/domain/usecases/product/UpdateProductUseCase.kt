@@ -1,7 +1,6 @@
 package com.example.seapedia.domain.usecases.product
 
 import com.example.seapedia.data.remote.body.CreateProductBody
-import com.example.seapedia.domain.entities.ProductEntity
 import com.example.seapedia.domain.repositories.ProductRepository
 import com.example.seapedia.global.utils.CommonState
 import kotlinx.coroutines.flow.Flow

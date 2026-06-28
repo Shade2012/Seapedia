@@ -11,18 +11,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.seapedia.domain.entities.ProductEntity
+import com.example.seapedia.domain.entities.Product
 import com.example.seapedia.global.utils.Formatting
 
 @Composable
 fun ProductDetailBody(
     modifier: Modifier = Modifier,
-    productEntity: ProductEntity
+    product: Product
 ) {
-    Text(productEntity.name, style = MaterialTheme.typography.headlineSmall.copy(
+    Text(product.name, style = MaterialTheme.typography.headlineSmall.copy(
         fontWeight = FontWeight.Medium
     ))
-    Text(text = "Rp ${Formatting.rupiahFormatter.format(productEntity.price)}", style = MaterialTheme.typography.headlineSmall.copy(
+    Text(text = "Rp ${Formatting.rupiahFormatter.format(product.price)}", style = MaterialTheme.typography.headlineSmall.copy(
         fontSize = 26.sp,
         color = MaterialTheme.colorScheme.primary,
         fontWeight = FontWeight.Bold
@@ -32,20 +32,20 @@ fun ProductDetailBody(
         enabled = false,
         label = {
             Text(
-                if (productEntity.isAvailable)
+                if (product.isAvailable)
                     "Available"
                 else
                     "Unavailable"
             )
         }
     )
-    if (productEntity.types.isNotEmpty()) {
+    if (product.types.isNotEmpty()) {
         Text("Type Product", style = MaterialTheme.typography.bodyMedium)
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(4.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            productEntity.types.take(3).forEach { type ->
+            product.types.take(3).forEach { type ->
                 SuggestionChip(
                     onClick = {},
                     label = {

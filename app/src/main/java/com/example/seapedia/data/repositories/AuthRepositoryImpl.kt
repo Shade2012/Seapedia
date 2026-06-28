@@ -61,6 +61,10 @@ class AuthRepositoryImpl @Inject constructor(
         return authLocalDataSource.getAccessToken()
     }
 
+    override fun getUserId(): Flow<Int?> {
+        return authLocalDataSource.getUserId()
+    }
+
     override fun getEmail(): Flow<String?> {
         return authLocalDataSource.getEmail()
     }
@@ -75,6 +79,10 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun setAccessToken(accessToken: String) {
         return authLocalDataSource.setAccessToken(accessToken)
+    }
+
+    override suspend fun setUserId(id: Int) {
+        return authLocalDataSource.setUserId(id)
     }
 
     override suspend fun setEmail(email: String) {

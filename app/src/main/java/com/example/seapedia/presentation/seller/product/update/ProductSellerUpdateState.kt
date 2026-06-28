@@ -12,7 +12,7 @@ data class ProductSellerUpdateState(
 
     override val types: List<CreateProductType> = listOf<CreateProductType>(),
     val images : List<Uri> = listOf<Uri>(),
-    override val loading: Boolean = false,
+    override val isLoading: Boolean = false,
     override val error: String = "",
 
     override val nameError: Boolean = true,

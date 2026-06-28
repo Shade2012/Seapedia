@@ -42,7 +42,7 @@ fun StoreSellerCreateScreen(
         ButtonCustom(
             enabled = !state.nameError and !state.phoneNumberError and !state.addressError and !state.provinceError and
                     !state.cityError and !state.districtError and !state.villageError && state.image != null,
-            isNotLoading = !state.loading,
+            isNotLoading = !state.isLoading,
             title = "Create Store",
             onClick = viewModel::createStore
         )

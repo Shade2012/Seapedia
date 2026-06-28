@@ -1,7 +1,7 @@
 package com.example.seapedia.presentation.seller.store.update
 
 import android.net.Uri
-import com.example.seapedia.domain.entities.RegionEntity
+import com.example.seapedia.domain.entities.Region
 import com.example.seapedia.presentation.seller.store.state.StoreFormState
 
 data class StoreSellerUpdateState(
@@ -10,20 +10,20 @@ data class StoreSellerUpdateState(
     override val address: String = "",
     override val phoneNumber: String = "",
 
-    override val provinceList: List<RegionEntity> = emptyList(),
-    override val cityList: List<RegionEntity> = emptyList(),
-    override val districtList: List<RegionEntity> = emptyList(),
-    override val villageList: List<RegionEntity> = emptyList(),
+    override val provinceList: List<Region> = emptyList(),
+    override val cityList: List<Region> = emptyList(),
+    override val districtList: List<Region> = emptyList(),
+    override val villageList: List<Region> = emptyList(),
 
     override val image: Uri? = null,
     override val imageUrl: String? = null,
 
-    override val province: RegionEntity? = null,
-    override val city: RegionEntity? = null,
-    override val district: RegionEntity? = null,
-    override val village: RegionEntity? = null,
+    override val province: Region? = null,
+    override val city: Region? = null,
+    override val district: Region? = null,
+    override val village: Region? = null,
 
-    override val loading: Boolean = false,
+    override val isLoading: Boolean = false,
 
     override val provinceLoading: Boolean = true,
     override val cityLoading: Boolean = true,

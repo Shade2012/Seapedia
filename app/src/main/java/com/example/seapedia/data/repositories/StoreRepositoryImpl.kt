@@ -5,7 +5,7 @@ import android.net.Uri
 import android.util.Log
 import com.example.seapedia.data.remote.StoreRemoteDataSources
 import com.example.seapedia.data.remote.body.StoreBody
-import com.example.seapedia.domain.entities.StoreEntity
+import com.example.seapedia.domain.entities.Store
 import com.example.seapedia.domain.repositories.StoreRepository
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.global.utils.getErrorMessage
@@ -26,14 +26,14 @@ class StoreRepositoryImpl @Inject constructor(
         return storeRemoteDataSources.getValidStore().data
     }
 
-    override suspend fun getStoreBySeller(): Flow<CommonState<StoreEntity?>> = flow{
+    override suspend fun getStoreBySeller(): Flow<CommonState<Store?>> = flow{
         emit(CommonState.Loading())
         try {
             val response = storeRemoteDataSources.getStoreBySeller()
             if(response.data != null){
-                emit(CommonState.Success<StoreEntity?>(data = StoreRawMapper().mapFromResponse(response.data)))
+                emit(CommonState.Success<Store?>(data = StoreRawMapper().mapFromResponse(response.data)))
             }else{
-                emit(CommonState.Success<StoreEntity?>(data = null))
+                emit(CommonState.Success<Store?>(data = null))
             }
         } catch (e: retrofit2.HttpException) {
             val message = e.getErrorMessage()
@@ -45,12 +45,12 @@ class StoreRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun createStoreBySeller(storeBody: StoreBody, image: Uri): Flow<CommonState<StoreEntity>> = flow{
+    override suspend fun createStoreBySeller(storeBody: StoreBody, image: Uri): Flow<CommonState<Store>> = flow{
         emit(CommonState.Loading())
         try {
             val imageMultipart = image.toMultipart(context,"store_image")
             val response = storeRemoteDataSources.createStoreBySeller(storeBody,imageMultipart)
-            emit(CommonState.Success<StoreEntity>(data = StoreRawMapper().mapFromResponse(response.data)))
+            emit(CommonState.Success<Store>(data = StoreRawMapper().mapFromResponse(response.data)))
         } catch (e: retrofit2.HttpException) {
             val message = e.getErrorMessage()
             emit(CommonState.Error(message = message))
@@ -60,12 +60,12 @@ class StoreRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateStoreBySeller(storeBody: StoreBody, image: Uri?): Flow<CommonState<StoreEntity>> = flow{
+    override suspend fun updateStoreBySeller(storeBody: StoreBody, image: Uri?): Flow<CommonState<Store>> = flow{
         emit(CommonState.Loading())
         try {
             val imageMultipart = image?.toMultipart(context,"store_image")
             val response = storeRemoteDataSources.updateStoreBySeller(storeBody,imageMultipart)
-            emit(CommonState.Success<StoreEntity>(data = StoreRawMapper().mapFromResponse(response.data)))
+            emit(CommonState.Success<Store>(data = StoreRawMapper().mapFromResponse(response.data)))
         } catch (e: retrofit2.HttpException) {
             val message = e.getErrorMessage()
             emit(CommonState.Error(message = message))

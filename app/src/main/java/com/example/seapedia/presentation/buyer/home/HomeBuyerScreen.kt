@@ -1,31 +1,20 @@
 package com.example.seapedia.presentation.buyer.home
 
-import  com.example.seapedia.R
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
@@ -33,8 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.example.seapedia.domain.entities.ProductEntity
-import com.example.seapedia.domain.entities.ReviewEntity
+import com.example.seapedia.domain.entities.Product
+import com.example.seapedia.domain.entities.Review
 import com.example.seapedia.global.navigation.review.ReviewRoutes
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.presentation.buyer.home.shimmer.HomeBuyerShimmer
@@ -42,6 +31,7 @@ import com.example.seapedia.presentation.buyer.home.shimmer.ReviewCardShimmer
 import com.example.seapedia.presentation.buyer.home.widgets.defaultProductSection
 import com.example.seapedia.presentation.buyer.home.widgets.reviewSection
 import com.example.seapedia.presentation.buyer.home.widgets.searchProductSection
+import com.example.seapedia.presentation.common.BalanceSection
 import com.example.seapedia.presentation.common.FailedCommonCustom
 import com.example.seapedia.presentation.common.RefreshCommon
 import com.example.seapedia.presentation.common.TextFieldCustom
@@ -85,7 +75,7 @@ fun HomeBuyerScreen(
                 item(
                     span = { GridItemSpan(maxLineSpan) }
                 ) {
-                    BalanceSection()
+                    BalanceSection(Modifier, amount = 200000)
                 }
             }
 
@@ -121,7 +111,7 @@ fun HomeBuyerScreen(
                     }
                 }
 
-                is CommonState.Success<List<ProductEntity>> -> {
+                is CommonState.Success<List<Product>> -> {
                     if (state.searchName.isNotEmpty()) {
                         searchProductSection(
                             products = productsState.data,
@@ -152,7 +142,7 @@ fun HomeBuyerScreen(
                     }
                 }
 
-                is CommonState.Success<List<ReviewEntity>> -> {
+                is CommonState.Success<List<Review>> -> {
 
                     reviewSection(
                         modifier = Modifier,
@@ -207,50 +197,4 @@ fun SearchBar(
     }
 }
 
-@Composable
-fun BalanceSection(modifier: Modifier = Modifier) {
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.primary)
-                .padding(Dimens.InnerPadding)
-        ) {
 
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 10.dp),
-                verticalArrangement = Arrangement.spacedBy(Dimens.SpacePadding)
-            ) {
-                Text(
-                    text = "Balance",
-                    style = MaterialTheme.typography.bodyLarge.copy(
-                        color = White
-                    )
-                )
-
-                Text(
-                    text = "Rp 2.540.000",
-                    style = MaterialTheme.typography.headlineSmall.copy(
-                        color = White
-                    ),
-                    fontWeight = FontWeight.Bold
-                )
-            }
-
-            Icon(
-                imageVector = ImageVector.vectorResource(R.drawable.money_bag),
-                contentDescription = "Money Icon",
-                tint = White,
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(8.dp)
-                    .size(48.dp)
-            )
-        }
-    }
-}

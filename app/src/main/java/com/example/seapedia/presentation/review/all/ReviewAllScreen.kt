@@ -4,11 +4,6 @@ package com.example.seapedia.presentation.review.all
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -16,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.example.seapedia.domain.entities.ReviewEntity
+import com.example.seapedia.domain.entities.Review
 import com.example.seapedia.global.navigation.review.ReviewRoutes
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.presentation.buyer.home.shimmer.ReviewCardShimmer
@@ -26,7 +21,6 @@ import com.example.seapedia.presentation.common.RefreshCommon
 import com.example.seapedia.presentation.common.TopAppBarCustom
 import com.example.seapedia.presentation.review.all.widgets.ReviewAllSection
 import com.example.seapedia.ui.theme.Dimens
-import com.example.seapedia.ui.theme.White
 
 @Composable
 fun ReviewAllScreen(
@@ -79,7 +73,7 @@ fun ReviewAllScreen(
                         ReviewCardShimmer()
                     }
 
-                    is CommonState.Success<List<ReviewEntity>> -> {
+                    is CommonState.Success<List<Review>> -> {
                         ReviewAllSection(
                             reviews = reviewsState.data
                         )

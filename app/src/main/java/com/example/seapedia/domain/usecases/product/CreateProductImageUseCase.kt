@@ -1,8 +1,6 @@
 package com.example.seapedia.domain.usecases.product
 
 import android.net.Uri
-import com.example.seapedia.data.remote.query.ProductImagesQuery
-import com.example.seapedia.domain.entities.ProductImageEntity
 import com.example.seapedia.domain.repositories.ProductRepository
 import com.example.seapedia.global.utils.CommonState
 import kotlinx.coroutines.flow.Flow

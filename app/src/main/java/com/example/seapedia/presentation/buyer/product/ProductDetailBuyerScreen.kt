@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.example.seapedia.domain.entities.ProductEntity
+import com.example.seapedia.domain.entities.Product
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.presentation.buyer.product.shimmer.ProductDetailBuyerShimmer
 import com.example.seapedia.presentation.buyer.product.widgets.ProductDetailBody
@@ -54,7 +54,7 @@ fun ProductDetailBuyerScreen(
             is CommonState.Loading<*> -> {
                 ProductDetailBuyerShimmer()
             }
-            is CommonState.Success<ProductEntity> -> {
+            is CommonState.Success<Product> -> {
                 val product = state.product.data
                 ProductDetailSection(
                     modifier,
@@ -78,7 +78,7 @@ fun ProductDetailBuyerScreen(
 fun ProductDetailSection(
     modifier: Modifier = Modifier,
     selectedImage : String? = null,
-    product: ProductEntity,
+    product: Product,
     onClick: (String) -> Unit,
 ) {
     if(selectedImage != null)

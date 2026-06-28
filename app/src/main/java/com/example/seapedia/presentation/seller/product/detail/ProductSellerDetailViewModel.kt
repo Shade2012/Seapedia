@@ -3,16 +3,14 @@ package com.example.seapedia.presentation.seller.product.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.seapedia.domain.entities.ProductEntity
+import com.example.seapedia.domain.entities.Product
 import com.example.seapedia.domain.usecases.product.GetDetailProductUseCase
-import com.example.seapedia.global.navigation.buyer.BuyerRoute
 import com.example.seapedia.global.navigation.seller.SellerRoute
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.global.utils.ui.AppEventBus
 import com.example.seapedia.global.utils.ui.CustomSnackbarVisuals
 import com.example.seapedia.global.utils.ui.SnackbarType
 import com.example.seapedia.global.utils.ui.UiEvent
-import com.example.seapedia.presentation.buyer.product.ProductDetailBuyerState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -57,7 +55,7 @@ class ProductSellerDetailViewModel @Inject constructor(
                             copy(product = CommonState.Loading())
                         }
                     }
-                    is CommonState.Success<ProductEntity> -> {
+                    is CommonState.Success<Product> -> {
                         updateState {
                             copy(
                                 product = result,

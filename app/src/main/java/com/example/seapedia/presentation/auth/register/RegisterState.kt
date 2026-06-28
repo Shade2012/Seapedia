@@ -7,7 +7,7 @@ data class RegisterState(
     val fullName:String = "Shade Kabrun",
     val password: String = "12345678",
     val selectedRole: UserRole? = null,
-    val loading: Boolean = false,
+    val isLoading: Boolean = false,
     val error : String = "",
     val emailError : Boolean = false,
     val passwordError : Boolean = false,

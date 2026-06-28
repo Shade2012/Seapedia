@@ -1,5 +1,6 @@
 package com.example.seapedia.presentation.seller.product.all
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,11 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.example.seapedia.domain.entities.ProductEntity
+import com.example.seapedia.domain.entities.Product
 import com.example.seapedia.global.navigation.seller.SellerRoute
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.presentation.buyer.home.SearchBar
 import com.example.seapedia.presentation.common.ConfirmationDialogCustom
+import com.example.seapedia.presentation.common.EmptyCommonCustom
 import com.example.seapedia.presentation.common.FailedCommonCustom
 import com.example.seapedia.presentation.seller.product.all.shimmer.ProductSellerScreenShimmer
 import com.example.seapedia.presentation.seller.product.all.widgets.ProductListRowSection
@@ -33,10 +35,10 @@ fun ProductSellerScreen(
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
     var productToDelete by rememberSaveable {
-        mutableStateOf<ProductEntity?>(null)
+        mutableStateOf<Product?>(null)
     }
     var productToEdit by rememberSaveable {
-        mutableStateOf<ProductEntity?>(null)
+        mutableStateOf<Product?>(null)
     }
 
     val refresh = sellerNavController.currentBackStackEntry?.savedStateHandle?.getStateFlow("refresh_product",false)
@@ -105,7 +107,8 @@ fun ProductSellerScreen(
                             }
                         )
                     }
-                }else{
+                }
+                else{
                     item {
                         Text(
                             text = "Search Result for : ${state.searchName}",
@@ -124,6 +127,13 @@ fun ProductSellerScreen(
                             productToEdit = it
                         }
                     )
+                }
+                if((result.data.productsAvailable + result.data.productsUnavailable).isEmpty()){
+                    item {
+                        EmptyCommonCustom(
+                            text = "No Product yet.."
+                        )
+                    }
                 }
             }
         }

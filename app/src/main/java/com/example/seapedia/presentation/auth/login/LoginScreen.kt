@@ -69,7 +69,7 @@ fun LoginScreen(
     ){
         TopIconAppAuth()
         TextFieldCustom(
-            enabled = !state.loading,
+            enabled = !state.isLoading,
             title = "Email",
             hint = "Input your email",
             keyboardType = KeyboardType.Email,
@@ -84,7 +84,7 @@ fun LoginScreen(
         }
 
         TextFieldCustom(
-            enabled = !state.loading,
+            enabled = !state.isLoading,
             title = "Password",
             hint = "Input your password",
             keyboardType = KeyboardType.Password,
@@ -131,7 +131,7 @@ fun LoginScreen(
         Spacer(Modifier.height(5.dp))
         ButtonCustom(
             enabled = !state.passwordError and !state.emailError && state.selectedRole != null,
-            isNotLoading = !state.loading,
+            isNotLoading = !state.isLoading,
             title = "Login",
             onClick = {
                 viewModel.login()

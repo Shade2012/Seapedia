@@ -31,7 +31,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.seapedia.domain.entities.ReviewEntity
+import com.example.seapedia.domain.entities.Review
 import com.example.seapedia.global.utils.TimeFormatting
 import com.example.seapedia.ui.theme.Dimens
 import com.example.seapedia.ui.theme.Grey
@@ -42,7 +42,7 @@ import kotlin.time.ExperimentalTime
 @Composable
 fun ReviewCard(
     modifier: Modifier = Modifier,
-    review: ReviewEntity
+    review: Review
 ) {
     Box(
         modifier

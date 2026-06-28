@@ -1,6 +1,6 @@
 package com.example.seapedia.domain.entities
 
-data class RegionEntity(
+data class Region(
     val id: String,
     val name: String
 )

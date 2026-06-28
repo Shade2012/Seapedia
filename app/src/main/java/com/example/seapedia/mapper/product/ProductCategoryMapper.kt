@@ -21,5 +21,4 @@ class ProductCategoryRawMapper : Mapper<ProductCategoryResponse, ProductCategory
             name = item.name
         )
     }
-
 }

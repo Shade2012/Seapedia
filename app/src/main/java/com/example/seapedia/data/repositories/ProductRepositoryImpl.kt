@@ -9,15 +9,13 @@ import com.example.seapedia.data.remote.body.ProductImageBody
 import com.example.seapedia.data.remote.query.AllProductQuery
 import com.example.seapedia.data.remote.query.AllProductSellerQuery
 import com.example.seapedia.data.remote.query.ProductImagesQuery
-import com.example.seapedia.domain.entities.ProductEntity
-import com.example.seapedia.domain.entities.ProductImageEntity
-import com.example.seapedia.domain.entities.SellerProductEntity
-import com.example.seapedia.domain.entities.StoreEntity
+import com.example.seapedia.domain.entities.Product
+import com.example.seapedia.domain.entities.ProductImage
+import com.example.seapedia.domain.entities.SellerProduct
 import com.example.seapedia.domain.repositories.ProductRepository
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.global.utils.getErrorMessage
 import com.example.seapedia.global.utils.toMultipart
-import com.example.seapedia.mapper.StoreRawMapper
 import com.example.seapedia.mapper.product.ProductImageRawMapper
 import com.example.seapedia.mapper.product.ProductRawMapper
 import com.example.seapedia.mapper.seller.SellerProductMapper
@@ -34,14 +32,14 @@ class ProductRepositoryImpl @Inject constructor(
     @ApplicationContext
     private val context: Context,
 ) : ProductRepository {
-    override suspend fun getAllProduct(queries: AllProductQuery): Flow<CommonState<List<ProductEntity>>> = flow{
+    override suspend fun getAllProduct(queries: AllProductQuery): Flow<CommonState<List<Product>>> = flow{
         emit(CommonState.Loading())
         try {
             val response = productRemoteDataSources.getAllProduct(queries)
             val products = response.data.map {
                 ProductRawMapper().mapFromResponse(it)
             }.toList()
-            emit(CommonState.Success<List<ProductEntity>>(data = products))
+            emit(CommonState.Success<List<Product>>(data = products))
         } catch (e: retrofit2.HttpException) {
             val message = e.getErrorMessage()
             emit(CommonState.Error(message = message))
@@ -50,11 +48,11 @@ class ProductRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getDetailProduct(id: Int): Flow<CommonState<ProductEntity>> = flow {
+    override suspend fun getDetailProduct(id: Int): Flow<CommonState<Product>> = flow {
         emit(CommonState.Loading())
         try {
             val response = productRemoteDataSources.getDetailProduct(id)
-            emit(CommonState.Success<ProductEntity>(data = ProductRawMapper().mapFromResponse(response.data)))
+            emit(CommonState.Success<Product>(data = ProductRawMapper().mapFromResponse(response.data)))
         } catch (e: retrofit2.HttpException) {
             val message = e.getErrorMessage()
             emit(CommonState.Error(message = message))
@@ -64,12 +62,12 @@ class ProductRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAllSellerProduct(queries: AllProductSellerQuery): Flow<CommonState<SellerProductEntity>> = flow{
+    override suspend fun getAllSellerProduct(queries: AllProductSellerQuery): Flow<CommonState<SellerProduct>> = flow{
         emit(CommonState.Loading())
         try {
             val response = productRemoteDataSources.getAllProductBySeller(queries)
             val result = SellerProductMapper().mapFromResponse(response)
-            emit(CommonState.Success<SellerProductEntity>(data = result))
+            emit(CommonState.Success<SellerProduct>(data = result))
         } catch (e: retrofit2.HttpException) {
             val message = e.getErrorMessage()
             emit(CommonState.Error(message = message))
@@ -110,11 +108,11 @@ class ProductRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAllProductImages(queries: ProductImagesQuery): Flow<CommonState<List<ProductImageEntity>>> = flow{
+    override suspend fun getAllProductImages(queries: ProductImagesQuery): Flow<CommonState<List<ProductImage>>> = flow{
         emit(CommonState.Loading())
         try {
             val response = productRemoteDataSources.getProductImages(queries)
-            emit(CommonState.Success<List<ProductImageEntity>>(data = response.data.map {
+            emit(CommonState.Success<List<ProductImage>>(data = response.data.map {
                 ProductImageRawMapper().mapFromResponse(it)
             }))
         } catch (e: retrofit2.HttpException) {

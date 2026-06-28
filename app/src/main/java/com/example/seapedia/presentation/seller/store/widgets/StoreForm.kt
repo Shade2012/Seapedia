@@ -9,7 +9,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import com.example.seapedia.R
-import com.example.seapedia.domain.entities.RegionEntity
+import com.example.seapedia.domain.entities.Region
 import com.example.seapedia.global.utils.NormalSupportingText
 import com.example.seapedia.global.utils.PhoneNumberSupportingText
 import com.example.seapedia.presentation.common.IconCustom
@@ -25,10 +25,10 @@ fun StoreForm(
     onChangeAddress: (String) -> Unit,
     onImageSelected: (Uri?) -> Unit,
 
-    onProvinceSelected: (RegionEntity) -> Unit,
-    onCitySelected: (RegionEntity) -> Unit,
-    onDistrictSelected: (RegionEntity) -> Unit,
-    onVillageSelected: (RegionEntity) -> Unit,
+    onProvinceSelected: (Region) -> Unit,
+    onCitySelected: (Region) -> Unit,
+    onDistrictSelected: (Region) -> Unit,
+    onVillageSelected: (Region) -> Unit,
 
     ) {
     SingleImageCustom(
@@ -37,7 +37,7 @@ fun StoreForm(
         onImageSelected = onImageSelected
     )
     TextFieldCustom(
-        enabled = !state.loading,
+        enabled = !state.isLoading,
         title = "Name",
         hint = "Input your store name",
         keyboardType = KeyboardType.Text,
@@ -52,7 +52,7 @@ fun StoreForm(
     }
 
     TextFieldCustom(
-        enabled = !state.loading,
+        enabled = !state.isLoading,
         title = "Phone Number",
         hint = "Input your phone number",
         keyboardType = KeyboardType.Phone,
@@ -75,7 +75,7 @@ fun StoreForm(
     )
 
     TextFieldCustom(
-        enabled = !state.loading,
+        enabled = !state.isLoading,
         title = "Address Detail",
         hint = "Input your store address (e.g. Jl. Garuda A9)",
         keyboardType = KeyboardType.Text,

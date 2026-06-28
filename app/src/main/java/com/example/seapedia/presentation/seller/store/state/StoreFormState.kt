@@ -1,27 +1,27 @@
 package com.example.seapedia.presentation.seller.store.state
 
 import android.net.Uri
-import com.example.seapedia.domain.entities.RegionEntity
+import com.example.seapedia.domain.entities.Region
 
 interface StoreFormState {
     val name: String
     val address: String
     val phoneNumber: String
 
-    val provinceList: List<RegionEntity>
-    val cityList: List<RegionEntity>
-    val districtList: List<RegionEntity>
-    val villageList: List<RegionEntity>
+    val provinceList: List<Region>
+    val cityList: List<Region>
+    val districtList: List<Region>
+    val villageList: List<Region>
 
     val image: Uri?
     val imageUrl: String?
 
-    val province: RegionEntity?
-    val city: RegionEntity?
-    val district: RegionEntity?
-    val village: RegionEntity?
+    val province: Region?
+    val city: Region?
+    val district: Region?
+    val village: Region?
 
-    val loading: Boolean
+    val isLoading: Boolean
 
     val provinceLoading: Boolean
     val cityLoading: Boolean

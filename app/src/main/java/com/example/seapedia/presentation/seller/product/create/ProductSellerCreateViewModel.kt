@@ -60,14 +60,14 @@ class ProductSellerCreateViewModel
                         ))
                         updateState {
                             copy(
-                                loading = false,
+                                isLoading = false,
                                 error = result.message
                             )
                         }
                     }
                     is CommonState.Loading<*> -> {
                         updateState {
-                            copy(loading = true)
+                            copy(isLoading = true)
                         }
                     }
                     is CommonState.Success<*> -> {
@@ -80,7 +80,7 @@ class ProductSellerCreateViewModel
                         _navigateToProductAll.emit(Unit)
                         updateState {
                             copy(
-                                loading = false
+                                isLoading = false
                             )
                         }
                     }

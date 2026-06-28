@@ -7,7 +7,7 @@ interface ProductFormState {
     val stock: String
     val types : List<CreateProductType>
 
-    val loading: Boolean
+    val isLoading: Boolean
     val error: String
 
     val nameError: Boolean

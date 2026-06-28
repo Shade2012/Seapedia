@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.seapedia.data.remote.body.CreateProductBody
 import com.example.seapedia.data.remote.body.CreateProductType
 import com.example.seapedia.data.remote.body.CreateProductTypeItem
-import com.example.seapedia.domain.entities.ProductEntity
+import com.example.seapedia.domain.entities.Product
 import com.example.seapedia.domain.entities.toCreateProductType
 import com.example.seapedia.domain.usecases.product.GetDetailProductUseCase
 import com.example.seapedia.domain.usecases.product.UpdateProductUseCase
@@ -49,7 +49,7 @@ class ProductSellerUpdateViewModel
     private fun getProductDetail(id: Int){
         viewModelScope.launch {
             updateState {
-                copy(loading = true)
+                copy(isLoading = true)
             }
             getDetailProductUseCase.run(id).collect {
                     result ->
@@ -57,7 +57,7 @@ class ProductSellerUpdateViewModel
                     is CommonState.Error<*> -> {
                         updateState {
                             copy(
-                                loading = false,
+                                isLoading = false,
                                 error = result.message
                             )
                         }
@@ -70,14 +70,14 @@ class ProductSellerUpdateViewModel
                     }
                     is CommonState.Loading<*> -> {
                         updateState {
-                            copy(loading = true)
+                            copy(isLoading = true)
                         }
                     }
-                    is CommonState.Success<ProductEntity> -> {
+                    is CommonState.Success<Product> -> {
                         val value = result.data
                         updateState {
                             copy(
-                                loading = false,
+                                isLoading = false,
                                 name = value.name,
                                 price = value.price.toString(),
                                 stock = value.stock.toString(),
@@ -118,14 +118,14 @@ class ProductSellerUpdateViewModel
                         ))
                         updateState {
                             copy(
-                                loading = false,
+                                isLoading = false,
                                 error = result.message
                             )
                         }
                     }
                     is CommonState.Loading<*> -> {
                         updateState {
-                            copy(loading = true)
+                            copy(isLoading = true)
                         }
                     }
                     is CommonState.Success<*> -> {
@@ -138,7 +138,7 @@ class ProductSellerUpdateViewModel
                         _navigateToProductAll.emit(Unit)
                         updateState {
                             copy(
-                                loading = false
+                                isLoading = false
                             )
                         }
                     }

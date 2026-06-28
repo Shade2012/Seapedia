@@ -24,14 +24,14 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.seapedia.R
-import com.example.seapedia.domain.entities.StoreEntity
+import com.example.seapedia.domain.entities.Store
 import com.example.seapedia.ui.theme.Dimens
 import com.example.seapedia.ui.theme.White
 
 @Composable
 fun StoreOverviewWidget(
     modifier: Modifier = Modifier,
-    store: StoreEntity
+    store: Store
 ) {
     Row(
         modifier = Modifier

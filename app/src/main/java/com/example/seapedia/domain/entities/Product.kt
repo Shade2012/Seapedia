@@ -3,18 +3,18 @@ package com.example.seapedia.domain.entities
 import com.example.seapedia.data.remote.body.CreateProductType
 import com.example.seapedia.data.remote.body.CreateProductTypeItem
 
-data class ProductEntity(
+data class Product(
     val id: Int,
     val name: String,
     val price: Int,
     val stock: Int,
     val isAvailable: Boolean,
-    val listImages: List<ProductImageEntity>,
-    val store: StoreEntity? = null,
+    val listImages: List<ProductImage>,
+    val store: Store? = null,
     val category: ProductCategoryEntity? = null,
     val types : List<ProductType>
 )
-data class ProductImageEntity(
+data class ProductImage(
     val id: Int,
     val imageUrl: String
 )

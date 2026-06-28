@@ -4,13 +4,13 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.ui.Modifier
-import com.example.seapedia.domain.entities.ReviewEntity
+import com.example.seapedia.domain.entities.Review
 import com.example.seapedia.presentation.review.widgets.ReviewCard
 
 
 fun LazyGridScope.reviewSection(
     modifier: Modifier = Modifier,
-    reviews: List<ReviewEntity>,
+    reviews: List<Review>,
     onClickAllReview: () -> Unit
 ) {
     item(

@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -30,7 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.seapedia.domain.entities.StoreEntity
+import com.example.seapedia.domain.entities.Store
 import com.example.seapedia.presentation.common.IconCustom
 import com.example.seapedia.presentation.common.ImageCustom
 import com.example.seapedia.ui.theme.Dimens
@@ -38,7 +37,7 @@ import com.example.seapedia.ui.theme.White
 
 @Composable
 fun StoreCard(
-    store: StoreEntity,
+    store: Store,
     onClick: () -> Unit
 ) {
     Card(

@@ -6,14 +6,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.seapedia.domain.entities.ReviewEntity
+import com.example.seapedia.domain.entities.Review
 import com.example.seapedia.presentation.review.widgets.ReviewCard
 import com.example.seapedia.ui.theme.Dimens
 
 @Composable
 fun ReviewAllSection(
     modifier: Modifier = Modifier,
-    reviews: List<ReviewEntity>
+    reviews: List<Review>
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),

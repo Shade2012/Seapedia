@@ -43,8 +43,8 @@ val AppTypography = Typography(
         fontFamily = monserratFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 17.sp,
-
         ),
+
     labelMedium = TextStyle(
         fontFamily = monserratFontFamily,
         fontWeight = FontWeight.Medium,

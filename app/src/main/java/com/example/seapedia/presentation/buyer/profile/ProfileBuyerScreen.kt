@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.example.seapedia.domain.entities.UserProfileEntity
+import com.example.seapedia.domain.entities.UserProfile
 import com.example.seapedia.global.navigation.NavGraph
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.presentation.buyer.profile.shimmer.ProfileBuyerShimmer
@@ -100,7 +100,7 @@ fun IconProfile(modifier: Modifier = Modifier) {
 @Composable
 fun BodyProfile(
     modifier: Modifier = Modifier,
-    user: UserProfileEntity
+    user: UserProfile
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),

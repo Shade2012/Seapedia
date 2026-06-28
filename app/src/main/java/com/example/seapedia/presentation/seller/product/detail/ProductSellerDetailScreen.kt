@@ -25,8 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.example.seapedia.domain.entities.ProductEntity
-import com.example.seapedia.domain.entities.ProductImageEntity
+import com.example.seapedia.domain.entities.Product
+import com.example.seapedia.domain.entities.ProductImage
 import com.example.seapedia.domain.entities.toCreateProductType
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.global.utils.Formatting
@@ -94,7 +94,7 @@ fun ProductSellerDetailScreen(
 
 @Composable
 fun ProductHeaderSection(
-    product: ProductEntity
+    product: Product
 ) {
     Box(
         modifier = Modifier
@@ -113,7 +113,7 @@ fun ProductHeaderSection(
 }
 @Composable
 fun ProductDetailSection(
-    product: ProductEntity
+    product: Product
 ) {
     product.category?.let {
         Text("Category : ${product.category.name}", style = MaterialTheme.typography.titleMedium)
@@ -139,7 +139,7 @@ fun ProductDetailSection(
 }
 @Composable
 fun ProductImageDetail(
-    images: List<ProductImageEntity>
+    images: List<ProductImage>
 ) {
     var showDialog by rememberSaveable { mutableStateOf(false) }
     var selectedIndex by rememberSaveable { mutableIntStateOf(0) }

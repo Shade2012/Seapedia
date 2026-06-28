@@ -1,6 +1,5 @@
 package com.example.seapedia.presentation.seller.product.all.widgets
 
-import android.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -33,18 +32,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.example.seapedia.domain.entities.ProductEntity
+import com.example.seapedia.domain.entities.Product
 import com.example.seapedia.global.utils.Formatting
-import com.example.seapedia.ui.theme.Black
 import com.example.seapedia.ui.theme.Dimens
-import com.example.seapedia.ui.theme.White
 
 @Composable
 fun ProductCard(
-    product: ProductEntity,
-    onEdit: (ProductEntity) -> Unit,
-    onDelete: (ProductEntity) -> Unit,
-    onDetail:(ProductEntity) -> Unit,
+    product: Product,
+    onEdit: (Product) -> Unit,
+    onDelete: (Product) -> Unit,
+    onDetail:(Product) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -103,8 +100,9 @@ fun ProductCard(
                 // Name
                 Text(
                     text = product.name,
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.SemiBold,
+                    style = MaterialTheme.typography.titleSmall.copy(
+                        fontWeight = FontWeight.SemiBold,
+                    ),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.padding(top = 2.dp)
@@ -113,9 +111,10 @@ fun ProductCard(
                 // Price
                 Text(
                     text =  Formatting().formatRupiah(product.price.toString()),
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary,
+                    style = MaterialTheme.typography.titleSmall.copy(
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary,
+                    ),
                     modifier = Modifier.padding(top = 4.dp)
                 )
 
@@ -126,14 +125,16 @@ fun ProductCard(
                 ) {
                     Text(
                         text = "Stock: ${product.stock}",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        ),
                     )
                     if (product.types.isNotEmpty()) {
                         Text(
                             text = "${product.types.size} types",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            style = MaterialTheme.typography.labelSmall.copy(
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            ),
                         )
                     }
                 }

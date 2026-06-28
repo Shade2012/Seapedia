@@ -56,7 +56,7 @@ fun ProductSellerUpdateScreen(
                                     item.name.isNotBlank()
                                 }
                     },
-            isNotLoading = !state.loading,
+            isNotLoading = !state.isLoading,
             title = "Update Product",
             onClick = viewModel::updateProduct
         )
@@ -73,7 +73,7 @@ fun ProductSellerUpdateScreen(
 //            stock=${state.stock}
 //            images=${state.images.size}
 //            types=${state.types}
-//            loading=${state.loading}
+//            isLoading=${state.isLoading}
 //            nameError=${state.nameError}
 //            priceError=${state.priceError}
 //            stockError=${state.stockError}

@@ -2,12 +2,10 @@ package com.example.seapedia.presentation.seller.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.seapedia.domain.entities.UserProfileEntity
+import com.example.seapedia.domain.entities.UserProfile
 import com.example.seapedia.domain.usecases.auth.LogoutUseCase
 import com.example.seapedia.domain.usecases.user.GetProfileUseCase
 import com.example.seapedia.global.utils.CommonState
-import com.example.seapedia.global.utils.UserRole
-import com.example.seapedia.global.utils.session.SessionRepository
 import com.example.seapedia.global.utils.ui.AppEventBus
 import com.example.seapedia.global.utils.ui.CustomSnackbarVisuals
 import com.example.seapedia.global.utils.ui.SnackbarType
@@ -28,7 +26,7 @@ class ProfileSellerViewModel @Inject constructor(
     private val logoutUseCase: LogoutUseCase
 
 ) : ViewModel() {
-    private val _state = MutableStateFlow<CommonState<UserProfileEntity>>(CommonState.Loading())
+    private val _state = MutableStateFlow<CommonState<UserProfile>>(CommonState.Loading())
     private val _navigateToLogin = MutableSharedFlow<Unit>()
     val navigateToAuth = _navigateToLogin.asSharedFlow()
     val state = _state.asStateFlow()
@@ -63,7 +61,7 @@ class ProfileSellerViewModel @Inject constructor(
                     is CommonState.Loading<*> -> {
                         _state.emit(CommonState.Loading())
                     }
-                    is CommonState.Success<UserProfileEntity> -> {
+                    is CommonState.Success<UserProfile> -> {
                         _state.emit(result)
                     }
                 }
