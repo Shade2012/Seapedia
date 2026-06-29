@@ -16,6 +16,7 @@ import com.example.seapedia.presentation.buyer.home.HomeBuyerScreen
 import com.example.seapedia.presentation.buyer.profile.ProfileBuyerScreen
 import com.example.seapedia.presentation.buyer.product.ProductDetailBuyerScreen
 import com.example.seapedia.presentation.buyer.profile.phone.UpdatePhoneNumberScreen
+import com.example.seapedia.presentation.buyer.topup.TopUpScreen
 
 
 @Composable
@@ -124,6 +125,14 @@ fun BuyerNavHost(
         ) { backStackEntry ->
             AddCartItemScreen(
                 buyerNavController = buyerNavController,
+            )
+        }
+
+        composable(
+            route = BuyerRoute.TopUp.route,
+        ) {
+            TopUpScreen(
+                buyerNavController = buyerNavController
             )
         }
     }

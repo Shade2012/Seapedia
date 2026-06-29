@@ -19,5 +19,12 @@ fun NavGraphBuilder.sellerGraph(
         composable (SellerRoute.MainNavigation.route){
             MainSellerScreen(rootNavController = navController)
         }
+
+        composable(SellerRoute.SellerOrderRoute.route) {
+            MainSellerScreen(
+                rootNavController = navController,
+                startDestination = SellerRoute.Order.route
+            )
+        }
     }
 }

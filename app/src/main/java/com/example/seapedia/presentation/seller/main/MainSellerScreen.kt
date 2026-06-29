@@ -14,6 +14,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.seapedia.global.navigation.seller.SellerNavHost
 import com.example.seapedia.global.navigation.seller.SellerRoute
+import com.example.seapedia.global.utils.UserRole
 import com.example.seapedia.presentation.common.AlertDialogCustom
 import com.example.seapedia.presentation.common.CommonFloatingActionButton
 import com.example.seapedia.presentation.seller.main.widgets.BottomSellerBar
@@ -21,9 +22,11 @@ import com.example.seapedia.presentation.seller.main.widgets.BottomSellerBar
 @Composable
 fun MainSellerScreen(
     rootNavController: NavHostController,
+    startDestination:String? = null,
     mainSellerViewModel: MainSellerViewModel = hiltViewModel<MainSellerViewModel>()
 ) {
     val sellerNavController = rememberNavController()
+    val role = mainSellerViewModel.state.value.role ?: UserRole.Buyer
     val showDialog by mainSellerViewModel.showInvalidStoreDialog.collectAsState()
     val isValidStore by mainSellerViewModel.validState.collectAsState()
 
@@ -49,11 +52,11 @@ fun MainSellerScreen(
     Scaffold(
         bottomBar = {
             if (
-                currentRoute == SellerRoute.Home.route ||
+                (currentRoute == SellerRoute.Home.route ||
                 currentRoute == SellerRoute.Order.route ||
                 currentRoute == SellerRoute.ProductList.route ||
                 currentRoute == SellerRoute.Store.route ||
-                currentRoute == SellerRoute.Profile.route
+                currentRoute == SellerRoute.Profile.route) && role == UserRole.Seller
             ) {
                 BottomSellerBar(
                     navController = sellerNavController
@@ -80,7 +83,8 @@ fun MainSellerScreen(
             sellerNavController = sellerNavController,
             rootNavController = rootNavController,
             modifier = Modifier.padding(padding),
-            mainSellerViewModel = mainSellerViewModel
+            mainSellerViewModel = mainSellerViewModel,
+            startDestination = startDestination ?: SellerRoute.Home.route
         )
     }
 }

@@ -3,6 +3,7 @@ package com.example.seapedia.presentation.seller.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.seapedia.domain.usecases.store.GetCheckValidationStoreUseCase
+import com.example.seapedia.global.utils.UserRole
 import com.example.seapedia.global.utils.session.SessionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,6 +28,9 @@ class MainSellerViewModel @Inject constructor(
     }
     fun getValid(){
         viewModelScope.launch {
+            if(state.value.role != UserRole.Seller){
+                return@launch
+            }
             val isValid = getCheckValidationStoreUseCase.run()
             if (!isValid) {
                 _showInvalidStoreDialog.value = true

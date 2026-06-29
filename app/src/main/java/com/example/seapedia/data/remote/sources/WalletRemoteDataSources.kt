@@ -1,5 +1,7 @@
 package com.example.seapedia.data.remote.sources
 
+import com.example.seapedia.data.remote.body.TopUpBody
+import com.example.seapedia.data.remote.responses.BaseMessage
 import com.example.seapedia.data.remote.responses.BaseResponse
 import com.example.seapedia.data.remote.responses.wallet.WalletResponse
 import com.example.seapedia.data.remote.responses.wallet.WalletTransactionResponse
@@ -16,4 +18,5 @@ class WalletRemoteDataSources @Inject constructor(
 
     suspend fun getRevenue(): BaseResponse<Int> = walletService.getRevenue()
     suspend fun getWalletTransaction(): BaseResponse<List<WalletTransactionResponse>> = walletService.getWalletTransactions()
+    suspend fun topUp( body: TopUpBody): BaseMessage = walletService.topUp(body)
 }

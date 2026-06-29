@@ -31,6 +31,7 @@ import com.example.seapedia.data.remote.responses.order.OrderStatus
 import com.example.seapedia.domain.entities.Order
 import com.example.seapedia.domain.entities.OrderItem
 import com.example.seapedia.global.utils.TimeFormatting
+import com.example.seapedia.global.utils.UserRole
 import com.example.seapedia.presentation.common.IconCustom
 import com.example.seapedia.ui.theme.Dimens
 import com.example.seapedia.ui.theme.ErrorColor
@@ -45,6 +46,7 @@ import kotlin.time.ExperimentalTime
 fun OrderCard(
     order: Order,
     onClick: () -> Unit,
+    role: UserRole,
     onUpdateStatus: (Order) -> Unit = {}
 ) {
     val textColor = when (order.status) {
@@ -124,7 +126,7 @@ fun OrderCard(
                         color = iconColor
                     )
                 }
-                if(order.status == OrderStatus.PROCCESS)
+                if(order.status == OrderStatus.PROCCESS && role == UserRole.Seller)
                     IconButton(
                         onClick = { onUpdateStatus(order) }
                     ) {

@@ -38,6 +38,7 @@ import androidx.navigation.NavController
 import com.example.seapedia.domain.entities.UserProfile
 import com.example.seapedia.global.navigation.NavGraph
 import com.example.seapedia.global.navigation.buyer.BuyerRoute
+import com.example.seapedia.global.navigation.seller.SellerRoute
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.global.utils.UserRole
 import com.example.seapedia.presentation.buyer.profile.shimmer.ProfileBuyerShimmer
@@ -112,6 +113,12 @@ fun ProfileBuyerScreen(
                     },
                     onClickWallet = {
                         rootNavController.navigate(NavGraph.WALLET_TRANSACTIONS)
+                    },
+                    onClickTopUp = {
+                        buyerNavController.navigate(BuyerRoute.TopUp.route)
+                    },
+                    onClickOrder = {
+                        rootNavController.navigate(SellerRoute.SellerOrderRoute.route)
                     }
                 )
                 LogoutSection {
@@ -150,7 +157,9 @@ fun BodyProfile(
     isGuest: Boolean,
     onClickAddress : () -> Unit = {},
     onClickPhone : (String) -> Unit = {},
-    onClickWallet : () -> Unit = {}
+    onClickWallet : () -> Unit = {},
+    onClickTopUp : () -> Unit = {},
+    onClickOrder: () -> Unit ={}
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -234,6 +243,26 @@ fun BodyProfile(
                     content = {
                         Text(
                             text = "Wallet Transactions",
+                            style = MaterialTheme.typography.labelLarge
+                        )
+                    }
+                )
+                HorizontalDivider()
+                ProfileButtonField(
+                    onClick = onClickTopUp,
+                    content = {
+                        Text(
+                            text = "Top Up",
+                            style = MaterialTheme.typography.labelLarge
+                        )
+                    }
+                )
+                HorizontalDivider()
+                ProfileButtonField(
+                    onClick = onClickOrder,
+                    content = {
+                        Text(
+                            text = "Order",
                             style = MaterialTheme.typography.labelLarge
                         )
                     }

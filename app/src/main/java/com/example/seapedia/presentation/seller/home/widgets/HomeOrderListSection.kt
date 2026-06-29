@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.seapedia.domain.entities.Order
+import com.example.seapedia.global.utils.UserRole
 import com.example.seapedia.presentation.common.EmptyCommonCustom
 import com.example.seapedia.presentation.seller.order.all.widgets.OrderCard
 import com.example.seapedia.ui.theme.Dimens
@@ -23,6 +24,7 @@ import com.example.seapedia.ui.theme.Dimens
 fun HomeOrderListSection(
     orders: List<Order>,
     onClick: (Order) -> Unit,
+    role: UserRole,
     onUpdateStatus: (Order) -> Unit = {}
 ) {
     Box(
@@ -59,6 +61,7 @@ fun HomeOrderListSection(
                         onClick = {
                             onClick(order)
                         },
+                        role = role,
                         onUpdateStatus = onUpdateStatus
                     )
                 }

@@ -20,6 +20,7 @@ import androidx.navigation.NavController
 import com.example.seapedia.data.remote.responses.order.OrderStatus
 import com.example.seapedia.domain.entities.Order
 import com.example.seapedia.global.utils.CommonState
+import com.example.seapedia.global.utils.UserRole
 import com.example.seapedia.presentation.common.ButtonCustom
 import com.example.seapedia.presentation.common.FailedCommonCustom
 import com.example.seapedia.presentation.common.TopAppBarCustom
@@ -38,6 +39,7 @@ fun OrderSellerDetailScreen(
     sellerNavController: NavController,
     viewModel: OrderSellerDetailViewModel = hiltViewModel<OrderSellerDetailViewModel>()
 ) {
+    val role = viewModel.sessionState.value.role ?: UserRole.Guest
     val scrollState = rememberScrollState()
     val state = viewModel.state.collectAsStateWithLifecycle().value
     var orderToEdit by rememberSaveable {
@@ -77,7 +79,7 @@ fun OrderSellerDetailScreen(
                     state.orderHistories is CommonState.Success -> {
                 val order = state.order.data
                 val histories = state.orderHistories.data
-                if(order.status == OrderStatus.PROCCESS)
+                if(order.status == OrderStatus.PROCCESS && role == UserRole.Seller)
                     ButtonCustom(
                         enabled = !state.isLoading,
                         title = "Update Status",

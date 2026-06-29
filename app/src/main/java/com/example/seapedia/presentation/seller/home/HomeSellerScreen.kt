@@ -15,6 +15,7 @@ import com.example.seapedia.domain.entities.Order
 import com.example.seapedia.global.navigation.NavGraph
 import com.example.seapedia.global.navigation.seller.SellerRoute
 import com.example.seapedia.global.utils.CommonState
+import com.example.seapedia.global.utils.UserRole
 import com.example.seapedia.presentation.common.BalanceSection
 import com.example.seapedia.presentation.common.FailedCommonCustom
 import com.example.seapedia.presentation.seller.home.shimmer.BalanceSectionShimmer
@@ -30,19 +31,13 @@ fun HomeSellerScreen(
     navController: NavController,
     viewModel: HomeSellerViewModel = hiltViewModel<HomeSellerViewModel>()
 ) {
+    val role = viewModel.sessionState.value.role ?: UserRole.Guest
     val state = viewModel.state.collectAsStateWithLifecycle().value
     var orderToEdit by rememberSaveable {
         mutableStateOf<Order?>(null)
     }
 
     val scrollState = rememberScrollState()
-//    LaunchedEffect(Unit) {
-//        profileBuyerViewModel.navigateToBuyer.collect {
-//            rootNavController.navigate(NavGraph.AUTH){
-//                popUpTo(0)
-//            }
-//        }
-//    }
     SellerBody(
         scrollState,
         isRefreshing = state.isRefreshing,
@@ -86,6 +81,7 @@ fun HomeSellerScreen(
                     onClick = {
                         rootNavController.navigate(SellerRoute.OrderDetail.createRoute(it.id))
                     },
+                    role = role,
                     onUpdateStatus = {
                         orderToEdit = it
                     }

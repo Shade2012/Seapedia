@@ -23,6 +23,7 @@ import com.example.seapedia.data.remote.responses.order.OrderStatus
 import com.example.seapedia.domain.entities.Order
 import com.example.seapedia.global.navigation.seller.SellerRoute
 import com.example.seapedia.global.utils.CommonState
+import com.example.seapedia.global.utils.UserRole
 import com.example.seapedia.presentation.auth.login.widgets.DropdownCustom
 import com.example.seapedia.presentation.common.EmptyCommonCustom
 import com.example.seapedia.presentation.common.FailedCommonCustom
@@ -40,6 +41,7 @@ fun OrderSellerScreen(
     modifier: Modifier = Modifier,
     viewModel: OrderSellerViewModel = hiltViewModel()
 ) {
+    val role = viewModel.sessionState.value.role ?: UserRole.Guest
     val state = viewModel.state.collectAsStateWithLifecycle().value
     val listState = rememberLazyGridState()
     var orderToEdit by rememberSaveable {
@@ -120,6 +122,7 @@ fun OrderSellerScreen(
                                 onClick = {
                                     sellerNavController.navigate(SellerRoute.OrderDetail.createRoute(order.id))
                                 },
+                                role = role,
                                 onUpdateStatus = {
                                     orderToEdit = order
                                 }
@@ -130,6 +133,7 @@ fun OrderSellerScreen(
                             title = "Proccess",
                             orders = state.processOrder,
                             sellerNavController = sellerNavController,
+                            role = role,
                             onUpdate = {
                              orderToEdit = it
                             }
@@ -139,6 +143,7 @@ fun OrderSellerScreen(
                             title = "Waiting Driver",
                             orders = state.waitingDriverOrder,
                             sellerNavController = sellerNavController,
+                            role = role,
                             onUpdate = {
                                 orderToEdit = it
                             }
@@ -148,6 +153,7 @@ fun OrderSellerScreen(
                             title = "On Way",
                             orders = state.onWayOrder,
                             sellerNavController = sellerNavController,
+                            role = role,
                             onUpdate = {
                                 orderToEdit = it
                             }
@@ -157,6 +163,7 @@ fun OrderSellerScreen(
                             title = "Done",
                             orders = state.doneOrder,
                             sellerNavController = sellerNavController,
+                            role = role,
                             onUpdate = {
                                 orderToEdit = it
                             }
@@ -166,6 +173,7 @@ fun OrderSellerScreen(
                             title = "Returned",
                             orders = state.returnOrder,
                             sellerNavController = sellerNavController,
+                            role = role,
                             onUpdate = {
                                 orderToEdit = it
                             }

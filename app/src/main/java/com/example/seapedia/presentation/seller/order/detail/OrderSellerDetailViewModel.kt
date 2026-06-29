@@ -8,6 +8,7 @@ import com.example.seapedia.domain.usecases.order.GetOrderHistoriesUseCase
 import com.example.seapedia.domain.usecases.order.UpdateHistoryUseCase
 import com.example.seapedia.global.navigation.seller.SellerRoute
 import com.example.seapedia.global.utils.CommonState
+import com.example.seapedia.global.utils.session.SessionRepository
 import com.example.seapedia.global.utils.ui.AppEventBus
 import com.example.seapedia.global.utils.ui.CustomSnackbarVisuals
 import com.example.seapedia.global.utils.ui.SnackbarType
@@ -24,12 +25,15 @@ import javax.inject.Inject
 @HiltViewModel
 class OrderSellerDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    private val sessionRepository: SessionRepository,
     private val getDetailOrderUseCase: GetDetailOrderUseCase,
     private val getOrderHistoriesUseCase: GetOrderHistoriesUseCase,
     private val updateHistoryUseCase: UpdateHistoryUseCase,
 ): ViewModel(){
     private val _state = MutableStateFlow<OrderSellerDetailState>(OrderSellerDetailState())
     val state = _state.asStateFlow()
+
+    val sessionState = sessionRepository.sessionState
 
     private val _refreshOrderAll = MutableSharedFlow<Unit>()
     val refreshOrderAll = _refreshOrderAll.asSharedFlow()

@@ -2,6 +2,7 @@ package com.example.seapedia.global.navigation.seller
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -27,12 +28,13 @@ fun SellerNavHost(
     sellerNavController: NavHostController,
     rootNavController: NavHostController,
     mainSellerViewModel: MainSellerViewModel,
+    startDestination: String,
     modifier: Modifier = Modifier
 ) {
 
     NavHost(
         navController = sellerNavController,
-        startDestination = SellerRoute.Home.route,
+        startDestination = startDestination,
         modifier = modifier
     ) {
 

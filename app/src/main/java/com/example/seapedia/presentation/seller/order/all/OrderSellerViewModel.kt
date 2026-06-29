@@ -7,6 +7,7 @@ import com.example.seapedia.data.remote.responses.order.OrderStatus
 import com.example.seapedia.domain.usecases.order.GetAllOrderUseCase
 import com.example.seapedia.domain.usecases.order.UpdateHistoryUseCase
 import com.example.seapedia.global.utils.CommonState
+import com.example.seapedia.global.utils.session.SessionRepository
 import com.example.seapedia.global.utils.ui.AppEventBus
 import com.example.seapedia.global.utils.ui.CustomSnackbarVisuals
 import com.example.seapedia.global.utils.ui.SnackbarType
@@ -22,11 +23,14 @@ import kotlin.collections.orEmpty
 
 @HiltViewModel
 class OrderSellerViewModel @Inject constructor(
+    val sessionRepository: SessionRepository,
     private val getAllOrderUseCase: GetAllOrderUseCase,
     private val updateHistoryUseCase: UpdateHistoryUseCase
 ) : ViewModel(){
     private val _state = MutableStateFlow<OrderSellerState>(OrderSellerState())
     val state = _state.asStateFlow()
+
+    val sessionState = sessionRepository.sessionState
 
     init {
         getOrders()

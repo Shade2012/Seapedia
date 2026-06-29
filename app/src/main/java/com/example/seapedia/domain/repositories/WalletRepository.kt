@@ -1,5 +1,6 @@
 package com.example.seapedia.domain.repositories
 
+import com.example.seapedia.data.remote.body.TopUpBody
 import com.example.seapedia.domain.entities.Wallet
 import com.example.seapedia.domain.entities.WalletTransaction
 import com.example.seapedia.global.utils.CommonState
@@ -11,4 +12,5 @@ interface WalletRepository {
     suspend fun getRevenue(): Flow<CommonState<Int>>
 
     suspend fun getWalletTransactions() : Flow<CommonState<List<WalletTransaction>>>
+    suspend fun topUp(body: TopUpBody) : Flow<CommonState<String>>
 }

@@ -12,12 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.seapedia.domain.entities.Order
 import com.example.seapedia.global.navigation.seller.SellerRoute
+import com.example.seapedia.global.utils.UserRole
 
 
 fun LazyGridScope.orderListSection(
     title: String,
     orders: List<Order>,
     onUpdate:(Order) -> Unit,
+    role: UserRole,
     sellerNavController: NavController
 ) {
     if (orders.isEmpty()) return
@@ -46,6 +48,7 @@ fun LazyGridScope.orderListSection(
             onClick = {
                 sellerNavController.navigate(SellerRoute.OrderDetail.createRoute(order.id))
             },
+            role = role,
             onUpdateStatus = onUpdate
         )
     }

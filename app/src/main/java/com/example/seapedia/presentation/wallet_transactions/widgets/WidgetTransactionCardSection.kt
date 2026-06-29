@@ -1,6 +1,8 @@
 package com.example.seapedia.presentation.wallet_transactions.widgets
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -60,6 +62,10 @@ fun WalletTransactionSection(
                     onClick = { onClick(it) }
                 )
             }
+        }
+
+        item {
+            Spacer(Modifier.height(Dimens.InnerPadding))
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.seapedia.global.navigation.seller
 
 sealed class SellerRoute(val route: String,val name: String){
+    object SellerOrderRoute : SellerRoute("seller_order_root","seller_order_root_screen")
     object Home : SellerRoute("home_seller","home_seller_screen")
     object Store : SellerRoute("store_seller","home_seller_screen")
     object Profile : SellerRoute("profile_seller", name = "profile_seller_screen")

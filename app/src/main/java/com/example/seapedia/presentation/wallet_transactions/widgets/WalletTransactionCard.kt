@@ -32,7 +32,7 @@ fun WalletTransactionCard(
 
     val isIncome =
         transaction.receiver == userId &&
-                transaction.sender != userId
+                (transaction.sender != userId || transaction.sender == userId)
 
     val background =
         if (isIncome)

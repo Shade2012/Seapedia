@@ -8,6 +8,7 @@ import com.example.seapedia.domain.usecases.order.GetAllOrderUseCase
 import com.example.seapedia.domain.usecases.order.UpdateHistoryUseCase
 import com.example.seapedia.domain.usecases.wallet.GetRevenueUseCase
 import com.example.seapedia.global.utils.CommonState
+import com.example.seapedia.global.utils.session.SessionRepository
 import com.example.seapedia.global.utils.ui.AppEventBus
 import com.example.seapedia.global.utils.ui.CustomSnackbarVisuals
 import com.example.seapedia.global.utils.ui.SnackbarType
@@ -24,10 +25,12 @@ import javax.inject.Inject
 class HomeSellerViewModel @Inject constructor(
     private val getRevenueUseCase: GetRevenueUseCase,
     private val getAllOrderUseCase: GetAllOrderUseCase,
-    private val updateHistoryUseCase: UpdateHistoryUseCase
+    private val updateHistoryUseCase: UpdateHistoryUseCase,
+    private val sessionRepository: SessionRepository
 ): ViewModel(){
     private val _state = MutableStateFlow(HomeSellerScreenState())
     val state = _state.asStateFlow()
+    val sessionState = sessionRepository.sessionState
 
     init {
         initLoadData()
