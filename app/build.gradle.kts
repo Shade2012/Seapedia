@@ -86,7 +86,8 @@ dependencies {
 //    Coil
     implementation(libs.io.coil.kt.coil3.coil.compose)
     implementation(libs.io.coil.kt.coil3.coil.network.okhttp)
-
+//    FlowRow
+    implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))

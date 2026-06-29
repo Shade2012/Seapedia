@@ -46,7 +46,9 @@ class OrderRawMapper : Mapper<OrderResponse, Order>{
             createdAt = Instant.parse(item.createdAt),
             orderAddress = OrderAddressRawMapper().mapFromResponse(item.orderAddressResponse),
             store = StoreRawMapper().mapFromResponse(item.store),
-            driver = JobMapperRawToDriver().mapFromResponse(type.jobResponse),
+            driver = type.jobResponse?.let {
+                JobMapperRawToDriver().mapFromResponse(type.jobResponse)
+            },
             orderItems = item.orderItemResponses.map {
                 OrderItemMapper().mapFromResponse(it)
             }

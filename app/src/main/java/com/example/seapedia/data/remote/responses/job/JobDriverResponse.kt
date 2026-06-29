@@ -1,18 +1,18 @@
-package com.example.seapedia.data.remote.responses
+package com.example.seapedia.data.remote.responses.job
 
 import com.example.seapedia.data.remote.responses.order.OrderResponse
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class JobResponse(
-    val id:Int,
+data class JobDriverResponse(
+    val id: Int,
+    val earning: Int,
     @SerialName("expired_date")
     val expiredDate: String,
-    @SerialName("created_at")
-    val createdAt: String,
-    val earning:Int,
     @SerialName("is_done")
     val isDone: Boolean,
-    val driver: DriverResponse?
+    @SerialName("created_at")
+    val createdAt: String,
+    val order : OrderResponse
 )

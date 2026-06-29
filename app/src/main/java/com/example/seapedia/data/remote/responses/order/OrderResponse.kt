@@ -36,7 +36,7 @@ data class OrderResponse @OptIn(ExperimentalTime::class) constructor(
     @SerialName("order_items")
     val orderItemResponses : List<OrderItemResponse>,
     @SerialName("job")
-    val jobResponse: JobResponse,
+    val jobResponse: JobResponse? = null,
     @SerialName("order_address")
     val orderAddressResponse: OrderAddressResponse,
     val store: StoreResponse

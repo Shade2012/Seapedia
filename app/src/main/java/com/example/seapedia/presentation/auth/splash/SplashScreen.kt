@@ -65,7 +65,11 @@ fun SplashScreen(
                 }
             }
             UserRole.Driver -> {
-                navController.navigate(NavGraph.DRIVER)
+                navController.navigate(NavGraph.DRIVER){
+                    popUpTo(NavGraph.AUTH){
+                        inclusive = true
+                    }
+                }
             }
             UserRole.Admin -> {
                 navController.navigate(NavGraph.ADMIN)

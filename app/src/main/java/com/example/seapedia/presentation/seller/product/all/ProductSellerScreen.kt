@@ -1,6 +1,5 @@
 package com.example.seapedia.presentation.seller.product.all
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

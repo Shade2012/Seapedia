@@ -8,6 +8,8 @@ object NetworkConstant {
     const val ORDERS = "orders"
     const val SELLERS = "seller"
     const val BUYER = "buyer"
+    const val DRIVER = "driver"
+    const val JOB = "job"
     const val ADDRESS = "addresses"
     const val CART = "carts"
     const val USERS = "users"

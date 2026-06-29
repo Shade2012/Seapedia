@@ -75,7 +75,6 @@ class AddRoleViewModel @Inject constructor(
                     }
                 }
             }
-            _isSuccess.emit(Unit)
             updateState {
                 copy(
                     isLoading = false

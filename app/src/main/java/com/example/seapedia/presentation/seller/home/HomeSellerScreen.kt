@@ -1,5 +1,6 @@
 package com.example.seapedia.presentation.seller.home
 
+import android.util.Log
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -71,6 +72,7 @@ fun HomeSellerScreen(
         }
         when (state.orders) {
             is CommonState.Error<*> -> {
+                Log.d("Common State Error",state.orders.message)
                 FailedCommonCustom(text = state.orders.message)
             }
 
@@ -82,7 +84,7 @@ fun HomeSellerScreen(
                 HomeOrderListSection(
                     orders = state.orders.data,
                     onClick = {
-                        rootNavController.navigate(SellerRoute.OrderDetail.createRoute(it.id))
+                        navController.navigate(SellerRoute.OrderDetail.createRoute(it.id))
                     },
                     daySystem = state.daySystem ?: Clock.System.now(),
                     role = role,
