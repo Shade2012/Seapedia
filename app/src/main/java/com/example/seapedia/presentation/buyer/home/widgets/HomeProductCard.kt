@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -21,13 +20,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.seapedia.domain.entities.Product
-import com.example.seapedia.global.utils.Formatting
-import com.example.seapedia.global.utils.cartitems.CartItemRepository
 import com.example.seapedia.presentation.buyer.widgets.AddToCartSection
 import com.example.seapedia.presentation.buyer.widgets.ProductPrice
 import com.example.seapedia.presentation.common.ImageCustom
 import com.example.seapedia.ui.theme.Dimens
-import com.example.seapedia.ui.theme.White
 
 
 @Composable

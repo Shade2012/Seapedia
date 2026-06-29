@@ -6,7 +6,7 @@ import com.example.seapedia.domain.usecases.buyer.CheckValidBuyerUseCase
 import com.example.seapedia.domain.usecases.carts.GetCartUseCase
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.global.utils.UserRole
-import com.example.seapedia.global.utils.cartitems.CartItemRepository
+import com.example.seapedia.global.utils.cart_items.CartItemRepository
 import com.example.seapedia.global.utils.session.SessionRepository
 import com.example.seapedia.global.utils.ui.AppEventBus
 import com.example.seapedia.global.utils.ui.CustomSnackbarVisuals
@@ -14,9 +14,7 @@ import com.example.seapedia.global.utils.ui.SnackbarType
 import com.example.seapedia.global.utils.ui.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject

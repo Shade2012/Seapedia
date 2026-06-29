@@ -8,7 +8,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import com.example.seapedia.R
 import com.example.seapedia.domain.entities.OrderItem
 import com.example.seapedia.domain.entities.OrderItemType
 import com.example.seapedia.global.utils.Formatting
@@ -21,13 +25,18 @@ import kotlin.collections.forEach
 fun OrderItemCard(
     orderItem: OrderItem
 ) {
+    val listImage = orderItem.product.listImages
+    val image = if(listImage.isNotEmpty()) listImage[0].imageUrl else null
+    val productPrice = orderItem.product.price - orderItem.promoDiscount
+    val subTotalPrice = productPrice * orderItem.quantity
     Column (
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(Dimens.SpacePadding)
     ) {
         ImageCustom(
             contentDescription = "Image Product",
-            imageUrl = orderItem.product.listImages[0].imageUrl
+            imageUrl =  image,
+            painter = painterResource(R.drawable.default_image)
         )
         Column(
             verticalArrangement = Arrangement.spacedBy(Dimens.SpacePadding)
@@ -35,15 +44,23 @@ fun OrderItemCard(
             Text(orderItem.product.name, style = MaterialTheme.typography.bodyMedium)
             OrderItemTypeSection(orderItem.orderItemType)
         }
+        if(orderItem.promoDiscount > 0){
+            Text(
+                text = "Promo = ${Formatting().formatRupiah(orderItem.promoDiscount.toString())}",
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    fontWeight = FontWeight.SemiBold
+                )
+            )
+        }
         Row {
             Text(
-                text = Formatting().formatRupiah(orderItem.subTotal.toString()),
+                text = Formatting().formatRupiah(subTotalPrice.toString()),
                 style = MaterialTheme.typography.bodyMedium.copy(
                     fontWeight = FontWeight.SemiBold
                 )
             )
             Text(
-                text = " = ${Formatting().formatRupiah((orderItem.product.price - orderItem.promoDiscount).toString())} x ${orderItem.quantity}",
+                text = " = ${Formatting().formatRupiah((productPrice).toString())} x ${orderItem.quantity}",
                 style = MaterialTheme.typography.bodyMedium.copy(
                     fontWeight = FontWeight.SemiBold
                 )

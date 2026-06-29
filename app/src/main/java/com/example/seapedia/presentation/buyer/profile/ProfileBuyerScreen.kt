@@ -60,12 +60,23 @@ fun ProfileBuyerScreen(
     val state = profileBuyerViewModel.state.collectAsStateWithLifecycle().value
     val scrollState = rememberScrollState()
     val refresh = buyerNavController.currentBackStackEntry?.savedStateHandle?.getStateFlow("refresh_profile",false)
+    val refreshRoot = rootNavController.currentBackStackEntry?.savedStateHandle?.getStateFlow("refresh_profile",false)
 
     LaunchedEffect(refresh) {
         refresh?.collect { shouldRefresh ->
             if (shouldRefresh) {
                 profileBuyerViewModel.getProfile()
                 buyerNavController.currentBackStackEntry
+                    ?.savedStateHandle
+                    ?.set("refresh_profile", false)
+            }
+        }
+    }
+    LaunchedEffect(refreshRoot) {
+        refreshRoot?.collect { shouldRefresh ->
+            if (shouldRefresh) {
+                profileBuyerViewModel.getProfile()
+                rootNavController.currentBackStackEntry
                     ?.savedStateHandle
                     ?.set("refresh_profile", false)
             }
@@ -119,6 +130,9 @@ fun ProfileBuyerScreen(
                     },
                     onClickOrder = {
                         rootNavController.navigate(SellerRoute.SellerOrderRoute.route)
+                    },
+                    onClickAddRole = {
+                        rootNavController.navigate(NavGraph.ADD_ROLE)
                     }
                 )
                 LogoutSection {
@@ -159,7 +173,8 @@ fun BodyProfile(
     onClickPhone : (String) -> Unit = {},
     onClickWallet : () -> Unit = {},
     onClickTopUp : () -> Unit = {},
-    onClickOrder: () -> Unit ={}
+    onClickOrder: () -> Unit ={},
+    onClickAddRole : () -> Unit = {},
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -193,11 +208,22 @@ fun BodyProfile(
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary
             )
-
             Text(
                 text = user.listRoles.joinToString(", ") { it.name },
                 style = MaterialTheme.typography.bodyMedium
             )
+            if(!isGuest){
+                HorizontalDivider()
+                ProfileButtonField(
+                    onClick = onClickAddRole,
+                    content = {
+                        Text(
+                            text = "Add Role",
+                            style = MaterialTheme.typography.labelLarge
+                        )
+                    }
+                )
+            }
 
             if(!isGuest && currentRole == UserRole.Buyer){
                 HorizontalDivider()

@@ -17,6 +17,8 @@ sealed class BuyerRoute(val route: String,val name: String){
     }
 
     object TopUp : BuyerRoute("top_up","top_up_screen")
+
+    object OrderCheckout : BuyerRoute("order_check_out","order_check_out_screen")
     object BuyerAddress : BuyerRoute("buyer_address","buyer_address_screen")
     object BuyerCreateAddress : BuyerRoute("buyer_create_address","buyer_create_address_screen")
     object BuyerUpdateAddress : BuyerRoute("buyer_update_address/{addressId}", name = "buyer_update_address"){

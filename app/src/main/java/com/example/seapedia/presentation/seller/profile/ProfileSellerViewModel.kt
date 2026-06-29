@@ -42,7 +42,7 @@ class ProfileSellerViewModel @Inject constructor(
             _navigateToLogin.emit(Unit)
         }
     }
-    private fun getProfile(){
+    fun getProfile(){
         viewModelScope.launch(Dispatchers.IO){
             delay(200)
             getProfileUseCase.run().collect {

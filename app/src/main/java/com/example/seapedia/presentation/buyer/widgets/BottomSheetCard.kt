@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomSheetCart(
+fun BottomSheetCard(
     visible: Boolean,
     onDismiss: () -> Unit,
     content: @Composable () -> Unit

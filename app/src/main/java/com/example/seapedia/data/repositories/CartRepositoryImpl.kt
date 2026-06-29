@@ -44,6 +44,7 @@ class CartRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getCart(): Flow<CommonState<CartResponse>> =flow{
+        emit(CommonState.Loading())
         try {
             val response = cartRemoteDataSources.getCart()
             emit(CommonState.Success<CartResponse>(data = response.data))

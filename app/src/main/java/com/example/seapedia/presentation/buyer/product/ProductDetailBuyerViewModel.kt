@@ -4,16 +4,13 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.seapedia.data.remote.body.cart.CartItemBodySend
-import com.example.seapedia.data.remote.responses.carts.CartItemResponse
-import com.example.seapedia.data.remote.responses.carts.CartResponse
 import com.example.seapedia.domain.entities.Product
-import com.example.seapedia.domain.entities.toCartItemResponse
 import com.example.seapedia.domain.usecases.carts.DeleteCartUseCase
 import com.example.seapedia.domain.usecases.carts.UpdateCartUseCase
 import com.example.seapedia.domain.usecases.product.GetDetailProductUseCase
 import com.example.seapedia.global.navigation.buyer.BuyerRoute
 import com.example.seapedia.global.utils.CommonState
-import com.example.seapedia.global.utils.cartitems.CartItemRepository
+import com.example.seapedia.global.utils.cart_items.CartItemRepository
 import com.example.seapedia.global.utils.session.SessionRepository
 import com.example.seapedia.global.utils.ui.AppEventBus
 import com.example.seapedia.global.utils.ui.CustomSnackbarVisuals

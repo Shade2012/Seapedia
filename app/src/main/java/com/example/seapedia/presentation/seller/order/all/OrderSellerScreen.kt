@@ -70,7 +70,6 @@ fun OrderSellerScreen(
             horizontalArrangement = Arrangement.spacedBy(Dimens.RowSpacePadding),
             verticalArrangement = Arrangement.spacedBy(Dimens.SpacePadding)
         ) {
-
             when (val result = state.allOrders) {
                 is CommonState.Loading -> {
                     item(span = { GridItemSpan(maxLineSpan) }) {

@@ -9,7 +9,7 @@ import com.example.seapedia.domain.usecases.carts.DeleteCartUseCase
 import com.example.seapedia.domain.usecases.carts.GetCartUseCase
 import com.example.seapedia.domain.usecases.carts.UpdateCartUseCase
 import com.example.seapedia.global.utils.CommonState
-import com.example.seapedia.global.utils.cartitems.CartItemRepository
+import com.example.seapedia.global.utils.cart_items.CartItemRepository
 import com.example.seapedia.global.utils.ui.AppEventBus
 import com.example.seapedia.global.utils.ui.CustomSnackbarVisuals
 import com.example.seapedia.global.utils.ui.SnackbarType
@@ -45,7 +45,6 @@ class CartViewModel @Inject constructor(
             )
         }
     }
-
     fun onDecrement(
         quantity: Int,
         cartItemId: Int
@@ -116,9 +115,9 @@ class CartViewModel @Inject constructor(
         }
     }
 
-    init {
-        onInit()
-    }
+//    init {
+//        onInit()
+//    }
 
     fun onRefresh(){
         onInit(true)

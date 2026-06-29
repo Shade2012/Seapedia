@@ -17,6 +17,7 @@ import com.example.seapedia.ui.theme.Dimens
 fun OrderSummaryCard(
     order: Order
 ) {
+    val voucherDiscount = order.voucherDiscount
     Column (
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(Dimens.SpacePadding)
@@ -25,6 +26,12 @@ fun OrderSummaryCard(
             title = "Sub Total",
             amount = Formatting().formatRupiah(order.subTotal.toString()),
         )
+        if(voucherDiscount > 0){
+            OrderSummaryField(
+                title = "Discount Voucher",
+                amount = Formatting().formatRupiah(voucherDiscount.toString()),
+            )
+        }
         OrderSummaryField(
             title = "Delivery Fee ${order.deliveryMethod.displayName}",
             amount = Formatting().formatRupiah(order.deliveryFee.toString()),

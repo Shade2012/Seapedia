@@ -3,14 +3,13 @@ package com.example.seapedia.presentation.buyer.cart.add
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.seapedia.data.remote.responses.carts.CartItemResponse
 import com.example.seapedia.domain.entities.Product
 import com.example.seapedia.domain.entities.toCartItemFormState
 import com.example.seapedia.domain.usecases.carts.CreateCartItemUseCase
 import com.example.seapedia.domain.usecases.product.GetDetailProductUseCase
 import com.example.seapedia.global.navigation.buyer.BuyerRoute
 import com.example.seapedia.global.utils.CommonState
-import com.example.seapedia.global.utils.cartitems.CartItemRepository
+import com.example.seapedia.global.utils.cart_items.CartItemRepository
 import com.example.seapedia.global.utils.ui.AppEventBus
 import com.example.seapedia.global.utils.ui.CustomSnackbarVisuals
 import com.example.seapedia.global.utils.ui.SnackbarType

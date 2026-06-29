@@ -1,5 +1,6 @@
 package com.example.seapedia.presentation.buyer.address.all.widgets
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -11,6 +12,8 @@ fun LazyListScope.addressSection(
     addresses: List<Address>,
     onClickUpdate: (Address) -> Unit,
     onClickDelete: (Address) -> Unit,
+    onClick : (Address) -> Unit = {},
+    enableDelete : Boolean = true
 ){
     items(
         addresses,
@@ -18,9 +21,13 @@ fun LazyListScope.addressSection(
     ){
         address ->
         AddressCard(
+            enableDelete =enableDelete,
+            modifier = Modifier.clickable{
+                onClick(address)
+            },
             address = address,
             onClickDelete = onClickDelete,
-            onClickUpdate = onClickUpdate
+            onClickUpdate = onClickUpdate,
         )
     }
 }

@@ -27,11 +27,23 @@ fun ProfileSellerScreen(
 
     val state = profileSellerViewModel.state.collectAsStateWithLifecycle().value
     val scrollState = rememberScrollState()
+    val refreshRoot = rootNavController.currentBackStackEntry?.savedStateHandle?.getStateFlow("refresh_profile",false)
 
     LaunchedEffect(Unit) {
         profileSellerViewModel.navigateToAuth.collect {
             rootNavController.navigate(NavGraph.AUTH){
                 popUpTo(0)
+            }
+        }
+    }
+
+    LaunchedEffect(refreshRoot) {
+        refreshRoot?.collect { shouldRefresh ->
+            if (shouldRefresh) {
+                profileSellerViewModel.getProfile()
+                rootNavController.currentBackStackEntry
+                    ?.savedStateHandle
+                    ?.set("refresh_profile", false)
             }
         }
     }
@@ -48,7 +60,9 @@ fun ProfileSellerScreen(
                 BodyProfile(
                     user = state.data,
                     currentRole = UserRole.Seller,
-                    onClickAddress = {},
+                    onClickAddRole = {
+                        rootNavController.navigate(NavGraph.ADD_ROLE)
+                    },
                     isGuest = false
                 )
             }

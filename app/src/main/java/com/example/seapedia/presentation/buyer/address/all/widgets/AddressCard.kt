@@ -27,9 +27,10 @@ import com.example.seapedia.ui.theme.Dimens
 @Composable
 fun AddressCard(
     address: Address,
+    modifier: Modifier = Modifier,
+    enableDelete : Boolean = true,
     onClickUpdate: (Address) -> Unit,
     onClickDelete: (Address) -> Unit,
-    modifier: Modifier = Modifier
 ) {
     OutlinedCard(
         modifier = modifier.fillMaxWidth(),
@@ -74,17 +75,18 @@ fun AddressCard(
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }
-
-                IconButton(
-                    onClick = {
-                        onClickDelete(address)
+                if(enableDelete){
+                    IconButton(
+                        onClick = {
+                            onClickDelete(address)
+                        }
+                    ) {
+                        Icon(
+                            Icons.Default.Delete,
+                            contentDescription = "Delete",
+                            tint = MaterialTheme.colorScheme.error
+                        )
                     }
-                ) {
-                    Icon(
-                        Icons.Default.Delete,
-                        contentDescription = "Delete",
-                        tint = MaterialTheme.colorScheme.error
-                    )
                 }
             }
 

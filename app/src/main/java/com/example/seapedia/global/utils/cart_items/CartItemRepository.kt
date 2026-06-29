@@ -1,13 +1,6 @@
-package com.example.seapedia.global.utils.cartitems
+package com.example.seapedia.global.utils.cart_items
 
-import android.util.Log
 import com.example.seapedia.data.remote.responses.carts.CartItemResponse
-import com.example.seapedia.data.remote.responses.carts.DiscountResponse
-import com.example.seapedia.data.remote.responses.carts.ProductImageResponse
-import com.example.seapedia.data.remote.responses.carts.ProductResponse
-import com.example.seapedia.data.remote.responses.carts.ProductTypeResponse
-import com.example.seapedia.data.remote.responses.carts.PromoResponse
-import com.example.seapedia.domain.entities.Product
 import com.example.seapedia.domain.usecases.carts.GetCartUseCase
 import com.example.seapedia.global.utils.CommonState
 import kotlinx.coroutines.CoroutineScope
@@ -15,11 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject

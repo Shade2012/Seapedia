@@ -180,7 +180,7 @@ fun CartBuyerScreen(
         onConfirm = {
             confirmAction?.let {
                 if(confirmAction == checkoutAction){
-                    Unit
+                    buyerNavController.navigate(BuyerRoute.OrderCheckout.route)
                 }
                 if (confirmAction == clearAction){
                     viewModel.onClearCart()

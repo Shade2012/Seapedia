@@ -13,6 +13,7 @@ import com.example.seapedia.presentation.buyer.address.update.BuyerAddressUpdate
 import com.example.seapedia.presentation.buyer.cart.CartBuyerScreen
 import com.example.seapedia.presentation.buyer.cart.add.AddCartItemScreen
 import com.example.seapedia.presentation.buyer.home.HomeBuyerScreen
+import com.example.seapedia.presentation.buyer.order.OrderCheckoutScreen
 import com.example.seapedia.presentation.buyer.profile.ProfileBuyerScreen
 import com.example.seapedia.presentation.buyer.product.ProductDetailBuyerScreen
 import com.example.seapedia.presentation.buyer.profile.phone.UpdatePhoneNumberScreen
@@ -132,6 +133,14 @@ fun BuyerNavHost(
             route = BuyerRoute.TopUp.route,
         ) {
             TopUpScreen(
+                buyerNavController = buyerNavController
+            )
+        }
+
+        composable(
+            route = BuyerRoute.OrderCheckout.route
+        ) {
+            OrderCheckoutScreen(
                 buyerNavController = buyerNavController
             )
         }

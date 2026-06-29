@@ -2,7 +2,9 @@ package com.example.seapedia.data.repositories
 
 import com.example.seapedia.data.remote.sources.OrderRemoteDataSources
 import com.example.seapedia.data.remote.body.OrderStatusBody
+import com.example.seapedia.data.remote.body.order.OrderBody
 import com.example.seapedia.data.remote.query.AllOrderQuery
+import com.example.seapedia.data.remote.responses.order.OrderPreviewResponse
 import com.example.seapedia.data.remote.responses.order.OrderStatus
 import com.example.seapedia.domain.entities.Order
 import com.example.seapedia.domain.entities.OrderHistory
@@ -69,6 +71,36 @@ class OrderRepositoryImpl @Inject constructor(
             val response = orderRemoteDataSources.updateOrderHistory(id, OrderStatusBody(
                 orderStatus = OrderStatus.WAITING_DRIVER
             ))
+            emit(CommonState.Success<String>(data = response.message))
+        } catch (e: retrofit2.HttpException) {
+            val message = e.getErrorMessage()
+            emit(CommonState.Error(message = message))
+        } catch (e: Exception) {
+            emit(CommonState.Error(message = e.message.toString()))
+        } catch (e: CancellationException) {
+            throw e
+        }
+    }
+
+    override suspend fun getPreview(body: OrderBody): Flow<CommonState<OrderPreviewResponse>> = flow{
+        emit(CommonState.Loading())
+        try {
+            val response = orderRemoteDataSources.getPreview(body)
+            emit(CommonState.Success<OrderPreviewResponse>(data = response.data))
+        } catch (e: retrofit2.HttpException) {
+            val message = e.getErrorMessage()
+            emit(CommonState.Error(message = message))
+        } catch (e: Exception) {
+            emit(CommonState.Error(message = e.message.toString()))
+        } catch (e: CancellationException) {
+            throw e
+        }
+    }
+
+    override suspend fun checkout(body: OrderBody): Flow<CommonState<String>> = flow{
+        emit(CommonState.Loading())
+        try {
+            val response = orderRemoteDataSources.checkout(body)
             emit(CommonState.Success<String>(data = response.message))
         } catch (e: retrofit2.HttpException) {
             val message = e.getErrorMessage()

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,12 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.seapedia.data.remote.responses.carts.CartItemResponse
-import com.example.seapedia.domain.entities.CartItem
 import com.example.seapedia.domain.entities.Product
 import com.example.seapedia.presentation.buyer.cart.widgets.CartItemCard
-import com.example.seapedia.presentation.buyer.widgets.BottomSheetCart
+import com.example.seapedia.presentation.buyer.widgets.BottomSheetCard
 import com.example.seapedia.presentation.buyer.widgets.BottomSheetShimmer
-import com.example.seapedia.presentation.common.BottomSheetCustom
 import com.example.seapedia.presentation.common.ButtonCustom
 import com.example.seapedia.ui.theme.Dimens
 
@@ -44,7 +41,7 @@ fun CartItemBottomSheet(
     onUpdateProduct: () -> Unit,
     onAddCartItem: () -> Unit,
 ) {
-    BottomSheetCart(
+    BottomSheetCard(
         visible = isVisible,
         onDismiss = onDismiss
     ) {

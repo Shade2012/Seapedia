@@ -3,9 +3,11 @@ package com.example.seapedia.data.remote.services
 import com.example.seapedia.data.remote.body.CreateProductBody
 import com.example.seapedia.data.remote.body.OrderStatusBody
 import com.example.seapedia.data.remote.body.ProductImageBody
+import com.example.seapedia.data.remote.body.order.OrderBody
 import com.example.seapedia.data.remote.responses.BaseMessage
 import com.example.seapedia.data.remote.responses.BaseResponse
 import com.example.seapedia.data.remote.responses.order.OrderHistoryResponse
+import com.example.seapedia.data.remote.responses.order.OrderPreviewResponse
 import com.example.seapedia.data.remote.responses.order.OrderResponse
 import com.example.seapedia.data.remote.responses.product.ProductImageResponse
 import com.example.seapedia.data.remote.responses.product.ProductResponse
@@ -31,10 +33,6 @@ interface OrderService {
 
     @GET("${NetworkConstant.ORDERS}/{id}")
     suspend fun getDetailOrder(@Path("id") id: Int): BaseResponse<OrderResponse>
-
-    // Update Status Order
-
-    // Order History
     @GET("${NetworkConstant.ORDERS}/${NetworkConstant.HISTORY}/{id}")
     suspend fun getOrderHistories(@Path("id") id: Int): BaseResponse<List<OrderHistoryResponse>>
 
@@ -44,4 +42,13 @@ interface OrderService {
         @Body body: OrderStatusBody
     ): BaseMessage
 
+    @POST("${NetworkConstant.ORDERS}/preview")
+    suspend fun getPreview(
+        @Body body: OrderBody
+    ): BaseResponse<OrderPreviewResponse>
+
+    @POST(NetworkConstant.ORDERS)
+    suspend fun checkout(
+        @Body body: OrderBody
+    ): BaseMessage
 }
