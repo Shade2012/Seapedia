@@ -1,5 +1,7 @@
 package com.example.seapedia.data.remote.sources
 
+import com.example.seapedia.data.remote.body.BuyerPhoneNumberBody
+import com.example.seapedia.data.remote.responses.BaseMessage
 import com.example.seapedia.data.remote.responses.BaseResponse
 import com.example.seapedia.data.remote.services.BuyerService
 import javax.inject.Inject
@@ -10,5 +12,9 @@ class BuyerRemoteDataSources @Inject constructor(
     private val buyerService: BuyerService,
 ) {
     suspend fun checkValidBuyer() : BaseResponse<Boolean> = buyerService.checkValidBuyer()
+
+    suspend fun updateBuyer(
+        body: BuyerPhoneNumberBody
+    ) : BaseMessage = buyerService.updatePhoneNumber(body)
 
 }

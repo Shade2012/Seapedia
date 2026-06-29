@@ -3,16 +3,22 @@ package com.example.seapedia.presentation.buyer.home
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.input.ImeAction
@@ -21,12 +27,15 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.seapedia.domain.entities.Product
 import com.example.seapedia.domain.entities.Review
+import com.example.seapedia.global.navigation.NavGraph
+import com.example.seapedia.global.navigation.buyer.BuyerRoute
 import com.example.seapedia.global.navigation.review.ReviewRoutes
 import com.example.seapedia.global.utils.CommonState
+import com.example.seapedia.global.utils.Formatting
+import com.example.seapedia.presentation.buyer.cart.add.CartItemBottomSheet
 import com.example.seapedia.presentation.buyer.home.shimmer.HomeBuyerShimmer
 import com.example.seapedia.presentation.buyer.home.shimmer.ReviewCardShimmer
 import com.example.seapedia.presentation.buyer.home.widgets.defaultProductSection
@@ -37,6 +46,7 @@ import com.example.seapedia.presentation.common.FailedCommonCustom
 import com.example.seapedia.presentation.common.RefreshCommon
 import com.example.seapedia.presentation.common.TextFieldCustom
 import com.example.seapedia.ui.theme.Dimens
+import com.example.seapedia.ui.theme.SpendingColor
 import com.example.seapedia.ui.theme.White
 
 @Composable
@@ -48,6 +58,18 @@ fun HomeBuyerScreen(
     homeBuyerViewModel: HomeBuyerViewModel = hiltViewModel()
 ) {
     val state = homeBuyerViewModel.state.collectAsStateWithLifecycle().value
+    var addProduct by remember {
+        mutableStateOf<Product?>(null)
+    }
+    val cartState by homeBuyerViewModel.cartItemStateGlobal.collectAsStateWithLifecycle()
+    val cartItems = remember(addProduct, cartState) {
+        addProduct?.let { product ->
+            cartState.cartItems.filter {
+                it.product.id == product.id
+            }
+        } ?: emptyList()
+    }
+
     RefreshCommon(
         modifier = Modifier.fillMaxSize(),
         refreshing = state.isRefreshing,
@@ -76,7 +98,39 @@ fun HomeBuyerScreen(
                 item(
                     span = { GridItemSpan(maxLineSpan) }
                 ) {
-                    BalanceSection(Modifier, amount = 200000)
+                    BalanceSection(
+                        amount = (state.wallet as? CommonState.Success)?.data?.balance ?: 0,
+                        title = "Balance",
+                        onClick = {
+                            rootNavController.navigate(NavGraph.WALLET_TRANSACTIONS)
+                        },
+                        content = {
+                            Text("Spending", style = MaterialTheme.typography.bodyMedium.copy(
+                                color = White
+                            ))
+                            when (val spending = state.spending) {
+                                is CommonState.Success -> {
+                                    Text(
+                                        Formatting().formatRupiah(spending.data.toString()),
+                                        color = SpendingColor
+                                    )
+                                }
+
+                                is CommonState.Loading -> {
+                                    CircularProgressIndicator(
+                                        modifier = Modifier.size(16.dp)
+                                    )
+                                }
+
+                                is CommonState.Error -> {
+                                    Text(
+                                        "-",
+                                        color = SpendingColor
+                                    )
+                                }
+                            }
+                        }
+                    )
                 }
             }
 
@@ -113,14 +167,25 @@ fun HomeBuyerScreen(
                 }
 
                 is CommonState.Success<List<Product>> -> {
+
                     if (state.searchName.isNotEmpty()) {
                         searchProductSection(
                             products = productsState.data,
                             searchName = state.searchName,
                             isGuest = isGuest,
                             buyerNavController = buyerNavController,
-                            onAddToCart = {
-                                homeBuyerViewModel.addToCart(it)
+                            homeBuyerViewModel = homeBuyerViewModel,
+                            onAddToCart = { product ->
+                                val quantity = homeBuyerViewModel.quantityCheckInCart(product.id)
+                                if (homeBuyerViewModel.addToCart()) {
+                                    if (quantity < 1) {
+                                        buyerNavController.navigate(
+                                            BuyerRoute.CartItemCreate.createRoute(product.id)
+                                        )
+                                    } else {
+                                        addProduct = product
+                                    }
+                                }
                             }
                         )
                     } else {
@@ -128,8 +193,18 @@ fun HomeBuyerScreen(
                             products = productsState.data,
                             isGuest = isGuest,
                             buyerNavController = buyerNavController,
-                            onAddToCart = {
-                                homeBuyerViewModel.addToCart(it)
+                            homeBuyerViewModel = homeBuyerViewModel,
+                            onAddToCart = { product ->
+                                val quantity = homeBuyerViewModel.quantityCheckInCart(product.id)
+                                if (homeBuyerViewModel.addToCart()) {
+                                    if (quantity < 1) {
+                                        buyerNavController.navigate(
+                                            BuyerRoute.CartItemCreate.createRoute(product.id)
+                                        )
+                                    } else {
+                                        addProduct = product
+                                    }
+                                }
                             }
                         )
                     }
@@ -166,6 +241,29 @@ fun HomeBuyerScreen(
             }
         }
     }
+
+    CartItemBottomSheet(
+        isVisible = addProduct != null,
+        isLoading = state.bottomSheetLoading ?: false,
+        onDismiss = {
+            addProduct = null
+        },
+        cartItemList = cartItems,
+        product = addProduct ?: Product.EMPTY,
+        onDecrement = { cartItemId, quantity ->
+            homeBuyerViewModel.onDecrement(quantity, cartItemId)
+        },
+        onIncrement = { cartItemId, quantity ->
+            homeBuyerViewModel.onIncrement(quantity, cartItemId, addProduct!!.stock)
+        },
+        onUpdateProduct = {},
+        onAddCartItem = {
+            addProduct?.let {
+                buyerNavController.navigate(BuyerRoute.CartItemCreate.createRoute(addProduct!!.id))
+            }
+            addProduct = null
+        },
+    )
 }
 
 

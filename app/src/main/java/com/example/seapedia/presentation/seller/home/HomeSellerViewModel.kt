@@ -6,7 +6,7 @@ import com.example.seapedia.data.remote.query.AllOrderQuery
 import com.example.seapedia.data.remote.responses.order.OrderStatus
 import com.example.seapedia.domain.usecases.order.GetAllOrderUseCase
 import com.example.seapedia.domain.usecases.order.UpdateHistoryUseCase
-import com.example.seapedia.domain.usecases.wallet.GetWalletUseCase
+import com.example.seapedia.domain.usecases.wallet.GetRevenueUseCase
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.global.utils.ui.AppEventBus
 import com.example.seapedia.global.utils.ui.CustomSnackbarVisuals
@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeSellerViewModel @Inject constructor(
-    private val getWalletUseCase: GetWalletUseCase,
+    private val getRevenueUseCase: GetRevenueUseCase,
     private val getAllOrderUseCase: GetAllOrderUseCase,
     private val updateHistoryUseCase: UpdateHistoryUseCase
 ): ViewModel(){
@@ -84,7 +84,7 @@ class HomeSellerViewModel @Inject constructor(
             try {
                 coroutineScope {
                     launch {
-                        getWalletUseCase.run().collect { result ->
+                        getRevenueUseCase.run().collect { result ->
                             when (result) {
                                 is CommonState.Error<*> -> {
                                     AppEventBus.events.emit(
@@ -96,19 +96,19 @@ class HomeSellerViewModel @Inject constructor(
                                         )
                                     )
                                     updateState {
-                                        copy(wallet = result)
+                                        copy(income = result)
                                     }
                                 }
 
                                 is CommonState.Loading<*> -> {
                                     updateState {
-                                        copy(wallet = CommonState.Loading())
+                                        copy(income = CommonState.Loading())
                                     }
                                 }
 
                                 is CommonState.Success<*> -> {
                                     updateState {
-                                        copy(wallet = result)
+                                        copy(income = result)
                                     }
                                 }
                             }

@@ -31,10 +31,10 @@ class ReviewRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun createReview(reviewEntity: Review): Flow<CommonState<Review>> = flow{
+    override suspend fun createReview(review: Review): Flow<CommonState<Review>> = flow{
         emit(CommonState.Loading())
         try {
-            val response = reviewRemoteDataSources.createReview(reviewEntity.toBody())
+            val response = reviewRemoteDataSources.createReview(review.toBody())
             val review = ReviewRawMapper().mapFromResponse(response.data)
             emit(CommonState.Success<Review>(data = review))
         } catch (e: retrofit2.HttpException) {

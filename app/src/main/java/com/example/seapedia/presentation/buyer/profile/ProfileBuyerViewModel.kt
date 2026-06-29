@@ -1,5 +1,6 @@
 package com.example.seapedia.presentation.buyer.profile
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.seapedia.domain.entities.BuyerProfile
@@ -42,12 +43,14 @@ class ProfileBuyerViewModel @Inject constructor(
     }
 
     fun logout(){
+        Log.d("Mencet Logout VM","Anjay")
         viewModelScope.launch(Dispatchers.IO) {
+            Log.d("Mencet RUN","Anjay")
             logoutUseCase.run()
             _navigateToLogin.emit(Unit)
         }
     }
-    private fun getProfile(){
+    fun getProfile(){
         if(sessionState.value.role != UserRole.Guest){
             viewModelScope.launch(Dispatchers.IO){
                 delay(200)

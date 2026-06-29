@@ -1,16 +1,13 @@
 package com.example.seapedia.presentation.common
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
@@ -23,8 +20,10 @@ fun ImageCustom(
     modifier: Modifier = Modifier,
     imageUrl: String? = null,
     painter: Painter? = null,
+    vector: ImageVector? = null,
     contentDescription: String
 ) {
+
     when {
         imageUrl != null -> {
             AsyncImage(
@@ -46,6 +45,14 @@ fun ImageCustom(
                 contentDescription = contentDescription,
                 modifier = modifier,
                 contentScale = ContentScale.Crop
+            )
+        }
+        vector != null -> {
+            Image(
+                imageVector = vector,
+                contentDescription = contentDescription,
+                modifier = modifier,
+                contentScale = ContentScale.Crop,
             )
         }
 

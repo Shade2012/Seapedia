@@ -1,8 +1,10 @@
 package com.example.seapedia.mapper.product
 
 import com.example.seapedia.data.remote.responses.BaseResponse
+import com.example.seapedia.data.remote.responses.carts.PromoResponse
 import com.example.seapedia.data.remote.responses.product.ProductResponse
 import com.example.seapedia.domain.entities.Product
+import com.example.seapedia.domain.entities.Promo
 import com.example.seapedia.global.utils.Mapper
 import com.example.seapedia.mapper.StoreRawMapper
 
@@ -27,6 +29,7 @@ class ProductRawMapper : Mapper<ProductResponse, Product>{
             types = product.types.map {
                     typeResponse -> ProductTypeRawMapper().mapFromResponse(typeResponse)
             },
+            promo = type.promo,
             listImages = product.images.map {
                     image ->
                 ProductImageRawMapper().mapFromResponse(type = image)
@@ -34,3 +37,4 @@ class ProductRawMapper : Mapper<ProductResponse, Product>{
         )
     }
 }
+

@@ -1,6 +1,7 @@
 package com.example.seapedia.data.remote.responses.product
 
 import com.example.seapedia.data.remote.responses.StoreResponse
+import com.example.seapedia.data.remote.responses.carts.PromoResponse
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -15,5 +16,6 @@ data class ProductResponse(
     val images : List<ProductImageResponse>,
     val types : List<ProductTypeResponse>,
     val store : StoreResponse? = null,
+    val promo: PromoResponse? = null,
     val category : ProductCategoryResponse? = null
 )

@@ -13,5 +13,7 @@ class WalletRemoteDataSources @Inject constructor(
 ) {
 //    suspend fun getProfile(): BaseResponse<ProfileResponse> = userService.getProfile()
     suspend fun getWallet(): BaseResponse<WalletResponse> = walletService.getBalance()
+
+    suspend fun getRevenue(): BaseResponse<Int> = walletService.getRevenue()
     suspend fun getWalletTransaction(): BaseResponse<List<WalletTransactionResponse>> = walletService.getWalletTransactions()
 }

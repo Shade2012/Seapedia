@@ -3,6 +3,7 @@ package com.example.seapedia.global.di
 import com.example.seapedia.data.repositories.AddressRepositoryImpl
 import com.example.seapedia.data.repositories.AuthRepositoryImpl
 import com.example.seapedia.data.repositories.BuyerRepositoryImpl
+import com.example.seapedia.data.repositories.CartRepositoryImpl
 import com.example.seapedia.data.repositories.OrderRepositoryImpl
 import com.example.seapedia.data.repositories.ProductRepositoryImpl
 import com.example.seapedia.data.repositories.RegionRepositoryImpl
@@ -13,6 +14,7 @@ import com.example.seapedia.data.repositories.WalletRepositoryImpl
 import com.example.seapedia.domain.repositories.AddressRepository
 import com.example.seapedia.domain.repositories.AuthRepository
 import com.example.seapedia.domain.repositories.BuyerRepository
+import com.example.seapedia.domain.repositories.CartRepository
 import com.example.seapedia.domain.repositories.OrderRepository
 import com.example.seapedia.domain.repositories.ProductRepository
 import com.example.seapedia.domain.repositories.RegionRepository
@@ -90,4 +92,10 @@ abstract class RepositoryModule {
     abstract fun bindAddressRepository(
         impl: AddressRepositoryImpl
     ): AddressRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindCartRepository(
+        impl: CartRepositoryImpl
+    ): CartRepository
 }

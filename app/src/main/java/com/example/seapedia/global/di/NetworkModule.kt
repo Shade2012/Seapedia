@@ -3,6 +3,7 @@ package com.example.seapedia.global.di
 import com.example.seapedia.data.remote.services.AddressService
 import com.example.seapedia.data.remote.services.AuthService
 import com.example.seapedia.data.remote.services.BuyerService
+import com.example.seapedia.data.remote.services.CartService
 import com.example.seapedia.data.remote.services.OrderService
 import com.example.seapedia.data.remote.services.ProductService
 import com.example.seapedia.data.remote.services.RegionService
@@ -53,6 +54,7 @@ object NetworkModule {
         val json = Json{
             ignoreUnknownKeys = true
             coerceInputValues = true
+            explicitNulls = false
         }
         return Retrofit.Builder()
             .client(okHttpClient)
@@ -131,6 +133,12 @@ object NetworkModule {
     @Singleton
     fun provideAddressService(retrofit: Retrofit): AddressService{
         return retrofit.create<AddressService>(AddressService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCartService(retrofit: Retrofit): CartService{
+        return retrofit.create<CartService>(CartService::class.java)
     }
 
     @Provides

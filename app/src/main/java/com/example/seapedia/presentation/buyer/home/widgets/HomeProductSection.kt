@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.seapedia.domain.entities.Product
 import com.example.seapedia.global.navigation.buyer.BuyerRoute
+import com.example.seapedia.presentation.buyer.home.HomeBuyerViewModel
 import com.example.seapedia.presentation.common.EmptyCommonCustom
 import com.example.seapedia.ui.theme.Dimens
 
@@ -23,6 +24,7 @@ fun LazyGridScope.searchProductSection(
     buyerNavController: NavController,
     isGuest: Boolean,
     onAddToCart : (Product) -> Unit,
+    homeBuyerViewModel: HomeBuyerViewModel
 ) {
     item(
         span = { GridItemSpan(maxLineSpan) }
@@ -46,14 +48,17 @@ fun LazyGridScope.searchProductSection(
     } else {
 
         items(
+            span = { GridItemSpan(maxLineSpan) },
             items = products,
-            key = { it.id }
+            key = { "${it.id}_search" }
         ) { product ->
+            val quantity = homeBuyerViewModel.quantityCheckInCart(product.id)
             HomeProductCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight(),
                 product = product,
+                quantity = quantity,
                 isGuest = isGuest,
                 onAddToCart = onAddToCart,
                 onClick = {
@@ -69,6 +74,7 @@ fun LazyGridScope.defaultProductSection(
     buyerNavController: NavController,
     isGuest: Boolean,
     onAddToCart : (Product) -> Unit,
+    homeBuyerViewModel: HomeBuyerViewModel
 ) {
 
     item(
@@ -90,14 +96,15 @@ fun LazyGridScope.defaultProductSection(
 
                 items(
                     items = products,
-                    key = { it.id }
+                    key = { "${it.id}_default" }
                 ) { product ->
-
+                    val quantity = homeBuyerViewModel.quantityCheckInCart(product.id)
                     HomeProductCard(
                         modifier = Modifier,
                         product = product,
                         isGuest = isGuest,
                         onAddToCart = onAddToCart,
+                        quantity = quantity,
                         onClick = {
                             buyerNavController.navigate(BuyerRoute.ProductDetail.createRoute(product.id))
                         },

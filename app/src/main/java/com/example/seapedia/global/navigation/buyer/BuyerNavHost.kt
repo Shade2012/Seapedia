@@ -11,9 +11,11 @@ import com.example.seapedia.presentation.buyer.address.all.BuyerAddressScreen
 import com.example.seapedia.presentation.buyer.address.create.BuyerAddressCreateScreen
 import com.example.seapedia.presentation.buyer.address.update.BuyerAddressUpdateScreen
 import com.example.seapedia.presentation.buyer.cart.CartBuyerScreen
+import com.example.seapedia.presentation.buyer.cart.add.AddCartItemScreen
 import com.example.seapedia.presentation.buyer.home.HomeBuyerScreen
 import com.example.seapedia.presentation.buyer.profile.ProfileBuyerScreen
 import com.example.seapedia.presentation.buyer.product.ProductDetailBuyerScreen
+import com.example.seapedia.presentation.buyer.profile.phone.UpdatePhoneNumberScreen
 
 
 @Composable
@@ -59,6 +61,18 @@ fun BuyerNavHost(
         }
 
         composable(
+            BuyerRoute.ProfileBuyerUpdatePhoneNumber.route,
+            arguments = listOf(
+                navArgument("phoneNumber"){
+                    type = NavType.StringType
+                }
+            )
+        ){
+            UpdatePhoneNumberScreen(
+                buyerNavController
+            )
+        }
+        composable(
             BuyerRoute.BuyerCreateAddress.route
         ) {
             BuyerAddressCreateScreen(
@@ -95,7 +109,22 @@ fun BuyerNavHost(
         composable(
             BuyerRoute.Cart.route
         ) {
-            CartBuyerScreen()
+            CartBuyerScreen(
+                buyerNavController
+            )
+        }
+
+        composable(
+            route = BuyerRoute.CartItemCreate.route,
+            arguments = listOf(
+                navArgument("productId"){
+                    type = NavType.IntType
+                }
+            )
+        ) { backStackEntry ->
+            AddCartItemScreen(
+                buyerNavController = buyerNavController,
+            )
         }
     }
 }

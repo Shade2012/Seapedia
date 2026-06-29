@@ -10,7 +10,8 @@ import retrofit2.http.GET
 interface WalletService {
     @GET(NetworkConstant.WALLET)
     suspend fun getBalance(): BaseResponse<WalletResponse>
-
+    @GET("${NetworkConstant.WALLET_TRANSACTION}/revenue")
+    suspend fun getRevenue(): BaseResponse<Int>
     @GET(NetworkConstant.WALLET_TRANSACTION)
     suspend fun getWalletTransactions(): BaseResponse<List<WalletTransactionResponse>>
 }

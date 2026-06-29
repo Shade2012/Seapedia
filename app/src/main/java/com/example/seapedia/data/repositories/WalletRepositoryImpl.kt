@@ -31,6 +31,20 @@ class WalletRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getRevenue(): Flow<CommonState<Int>> =flow{
+        try {
+            val response = walletRemoteDataSources.getRevenue()
+            emit(CommonState.Success<Int>(data = response.data))
+        } catch (e: retrofit2.HttpException) {
+            val message = e.getErrorMessage()
+            emit(CommonState.Error(message = message))
+        }  catch (e: Exception) {
+            emit(CommonState.Error(message = e.message.toString()))
+        } catch (e: CancellationException) {
+            throw e
+        }
+    }
+
     override suspend fun getWalletTransactions(): Flow<CommonState<List<WalletTransaction>>> = flow{
         try {
             val response = walletRemoteDataSources.getWalletTransaction()

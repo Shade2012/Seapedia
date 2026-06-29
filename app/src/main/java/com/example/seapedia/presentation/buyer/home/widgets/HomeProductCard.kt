@@ -22,6 +22,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.seapedia.domain.entities.Product
 import com.example.seapedia.global.utils.Formatting
+import com.example.seapedia.global.utils.cartitems.CartItemRepository
+import com.example.seapedia.presentation.buyer.widgets.AddToCartSection
+import com.example.seapedia.presentation.buyer.widgets.ProductPrice
 import com.example.seapedia.presentation.common.ImageCustom
 import com.example.seapedia.ui.theme.Dimens
 import com.example.seapedia.ui.theme.White
@@ -34,6 +37,7 @@ fun HomeProductCard(
     isGuest: Boolean,
     onClick: () -> Unit,
     onAddToCart:(Product) -> Unit,
+    quantity:Int,
 )
 {
     Card(
@@ -86,25 +90,19 @@ fun HomeProductCard(
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                Text(
-                    text = "Rp ${Formatting.rupiahFormatter.format(product.price)}",
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
-                )
+                ProductPrice(product)
                 Text(
                     text = "Stock: ${product.stock}",
                     style = MaterialTheme.typography.bodySmall
                 )
                 if (!isGuest) {
-                    Button(
+                    AddToCartSection(
                         modifier = Modifier.fillMaxWidth(),
-                        onClick = { onAddToCart(product) }
-                    ) {
-                        Text(text = "Add To Cart", style = MaterialTheme.typography.bodyMedium.copy(
-                            color = White
-                        ))
-                    }
+                        quantity = quantity,
+                        onClick = {
+                            onAddToCart(product)
+                        }
+                    )
                 }
             }
         }

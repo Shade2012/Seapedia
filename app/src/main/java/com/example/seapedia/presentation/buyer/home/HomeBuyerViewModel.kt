@@ -2,12 +2,18 @@ package com.example.seapedia.presentation.buyer.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.seapedia.data.remote.body.cart.CartItemBodySend
 import com.example.seapedia.data.remote.query.AllProductQuery
 import com.example.seapedia.data.remote.query.AllReviewQuery
 import com.example.seapedia.domain.entities.Product
+import com.example.seapedia.domain.usecases.carts.DeleteCartUseCase
+import com.example.seapedia.domain.usecases.carts.UpdateCartUseCase
 import com.example.seapedia.domain.usecases.product.GetAllProductUseCase
 import com.example.seapedia.domain.usecases.review.GetAllReviewUseCase
+import com.example.seapedia.domain.usecases.wallet.GetRevenueUseCase
+import com.example.seapedia.domain.usecases.wallet.GetWalletUseCase
 import com.example.seapedia.global.utils.CommonState
+import com.example.seapedia.global.utils.cartitems.CartItemRepository
 import com.example.seapedia.global.utils.session.SessionRepository
 import com.example.seapedia.global.utils.ui.AppEventBus
 import com.example.seapedia.global.utils.ui.CustomSnackbarVisuals
@@ -18,6 +24,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -34,35 +41,64 @@ import javax.inject.Inject
 class HomeBuyerViewModel @Inject constructor(
     private val sessionRepository: SessionRepository,
     private val getAllProductUseCase: GetAllProductUseCase,
-    private val getAllReviewUseCase: GetAllReviewUseCase
+    private val getAllReviewUseCase: GetAllReviewUseCase,
+    private val getWalletUseCase: GetWalletUseCase,
+    private val getRevenueUseCase: GetRevenueUseCase,
+    private val updateCartUseCase: UpdateCartUseCase,
+    private val deleteCartUseCase: DeleteCartUseCase,
+    private val cartItemRepository: CartItemRepository
 ) : ViewModel() {
     private val _navigateToBuyer = MutableSharedFlow<Unit>()
     private val _state = MutableStateFlow(HomeState(searchName = ""))
-
-    val navigateToBuyer = _navigateToBuyer.asSharedFlow()
-
     val sessionState = sessionRepository.sessionState
+    val cartItemStateGlobal = cartItemRepository.cartItemsState
     val state = _state.asStateFlow()
 
     init {
         observeProduct()
+        getWalletBalance()
         getReviews()
     }
+    fun quantityCheckInCart(productId: Int) : Int {
+        return cartItemRepository.checkIsExistInCartItem(productId)
+    }
 
-    fun addToCart(product: Product){
+    fun getWalletBalance() {
         viewModelScope.launch {
-            if(!sessionState.value.isValidBuyer){
-                AppEventBus.events.emit(
-                    UiEvent.ShowSnackbar(
-                        CustomSnackbarVisuals(
-                            message = "Please fill your information in profile first",
-                            type = SnackbarType.ERROR
-                        )
-                    )
-                )
-                return@launch
+            launch {
+                getRevenueUseCase.run().collect { result ->
+                    updateState {
+                        copy(spending = result)
+                    }
+                }
+            }
+
+            launch {
+                getWalletUseCase.run().collect { result ->
+                    updateState {
+                        copy(wallet = result)
+                    }
+                }
             }
         }
+    }
+    fun addToCart(): Boolean {
+        if (sessionState.value.isValidBuyer) {
+            return true
+        }
+
+        viewModelScope.launch {
+            AppEventBus.events.emit(
+                UiEvent.ShowSnackbar(
+                    CustomSnackbarVisuals(
+                        message = "Please fill your information in profile first",
+                        type = SnackbarType.ERROR
+                    )
+                )
+            )
+        }
+
+        return false
     }
     fun refreshHome() {
         viewModelScope.launch {
@@ -72,6 +108,7 @@ class HomeBuyerViewModel @Inject constructor(
             }
 
             coroutineScope {
+                launch { getWalletBalance() }
                 launch { refreshReviews() }
                 launch { refreshProducts() }
             }
@@ -86,6 +123,110 @@ class HomeBuyerViewModel @Inject constructor(
             copy(searchName = searchName)
         }
     }
+
+    fun onDecrement(
+        quantity: Int,
+        cartItemId: Int
+    ) {
+        viewModelScope.launch {
+            updateState {
+                copy(bottomSheetLoading = true)
+            }
+            val request =
+                if (quantity - 1 == 0) {
+                    deleteCartUseCase.run(cartItemId)
+                } else {
+                    updateCartUseCase.run(
+                        cartItemId,
+                        CartItemBodySend(
+                            quantity = quantity - 1
+                        )
+                    )
+                }
+
+            executeCartAction(
+                request = request,
+                onRun = {
+                    cartItemRepository.decrementQuantity(cartItemId)
+                }
+            )
+            updateState {
+                copy(
+                    bottomSheetLoading = false
+                )
+            }
+        }
+    }
+
+    fun onIncrement(
+        quantity: Int,
+        cartItemId: Int,
+        stock: Int
+    ) {
+        if (quantity >= stock) {
+            viewModelScope.launch {
+                AppEventBus.events.emit(
+                    UiEvent.ShowSnackbar(
+                        CustomSnackbarVisuals(
+                            type = SnackbarType.ERROR,
+                            message = "Product stock is insufficient."
+                        )
+                    )
+                )
+            }
+            return
+        }
+
+        viewModelScope.launch {
+            updateState {
+                copy(
+                    bottomSheetLoading = true
+                )
+            }
+            executeCartAction(
+                request = updateCartUseCase.run(
+                    cartItemId,
+                    CartItemBodySend(
+                        quantity = quantity + 1
+                    )
+                ),
+                onRun = {
+                    cartItemRepository.addQuantity(cartItemId)
+                }
+            )
+            updateState {
+                copy(
+                    bottomSheetLoading = false
+                )
+            }
+        }
+    }
+
+    private suspend fun executeCartAction(
+        request: Flow<CommonState<String>>,
+        onRun:()-> Unit,
+    ) {
+        request.collect { result ->
+            when (result) {
+                is CommonState.Loading -> {}
+                is CommonState.Error<*> -> {
+                    AppEventBus.events.emit(
+                        UiEvent.ShowSnackbar(
+                            CustomSnackbarVisuals(
+                                type = SnackbarType.ERROR,
+                                message = result.message
+                            )
+                        )
+                    )
+                }
+
+                is CommonState.Success -> {
+                    onRun()
+                }
+            }
+        }
+    }
+
 
     private fun updateState(
         update: HomeState.() -> HomeState

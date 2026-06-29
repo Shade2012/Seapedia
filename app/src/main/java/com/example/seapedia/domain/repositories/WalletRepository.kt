@@ -8,5 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface WalletRepository {
     suspend fun getBalance() : Flow<CommonState<Wallet>>
 
+    suspend fun getRevenue(): Flow<CommonState<Int>>
+
     suspend fun getWalletTransactions() : Flow<CommonState<List<WalletTransaction>>>
 }

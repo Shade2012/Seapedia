@@ -8,6 +8,7 @@ val Green = Color(0xFF4CAF50)
 val Yellow = Color(0xFFFFC107)
 val White = Color(0xFFFFFFFF)
 val ErrorColor = Color(0xFFDC0F0F)
+val SpendingColor = Color(0xFFC62828)
 
 
 // Light

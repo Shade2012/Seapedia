@@ -66,6 +66,19 @@ fun ConfirmationDialogCustom(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+
+                    ButtonCustom(
+                        enabled = true,
+                        title = confirmText,
+                        onClick = {
+                            onConfirm()
+                            onDismiss()
+                        },
+                        isNotLoading = true
+                    )
+                    Spacer(
+                        modifier = Modifier.height(Dimens.SpacePadding)
+                    )
                     TextButton(
                         onClick = onDismiss
                     ) {
@@ -76,19 +89,6 @@ fun ConfirmationDialogCustom(
                             )
                         )
                     }
-
-                    Spacer(
-                        modifier = Modifier.height(Dimens.SpacePadding)
-                    )
-                    ButtonCustom(
-                        enabled = true,
-                        title = confirmText,
-                        onClick = {
-                            onConfirm()
-                            onDismiss()
-                        },
-                        isNotLoading = true
-                    )
                 }
             }
         }

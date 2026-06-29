@@ -1,5 +1,6 @@
 package com.example.seapedia.presentation.buyer.profile
 
+import android.util.Log
 import com.example.seapedia.R
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -44,6 +45,7 @@ import com.example.seapedia.presentation.common.ButtonCustom
 import com.example.seapedia.presentation.common.IconCustom
 import com.example.seapedia.ui.theme.Dimens
 import com.example.seapedia.ui.theme.Grey
+import kotlinx.coroutines.launch
 import org.w3c.dom.Text
 
 @Composable
@@ -56,10 +58,26 @@ fun ProfileBuyerScreen(
 ) {
     val state = profileBuyerViewModel.state.collectAsStateWithLifecycle().value
     val scrollState = rememberScrollState()
+    val refresh = buyerNavController.currentBackStackEntry?.savedStateHandle?.getStateFlow("refresh_profile",false)
+
+    LaunchedEffect(refresh) {
+        refresh?.collect { shouldRefresh ->
+            if (shouldRefresh) {
+                profileBuyerViewModel.getProfile()
+                buyerNavController.currentBackStackEntry
+                    ?.savedStateHandle
+                    ?.set("refresh_profile", false)
+            }
+        }
+    }
+
     LaunchedEffect(Unit) {
         profileBuyerViewModel.navigateToAuth.collect {
-            rootNavController.navigate(NavGraph.AUTH){
-                popUpTo(0)
+
+            rootNavController.navigate(NavGraph.AUTH) {
+                popUpTo(rootNavController.graph.id) {
+                    inclusive = true
+                }
             }
         }
     }
@@ -88,9 +106,16 @@ fun ProfileBuyerScreen(
                     currentRole = profileBuyerViewModel.sessionState.value.role ?: UserRole.Guest,
                     onClickAddress = {
                         buyerNavController.navigate(BuyerRoute.BuyerAddress.route)
+                    },
+                    onClickPhone = {
+                        buyerNavController.navigate(BuyerRoute.ProfileBuyerUpdatePhoneNumber.createRoute(it))
+                    },
+                    onClickWallet = {
+                        rootNavController.navigate(NavGraph.WALLET_TRANSACTIONS)
                     }
                 )
                 LogoutSection {
+
                     profileBuyerViewModel.logout()
                 }
             }
@@ -124,7 +149,7 @@ fun BodyProfile(
     currentRole: UserRole,
     isGuest: Boolean,
     onClickAddress : () -> Unit = {},
-    onClickPhone : () -> Unit = {},
+    onClickPhone : (String) -> Unit = {},
     onClickWallet : () -> Unit = {}
 ) {
     Card(
@@ -168,11 +193,13 @@ fun BodyProfile(
             if(!isGuest && currentRole == UserRole.Buyer){
                 HorizontalDivider()
                 ProfileButtonField(
-                    onClick = onClickPhone,
+                    onClick = {
+                        onClickPhone(phoneNumber ?: "")
+                    },
                     content = {
                         Column {
                             Text(
-                                text = " Phone Number : $phoneNumber",
+                                text = " Phone Number :",
                                 style = MaterialTheme.typography.labelLarge
                             )
                             Spacer(Modifier.padding(Dimens.SpacePadding))

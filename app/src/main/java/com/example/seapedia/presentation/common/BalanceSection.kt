@@ -4,9 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -30,7 +33,9 @@ import com.example.seapedia.ui.theme.White
 fun BalanceSection(
     modifier: Modifier = Modifier,
     amount:Int,
-    onClick: () -> Unit = {}
+    title:String,
+    onClick: () -> Unit = {},
+    content: @Composable () -> Unit = {}
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -40,21 +45,22 @@ fun BalanceSection(
         ),
         shape = RoundedCornerShape(16.dp)
     ) {
-        Box(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.primary)
-                .padding(Dimens.InnerPadding)
+                .padding(Dimens.InnerPadding),
+            verticalAlignment = Alignment.CenterVertically
         ) {
 
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .weight(1f)
                     .padding(vertical = 10.dp),
                 verticalArrangement = Arrangement.spacedBy(Dimens.SpacePadding)
             ) {
                 Text(
-                    text = "Balance",
+                    text = title,
                     style = MaterialTheme.typography.bodyMedium.copy(
                         color = White
                     )
@@ -67,16 +73,17 @@ fun BalanceSection(
                     ),
                     fontWeight = FontWeight.Bold
                 )
+
+                content()
             }
+
+            Spacer(modifier = Modifier.width(Dimens.SpacePadding))
 
             Icon(
                 imageVector = ImageVector.vectorResource(R.drawable.money_bag),
                 contentDescription = "Money Icon",
                 tint = White,
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(8.dp)
-                    .size(48.dp)
+                modifier = Modifier.size(48.dp)
             )
         }
     }

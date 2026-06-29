@@ -48,10 +48,10 @@ fun HomeSellerScreen(
         isRefreshing = state.isRefreshing,
         onRefresh = viewModel::refresh
     ) {
-        when (state.wallet) {
+        when (state.income) {
             is CommonState.Error<*> -> {
                 Text(
-                    text = state.wallet.message, style = MaterialTheme.typography.bodyMedium.copy(
+                    text = state.income.message, style = MaterialTheme.typography.bodyMedium.copy(
                         color = ErrorColor
                     )
                 )
@@ -63,7 +63,8 @@ fun HomeSellerScreen(
 
             is CommonState.Success -> {
                 BalanceSection(
-                    amount = state.wallet.data.balance,
+                    title= "Income",
+                    amount = state.income.data,
                     onClick = {
                         rootNavController.navigate(NavGraph.WALLET_TRANSACTIONS)
                     }
