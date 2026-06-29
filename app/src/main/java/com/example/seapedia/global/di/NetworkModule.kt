@@ -9,6 +9,7 @@ import com.example.seapedia.data.remote.services.ProductService
 import com.example.seapedia.data.remote.services.RegionService
 import com.example.seapedia.data.remote.services.ReviewService
 import com.example.seapedia.data.remote.services.StoreService
+import com.example.seapedia.data.remote.services.SystemService
 import com.example.seapedia.data.remote.services.UserService
 import com.example.seapedia.data.remote.services.WalletService
 import com.example.seapedia.global.networks.NetworkConstant
@@ -148,5 +149,13 @@ object NetworkModule {
         retrofit: Retrofit
     ): RegionService{
         return retrofit.create<RegionService>(RegionService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSystemService(
+        retrofit: Retrofit
+    ): SystemService{
+        return retrofit.create<SystemService>(SystemService::class.java)
     }
 }

@@ -6,6 +6,7 @@ import com.example.seapedia.data.remote.query.AllOrderQuery
 import com.example.seapedia.data.remote.responses.order.OrderStatus
 import com.example.seapedia.domain.usecases.order.GetAllOrderUseCase
 import com.example.seapedia.domain.usecases.order.UpdateHistoryUseCase
+import com.example.seapedia.domain.usecases.system.GetDayUseCase
 import com.example.seapedia.domain.usecases.wallet.GetRevenueUseCase
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.global.utils.session.SessionRepository
@@ -20,13 +21,16 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 @HiltViewModel
 class HomeSellerViewModel @Inject constructor(
     private val getRevenueUseCase: GetRevenueUseCase,
     private val getAllOrderUseCase: GetAllOrderUseCase,
     private val updateHistoryUseCase: UpdateHistoryUseCase,
-    private val sessionRepository: SessionRepository
+    private val sessionRepository: SessionRepository,
+    private val getDayUseCase: GetDayUseCase
 ): ViewModel(){
     private val _state = MutableStateFlow(HomeSellerScreenState())
     val state = _state.asStateFlow()
@@ -117,7 +121,6 @@ class HomeSellerViewModel @Inject constructor(
                             }
                         }
                     }
-
                     launch {
                         getAllOrderUseCase.run(
                             AllOrderQuery(
@@ -148,6 +151,35 @@ class HomeSellerViewModel @Inject constructor(
                                 is CommonState.Success<*> -> {
                                     updateState {
                                         copy(orders = result)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    launch {
+                        getDayUseCase.run().collect {
+                            result ->
+                            when (result) {
+                                is CommonState.Error<*> -> {
+                                    AppEventBus.events.emit(
+                                        UiEvent.ShowSnackbar(
+                                            CustomSnackbarVisuals(
+                                                type = SnackbarType.ERROR,
+                                                message = result.message
+                                            )
+                                        )
+                                    )
+                                }
+
+                                is CommonState.Loading<*> -> {
+                                    updateState {
+                                        copy(orders = CommonState.Loading())
+                                    }
+                                }
+
+                                is CommonState.Success -> {
+                                    updateState {
+                                        copy(daySystem = result.data)
                                     }
                                 }
                             }

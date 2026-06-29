@@ -21,7 +21,10 @@ import com.example.seapedia.presentation.common.RefreshCommon
 import com.example.seapedia.presentation.common.TopAppBarCustom
 import com.example.seapedia.presentation.review.all.widgets.ReviewAllSection
 import com.example.seapedia.ui.theme.Dimens
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 @Composable
 fun ReviewAllScreen(
     modifier: Modifier = Modifier,
@@ -75,7 +78,8 @@ fun ReviewAllScreen(
 
                     is CommonState.Success<List<Review>> -> {
                         ReviewAllSection(
-                            reviews = reviewsState.data
+                            reviews = reviewsState.data,
+                            daySystem = state.daySystem ?: Clock.System.now()
                         )
                     }
                 }

@@ -40,6 +40,7 @@ import com.example.seapedia.ui.theme.Grey
 import com.example.seapedia.ui.theme.Yellow
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 @OptIn(ExperimentalTime::class)
 @Composable
@@ -47,6 +48,7 @@ fun OrderCard(
     order: Order,
     onClick: () -> Unit,
     role: UserRole,
+    daySystem: Instant,
     onUpdateStatus: (Order) -> Unit = {}
 ) {
     val textColor = when (order.status) {
@@ -136,9 +138,9 @@ fun OrderCard(
                         )
                     }
             }
-            if(order.overdue > Clock.System.now()){
+            if(order.overdue > daySystem){
                 Text(
-                    TimeFormatting.formatOverdueTime(order.overdue), style = MaterialTheme.typography.bodyMedium.copy(
+                    TimeFormatting.formatOverdueTime(daySystem,order.overdue), style = MaterialTheme.typography.bodyMedium.copy(
                         fontWeight = FontWeight.SemiBold,
                         color = ErrorColor
                     )
@@ -151,7 +153,7 @@ fun OrderCard(
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
-            TimeDelivery(order, textColor)
+            TimeDelivery(order, textColor,daySystem)
             FooterOrderCard(
                 onClick = onClick
             )

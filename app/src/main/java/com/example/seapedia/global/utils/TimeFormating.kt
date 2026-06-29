@@ -17,9 +17,10 @@ object TimeFormatting {
 
     @OptIn(ExperimentalTime::class)
     fun formatRelativeTime(
-        instant: Instant
+        instant: Instant,
+        daySystem: Instant
     ): String {
-        val now = Clock.System.now()
+        val now = daySystem
 
         val duration = now - instant
 
@@ -52,9 +53,10 @@ object TimeFormatting {
 
     @OptIn(ExperimentalTime::class)
     fun formatOverdueTime(
-        instant: Instant
+        instant: Instant,
+        daySystem: Instant
     ): String {
-        val now = Clock.System.now()
+        val now = daySystem
 
         // Already overdue
         if (instant <= now) {

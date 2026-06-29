@@ -6,12 +6,16 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.ui.Modifier
 import com.example.seapedia.domain.entities.Review
 import com.example.seapedia.presentation.review.widgets.ReviewCard
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 
+@OptIn(ExperimentalTime::class)
 fun LazyGridScope.reviewSection(
     modifier: Modifier = Modifier,
     reviews: List<Review>,
-    onClickAllReview: () -> Unit
+    onClickAllReview: () -> Unit,
+    daySystem: Instant
 ) {
     item(
         span = { GridItemSpan(maxLineSpan) }
@@ -24,7 +28,8 @@ fun LazyGridScope.reviewSection(
         span = { GridItemSpan(maxLineSpan) }
     ) { review ->
         ReviewCard(
-            review = review
+            review = review,
+            daySystem = daySystem
         )
     }
 }

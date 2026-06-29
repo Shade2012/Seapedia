@@ -9,11 +9,15 @@ import androidx.compose.ui.Modifier
 import com.example.seapedia.domain.entities.Review
 import com.example.seapedia.presentation.review.widgets.ReviewCard
 import com.example.seapedia.ui.theme.Dimens
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
+@OptIn(ExperimentalTime::class)
 @Composable
 fun ReviewAllSection(
     modifier: Modifier = Modifier,
-    reviews: List<Review>
+    reviews: List<Review>,
+    daySystem: Instant
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
@@ -24,7 +28,8 @@ fun ReviewAllSection(
             key = { it.id }
         ) { review ->
             ReviewCard(
-                review = review
+                review = review,
+                daySystem = daySystem
             )
         }
     }

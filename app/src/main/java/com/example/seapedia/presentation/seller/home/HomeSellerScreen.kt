@@ -24,7 +24,10 @@ import com.example.seapedia.presentation.seller.home.widgets.HomeOrderListSectio
 import com.example.seapedia.presentation.seller.order.widgets.OrderStatusBottomSheet
 import com.example.seapedia.presentation.seller.widgets.SellerBody
 import com.example.seapedia.ui.theme.ErrorColor
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 @Composable
 fun HomeSellerScreen(
     rootNavController: NavController,
@@ -81,6 +84,7 @@ fun HomeSellerScreen(
                     onClick = {
                         rootNavController.navigate(SellerRoute.OrderDetail.createRoute(it.id))
                     },
+                    daySystem = state.daySystem ?: Clock.System.now(),
                     role = role,
                     onUpdateStatus = {
                         orderToEdit = it

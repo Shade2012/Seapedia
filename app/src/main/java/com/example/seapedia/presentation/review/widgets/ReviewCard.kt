@@ -37,12 +37,14 @@ import com.example.seapedia.ui.theme.Dimens
 import com.example.seapedia.ui.theme.Grey
 import com.example.seapedia.ui.theme.Yellow
 import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 @OptIn(ExperimentalTime::class)
 @Composable
 fun ReviewCard(
     modifier: Modifier = Modifier,
-    review: Review
+    review: Review,
+    daySystem: Instant
 ) {
     Box(
         modifier
@@ -81,7 +83,7 @@ fun ReviewCard(
                         Text(text = review.reviewerName, style = MaterialTheme.typography.bodyMedium.copy(
                             fontWeight = FontWeight.Medium
                         ))
-                        Text(text = TimeFormatting.formatRelativeTime(review.createdAt), style = MaterialTheme.typography.bodyMedium.copy(
+                        Text(text = TimeFormatting.formatRelativeTime(daySystem,review.createdAt), style = MaterialTheme.typography.bodyMedium.copy(
                             fontWeight = FontWeight.Medium
                         ))
                     }

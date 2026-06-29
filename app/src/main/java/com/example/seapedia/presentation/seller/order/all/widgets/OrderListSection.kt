@@ -13,13 +13,17 @@ import androidx.navigation.NavController
 import com.example.seapedia.domain.entities.Order
 import com.example.seapedia.global.navigation.seller.SellerRoute
 import com.example.seapedia.global.utils.UserRole
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 
+@OptIn(ExperimentalTime::class)
 fun LazyGridScope.orderListSection(
     title: String,
     orders: List<Order>,
     onUpdate:(Order) -> Unit,
     role: UserRole,
+    daySystem: Instant,
     sellerNavController: NavController
 ) {
     if (orders.isEmpty()) return
@@ -49,6 +53,7 @@ fun LazyGridScope.orderListSection(
                 sellerNavController.navigate(SellerRoute.OrderDetail.createRoute(order.id))
             },
             role = role,
+            daySystem = daySystem,
             onUpdateStatus = onUpdate
         )
     }

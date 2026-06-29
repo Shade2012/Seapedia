@@ -18,16 +18,18 @@ import com.example.seapedia.domain.entities.Order
 import com.example.seapedia.global.utils.TimeFormatting
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalTime::class)
 @Composable
 fun TimeDelivery(
     order: Order,
-    progressColor: Color
+    progressColor: Color,
+    daySystem : Instant
 ) {
     val progress =
-        ((Clock.System.now() - order.createdAt).inWholeMilliseconds.toFloat() /
+        ((daySystem - order.createdAt).inWholeMilliseconds.toFloat() /
                 (order.overdue - order.createdAt).inWholeMilliseconds)
             .coerceIn(0f, 1f)
     Column (
@@ -38,11 +40,12 @@ fun TimeDelivery(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = TimeFormatting.formatOrderCard(Clock.System.now()),
+                text = TimeFormatting.formatOrderCard(daySystem),
                 style = MaterialTheme.typography.bodySmall.copy(
                     fontWeight = FontWeight.Medium
                 )
             )
+            Text("Some")
             Text(
                 text = TimeFormatting.formatOrderCard(order.overdue),
                 style = MaterialTheme.typography.bodySmall.copy(

@@ -9,6 +9,7 @@ import com.example.seapedia.domain.usecases.carts.DeleteCartUseCase
 import com.example.seapedia.domain.usecases.carts.UpdateCartUseCase
 import com.example.seapedia.domain.usecases.product.GetAllProductUseCase
 import com.example.seapedia.domain.usecases.review.GetAllReviewUseCase
+import com.example.seapedia.domain.usecases.system.GetDayUseCase
 import com.example.seapedia.domain.usecases.wallet.GetRevenueUseCase
 import com.example.seapedia.domain.usecases.wallet.GetWalletUseCase
 import com.example.seapedia.global.utils.CommonState
@@ -33,7 +34,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 @HiltViewModel
 class HomeBuyerViewModel @Inject constructor(
     private val sessionRepository: SessionRepository,
@@ -43,7 +46,8 @@ class HomeBuyerViewModel @Inject constructor(
     private val getRevenueUseCase: GetRevenueUseCase,
     private val updateCartUseCase: UpdateCartUseCase,
     private val deleteCartUseCase: DeleteCartUseCase,
-    private val cartItemRepository: CartItemRepository
+    private val cartItemRepository: CartItemRepository,
+    private val getDayUseCase: GetDayUseCase,
 ) : ViewModel() {
     private val _navigateToBuyer = MutableSharedFlow<Unit>()
     private val _state = MutableStateFlow(HomeState(searchName = ""))
@@ -55,6 +59,7 @@ class HomeBuyerViewModel @Inject constructor(
         observeProduct()
         getWalletBalance()
         getReviews()
+        getDay()
     }
     fun quantityCheckInCart(productId: Int) : Int {
         return cartItemRepository.checkIsExistInCartItem(productId)
@@ -108,10 +113,23 @@ class HomeBuyerViewModel @Inject constructor(
                 launch { getWalletBalance() }
                 launch { refreshReviews() }
                 launch { refreshProducts() }
+                launch { getDay() }
             }
 
             updateState {
                 copy(isRefreshing = false)
+            }
+        }
+    }
+
+    private fun getDay() {
+        viewModelScope.launch {
+            getDayUseCase.run().collect { result ->
+                if (result is CommonState.Success) {
+                    updateState {
+                        copy(daySystem = result.data)
+                    }
+                }
             }
         }
     }

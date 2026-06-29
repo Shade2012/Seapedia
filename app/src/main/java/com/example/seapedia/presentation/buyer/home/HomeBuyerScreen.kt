@@ -48,7 +48,10 @@ import com.example.seapedia.presentation.common.TextFieldCustom
 import com.example.seapedia.ui.theme.Dimens
 import com.example.seapedia.ui.theme.SpendingColor
 import com.example.seapedia.ui.theme.White
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 @Composable
 fun HomeBuyerScreen(
     modifier: Modifier = Modifier,
@@ -235,7 +238,8 @@ fun HomeBuyerScreen(
                         reviews = reviewState.data,
                         onClickAllReview = {
                             rootNavController.navigate(ReviewRoutes.AllReview.route)
-                        }
+                        },
+                        daySystem = state.daySystem ?: Clock.System.now()
                     )
                 }
             }

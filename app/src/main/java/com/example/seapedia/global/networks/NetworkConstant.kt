@@ -20,4 +20,5 @@ object NetworkConstant {
     const val CITY = "cities"
     const val DISTRICT = "districts"
     const val VILLAGE = "villages"
+    const val SYSTEM = "system"
 }

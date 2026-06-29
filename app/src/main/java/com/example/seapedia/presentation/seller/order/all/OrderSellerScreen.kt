@@ -33,8 +33,10 @@ import com.example.seapedia.presentation.seller.order.all.widgets.OrderCard
 import com.example.seapedia.presentation.seller.order.all.widgets.orderListSection
 import com.example.seapedia.presentation.seller.order.widgets.OrderStatusBottomSheet
 import com.example.seapedia.ui.theme.Dimens
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)
 @Composable
 fun OrderSellerScreen(
     sellerNavController: NavController,
@@ -124,7 +126,8 @@ fun OrderSellerScreen(
                                 role = role,
                                 onUpdateStatus = {
                                     orderToEdit = order
-                                }
+                                },
+                                daySystem = state.daySystem ?: Clock.System.now()
                             )
                         }
                     } else {
@@ -135,7 +138,8 @@ fun OrderSellerScreen(
                             role = role,
                             onUpdate = {
                              orderToEdit = it
-                            }
+                            },
+                            daySystem = state.daySystem ?: Clock.System.now()
                         )
 
                         orderListSection(
@@ -145,7 +149,8 @@ fun OrderSellerScreen(
                             role = role,
                             onUpdate = {
                                 orderToEdit = it
-                            }
+                            },
+                            daySystem = state.daySystem ?: Clock.System.now()
                         )
 
                         orderListSection(
@@ -155,7 +160,8 @@ fun OrderSellerScreen(
                             role = role,
                             onUpdate = {
                                 orderToEdit = it
-                            }
+                            },
+                            daySystem = state.daySystem ?: Clock.System.now()
                         )
 
                         orderListSection(
@@ -165,7 +171,8 @@ fun OrderSellerScreen(
                             role = role,
                             onUpdate = {
                                 orderToEdit = it
-                            }
+                            },
+                            daySystem = state.daySystem ?: Clock.System.now()
                         )
 
                         orderListSection(
@@ -175,7 +182,8 @@ fun OrderSellerScreen(
                             role = role,
                             onUpdate = {
                                 orderToEdit = it
-                            }
+                            },
+                            daySystem = state.daySystem ?: Clock.System.now()
                         )
                     }
                 }

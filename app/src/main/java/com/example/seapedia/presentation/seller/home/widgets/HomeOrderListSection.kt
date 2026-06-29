@@ -19,12 +19,16 @@ import com.example.seapedia.global.utils.UserRole
 import com.example.seapedia.presentation.common.EmptyCommonCustom
 import com.example.seapedia.presentation.seller.order.all.widgets.OrderCard
 import com.example.seapedia.ui.theme.Dimens
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
+@OptIn(ExperimentalTime::class)
 @Composable
 fun HomeOrderListSection(
     orders: List<Order>,
     onClick: (Order) -> Unit,
     role: UserRole,
+    daySystem: Instant,
     onUpdateStatus: (Order) -> Unit = {}
 ) {
     Box(
@@ -62,6 +66,7 @@ fun HomeOrderListSection(
                             onClick(order)
                         },
                         role = role,
+                        daySystem = daySystem,
                         onUpdateStatus = onUpdateStatus
                     )
                 }

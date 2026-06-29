@@ -6,6 +6,7 @@ import com.example.seapedia.data.remote.query.AllOrderQuery
 import com.example.seapedia.data.remote.responses.order.OrderStatus
 import com.example.seapedia.domain.usecases.order.GetAllOrderUseCase
 import com.example.seapedia.domain.usecases.order.UpdateHistoryUseCase
+import com.example.seapedia.domain.usecases.system.GetDayUseCase
 import com.example.seapedia.global.utils.CommonState
 import com.example.seapedia.global.utils.session.SessionRepository
 import com.example.seapedia.global.utils.ui.AppEventBus
@@ -15,17 +16,23 @@ import com.example.seapedia.global.utils.ui.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.collections.groupBy
 import kotlin.collections.orEmpty
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
+@OptIn(ExperimentalTime::class)
 @HiltViewModel
 class OrderSellerViewModel @Inject constructor(
     val sessionRepository: SessionRepository,
     private val getAllOrderUseCase: GetAllOrderUseCase,
-    private val updateHistoryUseCase: UpdateHistoryUseCase
+    private val updateHistoryUseCase: UpdateHistoryUseCase,
+    private val getDayUseCase: GetDayUseCase
 ) : ViewModel(){
     private val _state = MutableStateFlow<OrderSellerState>(OrderSellerState())
     val state = _state.asStateFlow()
@@ -82,6 +89,10 @@ class OrderSellerViewModel @Inject constructor(
                 )
             }
             val status = if(state.value.status == OrderStatus.All) null else state.value.status
+            val daySystem = getDayUseCase.run()
+                .filterIsInstance<CommonState.Success<Instant>>()
+                .first().data
+
             getAllOrderUseCase.run(
                 AllOrderQuery(
                     orderStatus = status
@@ -121,12 +132,14 @@ class OrderSellerViewModel @Inject constructor(
                         updateState {
                             copy(
                                 allOrders = result,
+                                daySystem = daySystem,
                                 returnOrder,
                                 doneOrder,
                                 onWayOrder,
                                 waitingDriverOrder,
                                 processOrder,
                                 isLoading = false,
+
                             )
                         }
                     }
@@ -199,6 +212,9 @@ class OrderSellerViewModel @Inject constructor(
             updateState {
                 copy(allOrders = CommonState.Loading())
             }
+            val daySystem = getDayUseCase.run()
+                .filterIsInstance<CommonState.Success<Instant>>()
+                .first().data
             getAllOrderUseCase.run(queries = AllOrderQuery()).collect {
                 result ->
                 when(result){
@@ -231,6 +247,7 @@ class OrderSellerViewModel @Inject constructor(
                         updateState {
                             copy(
                                 allOrders = result,
+                                daySystem = daySystem,
                                 returnOrder,
                                 doneOrder,
                                 onWayOrder,

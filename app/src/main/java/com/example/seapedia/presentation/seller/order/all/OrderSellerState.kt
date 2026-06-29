@@ -3,9 +3,12 @@ package com.example.seapedia.presentation.seller.order.all
 import com.example.seapedia.data.remote.responses.order.OrderStatus
 import com.example.seapedia.domain.entities.Order
 import com.example.seapedia.global.utils.CommonState
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
-data class OrderSellerState(
+data class OrderSellerState @OptIn(ExperimentalTime::class) constructor(
     val allOrders : CommonState<List<Order>> = CommonState.Loading(),
+    val daySystem: Instant? = null,
     val returnOrder : List<Order> = listOf(),
     val doneOrder : List<Order> = listOf(),
     val onWayOrder : List<Order> = listOf(),
