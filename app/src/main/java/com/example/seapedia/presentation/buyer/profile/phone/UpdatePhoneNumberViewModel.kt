@@ -8,6 +8,7 @@ import com.example.seapedia.data.remote.body.BuyerPhoneNumberBody
 import com.example.seapedia.domain.usecases.buyer.UpdateBuyerUseCase
 import com.example.seapedia.global.navigation.buyer.BuyerRoute
 import com.example.seapedia.global.utils.CommonState
+import com.example.seapedia.global.utils.session.SessionRepository
 import com.example.seapedia.global.utils.ui.AppEventBus
 import com.example.seapedia.global.utils.ui.CustomSnackbarVisuals
 import com.example.seapedia.global.utils.ui.SnackbarType
@@ -23,9 +24,11 @@ import javax.inject.Inject
 @HiltViewModel
 class UpdatePhoneNumberViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val updateBuyerUseCase: UpdateBuyerUseCase
+    private val updateBuyerUseCase: UpdateBuyerUseCase,
+    private val sessionRepository: SessionRepository
 ) : ViewModel(){
     private val phoneNumberNew: String = checkNotNull(savedStateHandle[BuyerRoute.ProfileBuyerUpdatePhoneNumber.PHONE_NUMBER])
+    val sessionState = sessionRepository.sessionState
     private val _navigateToProfile = MutableSharedFlow<Unit>()
     val navigateToProfile = _navigateToProfile
 

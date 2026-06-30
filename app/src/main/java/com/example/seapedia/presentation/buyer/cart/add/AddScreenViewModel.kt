@@ -95,6 +95,9 @@ class AddScreenViewModel @Inject constructor(
 
     fun submit() {
         viewModelScope.launch {
+            updateState {
+                copy(isLoading = true)
+            }
             createCartItemUseCase
                 .run(state.value.state.toBody())
                 .collect { result ->

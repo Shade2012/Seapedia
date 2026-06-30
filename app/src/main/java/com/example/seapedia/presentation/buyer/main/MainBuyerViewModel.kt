@@ -57,7 +57,6 @@ class MainBuyerViewModel @Inject constructor(
                                 if(!result.data){
                                     _showInvalidStoreDialog.emit(true)
                                 }
-                                sessionRepository.setValid(result.data)
                             }
                         }
 

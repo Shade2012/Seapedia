@@ -27,6 +27,10 @@ class SessionRepository @Inject constructor(){
         Log.d("Session 2",_sessionState.value.role.toString())
     }
 
+    fun setPhoneNumber(isValidBuyer: Boolean){
+
+    }
+
     fun setValid(isValidBuyer: Boolean){
         _sessionState.update {
             it.copy(

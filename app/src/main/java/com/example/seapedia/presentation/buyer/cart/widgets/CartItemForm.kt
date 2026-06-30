@@ -155,7 +155,9 @@ fun ProductTypeSection(
             style = MaterialTheme.typography.titleSmall
         )
 
-        productType.listItems.orEmpty().forEach { item ->
+        productType.listItems.orEmpty().filter {
+            it.stock > 0
+        }.forEach { item ->
 
             if (productType.isMultiple) {
 

@@ -180,14 +180,12 @@ fun HomeBuyerScreen(
                             homeBuyerViewModel = homeBuyerViewModel,
                             onAddToCart = { product ->
                                 val quantity = homeBuyerViewModel.quantityCheckInCart(product.id)
-                                if (homeBuyerViewModel.addToCart()) {
                                     if (quantity < 1) {
                                         buyerNavController.navigate(
                                             BuyerRoute.CartItemCreate.createRoute(product.id)
                                         )
                                     } else {
                                         addProduct = product
-                                    }
                                 }
                             }
                         )
@@ -199,7 +197,6 @@ fun HomeBuyerScreen(
                             homeBuyerViewModel = homeBuyerViewModel,
                             onAddToCart = { product ->
                                 val quantity = homeBuyerViewModel.quantityCheckInCart(product.id)
-                                if (homeBuyerViewModel.addToCart()) {
                                     if (quantity < 1) {
                                         buyerNavController.navigate(
                                             BuyerRoute.CartItemCreate.createRoute(product.id)
@@ -207,7 +204,6 @@ fun HomeBuyerScreen(
                                     } else {
                                         addProduct = product
                                     }
-                                }
                             }
                         )
                     }
