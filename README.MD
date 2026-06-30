@@ -11,7 +11,7 @@ If you only want to try the application, you don't need to build the project.
 1. Open the **Releases** page of this repository.
 2. Download the latest **APK** from the newest release.
 3. Install it on your Android device.
-4. Make sure the backend server is running before opening the application.
+4. Enjoy, Release already configure with BE Hosted
 
 > **Minimum Android Version:** Android 7.0 (API 24)
 
