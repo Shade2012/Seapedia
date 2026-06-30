@@ -1,83 +1,108 @@
 # Seapedia
 
-Seapedia is an Android application built with **Jetpack Compose** that communicates with a NestJS backend.
-
-## Prerequisites
-
-Before running this project, make sure you have installed:
-
-* Android Studio (Narwhal or newer recommended)
-* JDK 17
-* Android SDK 36
-* Android Emulator or a physical Android device (Android 7.0 / API 24 or above)
-* Git
+Seapedia is an Android marketplace application built with **Jetpack Compose** and powered by a **NestJS** backend.
 
 ---
 
-## Installation
+# 📱 Installation (Recommended)
 
-Clone the repository:
+If you only want to try the application, you don't need to build the project.
+
+1. Open the **Releases** page of this repository.
+2. Download the latest **APK** from the newest release.
+3. Install it on your Android device.
+4. Make sure the backend server is running before opening the application.
+
+> **Minimum Android Version:** Android 7.0 (API 24)
+
+---
+
+# 💻 Installation from Source
+
+## Prerequisites
+
+Before running this project, install:
+
+- Android Studio (Narwhal or newer recommended)
+- JDK 17
+- Android SDK 36
+- Git
+- Android Emulator **or** Physical Android Device (API 24+)
+
+---
+
+## Clone Repository
 
 ```bash
 git clone <repository-url>
 cd <project-folder>
 ```
 
-Open the project using **Android Studio**.
-
-Allow Gradle to sync and download all required dependencies.
+Open the project in **Android Studio** and allow Gradle to finish syncing.
 
 ---
 
-## Backend Connection
+# 🔗 Backend Setup
 
-This application requires the NestJS backend to be running locally.
+This application requires the **NestJS backend** to be running.
 
-Start the backend first:
+Start the backend:
 
 ```bash
 npm run start:dev
 ```
 
-### Using a Physical Device (USB)
+The backend runs on:
 
-1. Connect your Android device using a USB cable.
+```
+http://localhost:3000
+```
+
+---
+
+# 📲 Connect Android Device
+
+## USB Debugging
+
+1. Connect your Android device.
 2. Enable **Developer Options** and **USB Debugging**.
-3. Verify the device is detected:
+3. Verify the device:
 
 ```bash
 adb devices
 ```
 
-4. Forward port **3000** from your computer to the Android device:
+4. Forward port 3000:
 
 ```bash
 adb reverse tcp:3000 tcp:3000
 ```
 
-The application can now access the backend using:
+The app can now access the backend through:
 
-```text
+```
 http://localhost:3000
 ```
 
-### Using a Physical Device (Wi-Fi Debugging)
+---
 
-If your device supports **Wireless Debugging**, connect it through Android Studio, then run:
+## Wireless Debugging
+
+If using Android Studio's Wireless Debugging:
 
 ```bash
 adb reverse tcp:3000 tcp:3000
 ```
 
-> **Note:** Your computer and Android device must be connected to the same Wi-Fi network.
+> Your computer and Android device must be connected to the same Wi-Fi network.
 
 ---
 
-## Build and Run
+# ▶️ Run the Application
 
-After Gradle has finished syncing, click **Run ▶** in Android Studio.
+Inside Android Studio, simply press **Run ▶**.
 
-Or build the project from the terminal:
+Or build manually:
 
 ```bash
 ./gradlew assembleDebug
@@ -91,44 +116,59 @@ Install the debug APK:
 
 ---
 
-## Project Workflow
+# 🚀 Project Workflow
 
 ```text
 Clone Repository
-        │
-        ▼
+       │
+       ▼
 Open in Android Studio
-        │
-        ▼
-Sync Gradle
-        │
-        ▼
+       │
+       ▼
+Gradle Sync
+       │
+       ▼
 Start NestJS Backend
-        │
-        ▼
-Connect Android Device (USB or Wireless Debugging)
-        │
-        ▼
+       │
+       ▼
+Connect Android Device
+(USB / Wireless Debugging)
+       │
+       ▼
 adb reverse tcp:3000 tcp:3000
-        │
-        ▼
-Run the Application
+       │
+       ▼
+Run Application
 ```
 
 ---
 
-## Technologies Used
+# 🛠️ Technologies
 
-* Kotlin
-* Jetpack Compose
-* Material 3
-* Navigation Compose
-* ViewModel
-* Kotlinx Serialization
-* Retrofit
-* OkHttp
-* DataStore
-* Hilt (Dependency Injection)
-* Coil
-* Kotlinx Datetime
-* Compose Shimmer
+### Android
+
+- Kotlin
+- Jetpack Compose
+- Material 3
+- Navigation Compose
+- ViewModel
+- Hilt (Dependency Injection)
+- Retrofit
+- OkHttp
+- Kotlinx Serialization
+- Kotlinx Datetime
+- DataStore
+- Coil
+- Compose Shimmer
+
+### Backend
+
+- NestJS
+- TypeORM
+- PostgreSQL
+
+---
+
+# 📄 License
+
+This project is intended for educational and portfolio purposes.
