@@ -6,9 +6,9 @@ import com.example.seapedia.presentation.seller.store.state.StoreFormState
 
 data class StoreSellerCreateState(
 
-    override val name: String = "Toko Shade",
-    override val address: String = "Jalan Garuda A9",
-    override val phoneNumber: String = "+6282124654352",
+    override val name: String = "",
+    override val address: String = "",
+    override val phoneNumber: String = "",
 
     override val provinceList: List<Region> = emptyList(),
     override val cityList: List<Region> = emptyList(),

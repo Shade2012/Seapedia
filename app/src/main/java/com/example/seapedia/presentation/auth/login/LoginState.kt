@@ -3,8 +3,8 @@ package com.example.seapedia.presentation.auth.login
 import com.example.seapedia.global.utils.UserRole
 
 data class LoginState(
-    val email:String = "user1@gmail.com",
-    val password: String = "12345678",
+    val email:String = "",
+    val password: String = "",
     val selectedRole: UserRole? = null,
     val isLoading: Boolean = false,
     val error : String = "",

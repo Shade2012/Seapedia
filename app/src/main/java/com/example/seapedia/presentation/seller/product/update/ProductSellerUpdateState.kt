@@ -6,9 +6,9 @@ import com.example.seapedia.presentation.seller.product.state.ProductFormState
 
 data class ProductSellerUpdateState(
 
-    override val name: String = "Baju Castle",
-    override val price: String = "200000",
-    override val stock: String = "20",
+    override val name: String = "",
+    override val price: String = "",
+    override val stock: String = "",
 
     override val types: List<CreateProductType> = listOf<CreateProductType>(),
     val images : List<Uri> = listOf<Uri>(),

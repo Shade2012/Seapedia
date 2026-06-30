@@ -1,7 +1,7 @@
 package com.example.seapedia.global.networks
 
 object NetworkConstant {
-    const val BASE_URL = "http://localhost:3000"
+    const val BASE_URL = "https://seapedia.zeabur.app"
     const val BASE_URL_REGION = "https://api-regional-indonesia.vercel.app/api/"
     const val PRODUCTS = "products"
     const val PRODUCT_IMAGES = "product-image"

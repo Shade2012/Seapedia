@@ -6,9 +6,9 @@ import com.example.seapedia.presentation.buyer.address.state.AddressFormState
 
 
 data class BuyerAddressCreateState(
-    override val name: String = "Rumah",
-    override val receiverName: String = "+6282124654352",
-    override val addressDetail: String = "Jalan Garuda A9",
+    override val name: String = "",
+    override val receiverName: String = "",
+    override val addressDetail: String = "",
 
     override val provinceList: List<Region> = emptyList(),
     override val cityList: List<Region> = emptyList(),

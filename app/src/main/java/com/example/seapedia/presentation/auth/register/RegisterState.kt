@@ -3,9 +3,9 @@ package com.example.seapedia.presentation.auth.register
 import com.example.seapedia.global.utils.UserRole
 
 data class RegisterState(
-    val email:String = "shade@gmail.com",
-    val fullName:String = "Shade Kabrun",
-    val password: String = "12345678",
+    val email:String = "",
+    val fullName:String = "",
+    val password: String = "",
     val selectedRole: UserRole? = null,
     val isLoading: Boolean = false,
     val error : String = "",
